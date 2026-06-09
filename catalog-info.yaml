@@ -2,7 +2,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: cfems.ucd
-  title: CFEMS-UCD
+  title: Cfems-Ucd
   description: |
     A blank prototype kit version 13.18.1 with DWP Frontend installed
 
