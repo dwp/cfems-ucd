@@ -1,0 +1,109 @@
+{#
+For guidance on how to use layouts see:
+https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
+#}
+
+{% extends "govuk-prototype-kit/layouts/govuk-branded.njk" %}
+{% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+
+
+{% block header %}
+<style>.govuk-width-container { min-width: 1480px  }</style>
+
+
+    <header data-module="govuk-header" class="dwp-header">
+  <div class="dwp-header__content govuk-!-margin-left-6">
+    <div class="dwp-header__service-name">
+      <a href="../index" class="dwp-header__link">Counter Fraud and Error Management System</a>
+    </div>
+     <div class="dwp-header__service-action">
+      <a href="#" class="dwp-header__link govuk-!-margin-right-6">Accessibility statement</a>
+    </div>
+</div>
+</header>
+
+ <header data-module="govuk-header" class="dwp-header" style="background-color:grey;">
+
+  <div class="govuk-service-navigation" data-module="govuk-service-navigation">
+    <div class="govuk-width-container">
+      <div class="govuk-service-navigation__container">
+        <nav aria-label="Menu" class="govuk-service-navigation__wrapper">
+          <button type="button" class="govuk-service-navigation__toggle govuk-js-service-navigation-toggle" aria-controls="navigation" hidden aria-hidden="true">
+            Menu
+          </button>
+          <ul class="govuk-service-navigation__list" id="navigation">
+            
+            <li class="govuk-service-navigation__item govuk-service-navigation__item">
+              <a class="govuk-service-navigation__link" href="source">
+                <strong class="govuk-service-navigation__active-fallback">Source prioritisation</strong>
+              </a>
+            </li>
+            <li class="govuk-service-navigation__item">
+              <a class="govuk-service-navigation__link" href="team-control">
+                Team control
+              </a>
+            </li>
+            <li class="govuk-service-navigation__item">
+              <a class="govuk-service-navigation__link" href="workbasket-control">
+                Workbasket control
+              </a>
+            </li>
+            <li class="govuk-service-navigation__item">
+              <a class="govuk-service-navigation__link" href="search">
+                Search
+              </a>
+            </li>
+            <li class="govuk-service-navigation__item">
+              <a class="govuk-service-navigation__link" href="report">
+                Report
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  /* Highlights the border block under the active nav option */
+.govuk-service-navigation__item--current {
+  border-bottom: 4px solid #1d70b8; /* Design System Blue indicator tint */
+}
+
+/* Enhances textual contrast alignment on focused items */
+.govuk-service-navigation__item--current .govuk-service-navigation__link {
+  color: #0b0c0c;
+}
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+  // Capture the trailing segment of the current browser location path
+  const currentPath = window.location.pathname.split("/").pop();
+
+  // Select all matching link instances inside the service nav component
+  const navLinks = document.querySelectorAll(".govuk-service-navigation__link");
+
+  navLinks.forEach((link) => {
+    // Read the relative target destination attribute
+    const hrefTarget = link.getAttribute("href");
+
+    // Check if the current page URL path matches the link target destination
+    if (currentPath === hrefTarget) {
+      // Find the direct parent list-item wrapper element
+      const parentLi = link.closest(".govuk-service-navigation__item");
+
+      if (parentLi) {
+        // Apply official GDS current highlight visual markers
+        parentLi.classList.add("govuk-service-navigation__item--current");
+        
+        // Inject essential ARIA marker attributes for screen readers
+        link.setAttribute("aria-current", "page");
+      }
+    }
+  });
+});
+</script>
+
+{% endblock %}

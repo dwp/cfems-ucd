@@ -1,0 +1,71 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Home" %}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <a href="./enter-ref.html" class="govuk-back-link">Back</a>
+    
+
+   
+
+     <form method="post">
+
+          <div class="govuk-form-group">
+  <fieldset class="govuk-fieldset">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+      <h1 class="govuk-fieldset__heading">
+       Are you responding to this request for North East Water? 
+      </h1>
+    </legend>
+    <br>
+    <div class="govuk-radios" data-module="govuk-radios">
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="orgName" name="orgName" type="radio" value="yes">
+        <label class="govuk-label govuk-radios__label" for="orgName">
+          Yes
+        </label>
+      </div>
+     
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="orgName-2" name="orgName" type="radio" value="no">
+        <label class="govuk-label govuk-radios__label" for="orgName-2">
+          No
+        </label>
+      </div>
+    </div>
+  </fieldset>
+</div>
+
+
+
+
+<div class="govuk-warning-text">
+  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+  <strong class="govuk-warning-text__text">
+    <span class="govuk-visually-hidden">Warning</span>
+    You can be prosecuted if you deliberately give false or misleading information.
+  </strong>
+</div>
+             
+          <div class="govuk-button-group">
+              <button type="submit" class="govuk-button" data-module="govuk-button">
+                Continue
+              </button>
+               <a class="govuk-link" href="./portal-start.html">Cancel</a>
+           </div>
+       
+    
+  </form>
+
+
+     
+    
+  </div>
+</div>
+
+{% endblock %}

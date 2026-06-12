@@ -1,0 +1,97 @@
+{% extends "layouts/main-cfems.html" %}
+
+{% set pageName="Home" %}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full ">
+
+   {% include '/includes/name-and-nino.html' %}
+    
+    {% include '/includes/cfem-investigator-layout.html' %}
+
+ <div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    
+  <h2 class="govuk-heading-m">Add benefit</h2>
+
+   <form method="post">
+
+            <h3 class="govuk-heading-s">What benefit does your request relate to?</h3>
+            <div class="govuk-form-group">
+            <label class="govuk-label" for="sort">
+           
+             
+              
+            </label>
+            <select class="govuk-select" id="sort" name="sort">
+              <option value="choose" selected>Choose an option</option>
+              <option value="attendance">Attendance allowence</option>
+              <option value="adultdis">Adult disability payment</option>
+              <option value="accesstowork">Access to work</option>
+              <option value="bereavement">Bereavement allowance</option>
+              <option value="">Bereavement benefit</option>
+              <option value="">Carer's allowance</option>
+              <option value="">Child benefit</option>
+              <option value="">Child disability payment</option>
+              <option value="">Child support</option>
+              <option value="">Child tax credit</option>
+              <option value="">Council tax credit</option>
+              <option value="">Council tax benefit</option>
+              <option value="">Disability living allowance</option>
+              <option value="">Employment and support allowance</option>
+              <option value="">Housing benefit</option>
+              <option value="">Incapacity benefit</option>
+              <option value="">Industrail death benefit</option>
+              <option value="">Industrial disabilty benefit</option>
+              <option value="">Income support</option>
+              <option value="">Jobseeker's allowance</option>
+              <option value="">Maternity allowance</option>
+              <option value="">Pension credit</option>
+              <option value="">Personal inderpendance payment</option>
+              <option value="">Rates relief</option>
+              <option value="">Retirment pension</option>
+              <option value="">Severe disability allowance</option>
+              <option value="">Socila fund</option>
+              <option value="">State pension</option>
+              <option value="">Tax credits</option>
+              <option value="">Universal credit</option>
+              <option value="">War disability benefit group</option>
+              <option value="">Widows benefit</option>
+              <option value="">Winter fuel payment</option>
+              <option value="">Widowed parents allowance</option>
+              
+            </select>
+          </div>
+           
+               
+ 
+              
+      <div class="govuk-button-group">
+       <button type="submit" class="govuk-button" data-module="govuk-button">
+         Save and continue
+       </button>
+       <a href="javascript:history.back()" class="govuk-button govuk-button" style="background-color: rgb(168, 169, 169)">
+         Back
+       </a>
+      </div>
+
+   </form>
+
+
+</div>
+</div>
+
+</div>
+
+<br>
+
+{% include '/includes/case-table.html' %}
+
+    
+  </div>
+</div>
+
+{% endblock %}

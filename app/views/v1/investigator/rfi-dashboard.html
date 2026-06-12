@@ -1,0 +1,126 @@
+{% extends "layouts/main-cfems.html" %}
+
+{% set pageName="Home" %}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full ">
+
+   
+   {% include '/includes/name-and-nino.html' %}
+    
+    {% include '/includes/cfem-investigator-layout.html' %}
+
+  <div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+  <table class="govuk-table">
+  <caption class="govuk-table__caption govuk-table__caption--m">RFI Progress</caption>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header app-custom-class">Request sent to</th>
+      <th scope="col" class="govuk-table__header app-custom-class">Date sent</th>
+      <th scope="col" class="govuk-table__header app-custom-class">Due date</th>
+      <th scope="col" class="govuk-table__header app-custom-class">Status</th> 
+      <th scope="col" class="govuk-table__header app-custom-class">Request</th>
+      <th scope="col" class="govuk-table__header app-custom-class">Action</th> 
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td scope="row" class="govuk-table__cell">Santander</td>
+      <td class="govuk-table__cell">22 April 2026</td>
+      <td class="govuk-table__cell">06 May 2026</td>
+      <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">
+          Sent</strong></td>
+      <td class="govuk-table__cell">
+        <p class="govuk-body"><a href="#" class="govuk-link govuk-link--no-visited-state">View</a></p>
+     </td>
+          <td class="govuk-table__cell">
+        <p class="govuk-body"><a href="#" class="govuk-link govuk-link--no-visited-state">Action</a></p>
+      </td>
+    </tr>
+     <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td scope="row" class="govuk-table__cell">Bank of Scotland</td>
+      <td class="govuk-table__cell"></td>
+      <td class="govuk-table__cell"></td>
+      <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--yellow">
+          In Progress</strong></td>
+      <td class="govuk-table__cell">
+        <p class="govuk-body"><a href="#" class="govuk-link govuk-link--no-visited-state">View</a></p>
+     </td>
+          <td class="govuk-table__cell">
+        <p class="govuk-body"><a href="#" class="govuk-link govuk-link--no-visited-state">Action</a></p>
+      </td>
+    </tr>
+     <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td scope="row" class="govuk-table__cell">Monzo</td>
+      <td class="govuk-table__cell">14 March 2026</td>
+      <td class="govuk-table__cell">08 April 2026</td>
+      <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--red">
+         Overdue </strong></td>
+       <td class="govuk-table__cell">
+        <p class="govuk-body"><a href="#" class="govuk-link govuk-link--no-visited-state">View</a></p>
+     </td>
+         <td class="govuk-table__cell">
+        <p class="govuk-body"><a href="#" class="govuk-link govuk-link--no-visited-state">Action</a></p>
+      </td>
+    </tr>
+     <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td scope="row" class="govuk-table__cell">North East Water</td>
+      <td class="govuk-table__cell">06 January 2026</td>
+      <td class="govuk-table__cell">20 February 2026</td>
+      <td class="govuk-table__cell"><strong class="govuk-tag ">
+          Closed</strong></td>
+      <td class="govuk-table__cell">
+        <p class="govuk-body"><a href="#" class="govuk-link govuk-link--no-visited-state">View</a></p>
+     </td>
+     <td class="govuk-table__cell">
+        <p class="govuk-body"><a href="#" class="govuk-link govuk-link--no-visited-state">Action</a></p>
+      </td>
+    </tr>
+     <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td scope="row" class="govuk-table__cell">Santander</td>
+      <td class="govuk-table__cell">01 November 2025</td>
+      <td class="govuk-table__cell">14 November 2025</td>
+      <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">
+          Sent</strong></td>
+     <td class="govuk-table__cell">
+        <p class="govuk-body"><a href="#" class="govuk-link govuk-link--no-visited-state">View</a></p>
+     </td>
+      <td class="govuk-table__cell">
+        <p class="govuk-body"><a href="#" class="govuk-link govuk-link--no-visited-state">Action</a></p>
+      </td>
+    </tr>
+   
+  </tbody>
+</table>
+
+  
+
+
+ 
+       
+
+
+
+</div>
+</div>
+
+</div>
+
+<br>
+
+{% include '/includes/case-table.html' %}
+
+    
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends "layouts/rms-nav.html" %}
+
+{% set pageName="Home" %}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full ">
+
+    <h1 class="govuk-heading-l">Workbasket control</h1>
+    <p class="govuk-body">Filter workbasket by source or search using Case ID, Fraud Referral Form ID or National Insurance number to find cases you want to view, assign or close.</p>
+
+    <div class="govuk-form-group">
+  <label class="govuk-label" for="sort">
+    Select source to prioritise backlog
+  </label>
+  <select class="govuk-select" id="sort" name="sort">
+    <option value="published" selected>Select</option>
+    <option value="published">LA</option>
+    <option value="updated">HMRC</option>
+    <option value="views">UCCR</option>
+    <option value="comments">Performance measurement</option>
+  </select>
+</div>
+
+<div class="govuk-form-group">
+  <label class="govuk-label" for="one-quarter">
+    Search by Case ID
+  </label>
+  <div id="location-hint" class="govuk-hint">
+  For example, PR-123.
+</div>
+  <input class="govuk-input govuk-!-width-one-quarter" id="one-quarter" name="oneQuarter" type="text">
+</div>
+
+<div class="govuk-form-group">
+  <label class="govuk-label" for="one-quarter">
+    Search by Fraud Referral Form ID
+  </label>
+  <div id="location-hint" class="govuk-hint">
+  For example, FR-76929D8300004786.
+</div>
+  <input class="govuk-input govuk-!-width-one-quarter" id="one-quarter" name="oneQuarter" type="text">
+</div>
+
+<div class="govuk-form-group">
+  <label class="govuk-label" for="one-quarter">
+    Search by National Insurance number
+  </label>
+  <div id="location-hint" class="govuk-hint">
+  For example, QQ123456C.
+</div>
+  <input class="govuk-input govuk-!-width-one-quarter" id="one-quarter" name="oneQuarter" type="text">
+</div>
+
+
+<button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+  Search
+</button>
+
+<table class="govuk-table">
+  <label class="govuk-label" for="location">
+    Prioritised sources
+  </label>
+  <div id="location-hint" class="govuk-hint">
+    Once submitted, the changes you've made to any teams' workbasket will take place immediately. To change the priority of a source, remove it from the table and start again.
+  </div>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Source</th>
+      <th scope="col" class="govuk-table__header">Case ID</th>
+      <th scope="col" class="govuk-table__header">FRF ID</th>
+      <th scope="col" class="govuk-table__header">NI number</th>
+      <th scope="col" class="govuk-table__header">Date created</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"></td>
+      <td class="govuk-table__cell"></td>
+      <td class="govuk-table__cell"></td>
+      <td class="govuk-table__cell"></td>
+      <td class="govuk-table__cell"></td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"></td>
+      <td class="govuk-table__cell"></td>
+      <td class="govuk-table__cell"></td>
+      <td class="govuk-table__cell"></td>
+      <td class="govuk-table__cell"></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- conditional table? {% include '/includes/case-table.html' %}-->
+    
+  </div>
+</div>
+
+{% endblock %}

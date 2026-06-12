@@ -1,0 +1,100 @@
+<div class="govuk-form-group" style="position: relative;">
+  <label class="govuk-label" for="priority-search">
+    Select what you want to prioritise
+  </label>
+  <input class="govuk-input govuk-input--width-10" id="priority-search" name="priority-search" type="text" autocomplete="off">
+  
+  <!-- Container to render matching dropdown items dynamically -->
+  <div id="autocomplete-results" class="govuk-autocomplete__menu" style="display: none; position: absolute; z-index: 100; background: white; border: 2px solid #0b0c0c; width: 100%; max-width: 290px; box-sizing: border-box;"></div>
+</div>
+
+<style>
+  /* Optional complementary GOV.UK style alignment patches */
+  .govuk-autocomplete__item {
+    padding: 8px 12px;
+    cursor: pointer;
+    font-family: "GDS Transport", arial, sans-serif;
+    font-size: 19px;
+    border-bottom: 1px solid #bfc1c3;
+  }
+  .govuk-autocomplete__item:hover, .govuk-autocomplete__item:focus {
+    background-color: #1d70b8;
+    color: white;
+    outline: none;
+  }
+</style>
+
+<script>
+// --- Component Initialisation & Setup ---
+// Seed data based on things users might want to prioritise
+const priorities = [
+    "LA", "HMRC", "UCCR", "Performance Measurement"
+];
+
+// DOM Elements
+const inputEl = document.getElementById('priority-search');
+const resultsEl = document.getElementById('autocomplete-results');
+
+/**
+ * Searches the dataset for any string that contains the query substring
+ * @param {string} query - The search term typed by the user
+ * @returns {string[]} - Array of matching terms
+ */
+function getContainsSuggestions(query) {
+    const cleanQuery = query.trim().toLowerCase();
+    if (!cleanQuery) return [];
+
+    // Filters item if the user input exists anywhere inside the word string
+    return priorities.filter(item => item.toLowerCase().includes(cleanQuery));
+}
+
+// Debounce helper to prevent processing layout thrashing on rapid typing
+function debounce(func, timeout = 150) {
+    let timer;
+    return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => { func.apply(this, args); }, timeout);
+    };
+}
+
+// Render process
+const handleInput = debounce((e) => {
+    const value = e.target.value;
+    resultsEl.innerHTML = '';
+    
+    // Fetch suggestions where string contains the substring letters
+    const matches = getContainsSuggestions(value);
+
+    if (matches.length === 0) {
+        resultsEl.style.display = 'none';
+        return;
+    }
+
+    // Append suggestions matching GOV.UK typographic presentation
+    matches.forEach(match => {
+        const item = document.createElement('div');
+        item.className = 'govuk-autocomplete__item';
+        item.textContent = match;
+        
+        // Handle option selection click
+        item.addEventListener('click', () => {
+            inputEl.value = match;
+            resultsEl.style.display = 'none';
+        });
+
+        resultsEl.appendChild(item);
+    });
+
+    resultsEl.style.display = 'block';
+});
+
+// Attach execution hooks
+inputEl.addEventListener('input', handleInput);
+
+// Dismiss suggestion dropdown menu if user clicks outside component boundary
+document.addEventListener('click', (e) => {
+    if (!inputEl.contains(e.target) && !resultsEl.contains(e.target)) {
+        resultsEl.style.display = 'none';
+    }
+});
+</script>

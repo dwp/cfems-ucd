@@ -1,0 +1,93 @@
+{% extends "layouts/rms-nav.html" %}
+
+{% set pageName="Home" %}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full ">
+
+    <h1 class="govuk-heading-l">Team control</h1>
+    <p class="govuk-body">Assign a prioritised source to a specific team so they can work on those cases first. </p>
+
+    <div class="govuk-warning-text">
+  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+  <strong class="govuk-warning-text__text">
+    <span class="govuk-visually-hidden">Warning</span>
+    Changes you make here will override any source prioritisation previously set
+  </strong>
+</div>
+
+    <div class="govuk-form-group">
+      <label class="govuk-label" for="sort">
+        Select source you wnat to priotitise
+      </label>
+      <div id="location-hint" class="govuk-hint">
+    For example, if you want a particular team to work on Local Authority referrals, select that as the source.
+  </div>
+      <select class="govuk-select" id="sort" name="sort">
+        <option value="published" selected>Select</option>
+        <option value="published">LA</option>
+        <option value="updated">HMRC</option>
+        <option value="views">UCCR</option>
+        <option value="comments">Performance measurement</option>
+      </select>
+    </div>
+<div class="govuk-form-group">
+  <label class="govuk-label" for="location">
+    Select a team to assign the prioritised source to  
+  </label>
+  <div id="location-hint" class="govuk-hint">
+    The team selected will first work on referrals from the source you've prioritised. Once there are no longer any referrals from that prioritised source, the team will get referrals as normal from the workbasket. 
+  </div>
+  <select class="govuk-select" id="location" name="location" aria-describedby="location-hint">
+    <option value="choose" selected>Select</option>
+    <option value="london">RMS Team 1</option>
+    <option value="northeast">RMS Team 2</option>
+    <option value="northwest">RMS Team 3</option>
+    <option value="southeast">RMS Team 4</option>
+  </select>
+</div>
+
+<button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+  Add selection to the table
+</button>
+
+<table class="govuk-table">
+  <label class="govuk-label" for="location">
+    Prioritised sources
+  </label>
+  <div id="location-hint" class="govuk-hint">
+    Once submitted, the changes you've made to any teams' workbasket will take place immediately. To change the priority of a source, remove it from the table and start again.
+  </div>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Source</th>
+      <th scope="col" class="govuk-table__header">Ranking</th>
+      <th scope="col" class="govuk-table__header">Remove</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"></td>
+      <td class="govuk-table__cell"></td>
+      <td class="govuk-table__cell"></td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"></td>
+      <td class="govuk-table__cell"></td>
+      <td class="govuk-table__cell"></td>
+    </tr>
+  </tbody>
+</table>
+
+<button type="submit" class="govuk-button" data-module="govuk-button">
+  Apply
+</button>
+<!-- conditional table? {% include '/includes/case-table.html' %}-->
+    
+  </div>
+</div>
+
+{% endblock %}

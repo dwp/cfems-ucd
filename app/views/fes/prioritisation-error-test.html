@@ -1,0 +1,301 @@
+{% extends "layouts/fes-nav.html" %}
+
+{% set pageName="Home" %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+    <!-- GDS Error Summary Component -->
+    <div id="error-summary" class="govuk-error-summary" data-module="govuk-error-summary" style="display: none;" autofocus tabindex="-1" aria-labelledby="error-summary-title" role="alert">
+      <h2 class="govuk-error-summary__title" id="error-summary-title">
+        There is a problem
+      </h2>
+      <div class="govuk-error-summary__body">
+        <ul class="govuk-list govuk-error-summary__list" id="error-summary-list"></ul>
+      </div>
+    </div>
+
+    <h1 class="govuk-heading-l">Prioritisation</h1>
+    <p class="govuk-body">Choose what you want to prioritise from the workbasket.</p>
+
+    <!-- Form Group 1: Criteria Selection -->
+    <div id="group-sort" class="govuk-form-group">
+      <label class="govuk-label" for="sort">
+        Select criteria
+      </label>
+      <p id="error-sort" class="govuk-error-message" style="display: none;">
+        <span class="govuk-visually-hidden">Error:</span> Select a criteria type
+      </p>
+      <select class="govuk-select" id="sort" name="sort">
+        <option value="choose" selected>Select</option>
+        <option value="Benefit type">Benefit type</option>
+        <option value="Risk or allegation ID">Risk or allegation ID</option>
+        <option value="Source">Source</option>
+      </select>
+    </div>
+
+    <!-- Form Group 2: Substring Autocomplete Field -->
+    <div id="group-priority-search" class="govuk-form-group" style="position: relative;">
+      <label class="govuk-label" for="priority-search">
+        Select what you want to prioritise
+      </label>
+      <p id="error-priority-search" class="govuk-error-message" style="display: none;">
+        <span class="govuk-visually-hidden">Error:</span> Enter or choose an item to prioritise
+      </p>
+      <input class="govuk-input govuk-input--width-10" id="priority-search" name="priority-search" type="text" autocomplete="off">
+      
+      <!-- Container to render matching dropdown items dynamically -->
+      <div id="autocomplete-results" class="govuk-autocomplete__menu" style="display: none; position: absolute; z-index: 100; background: white; border: 2px solid #0b0c0c; width: 100%; max-width: 290px; box-sizing: border-box;"></div>
+    </div>
+
+    <!-- Form Group 3: Ranking Placement Selector -->
+    <div id="group-location" class="govuk-form-group">
+      <label class="govuk-label" for="location">
+        Select a priority ranking for the source (1 to 5) 
+      </label>
+      <div id="location-hint" class="govuk-hint">
+        You can prioritise up to 5 sources from 1 to 5, with 1 being the highest priority. Any sources given the same priority will be equally weighted.
+      </div>
+      <p id="error-location" class="govuk-error-message" style="display: none;">
+        <span class="govuk-visually-hidden">Error:</span> Select a ranking order value
+      </p>
+      <select class="govuk-select" id="location" name="location" aria-describedby="location-hint">
+        <option value="choose" selected>Select</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </div>
+
+    <!-- Action Trigger Button -->
+    <button type="button" id="btn-add-selection" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+      Add selection to the table
+    </button>
+
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-heading-m">Prioritised sources</caption>
+      <div id="table-hint" class="govuk-hint">
+        Once you apply the changes you've made, they will take place immediately for new cases and overnight for existing ones. To change the priority of a source, remove it from the table and start again.
+      </div>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Source</th>
+          <th scope="col" class="govuk-table__header">Prioritised choice</th>
+          <th scope="col" class="govuk-table__header">Ranking</th>
+          <th scope="col" class="govuk-table__header">Action</th>
+        </tr>
+      </thead>
+      <!-- Empty table body waiting to receive dynamic rows -->
+      <tbody class="govuk-table__body" id="table-results-body"></tbody>
+    </table>
+
+    <button type="submit" class="govuk-button" data-module="govuk-button">
+      Apply
+    </button>
+    
+  </div>
+</div>
+
+<style>
+  .govuk-autocomplete__item {
+    padding: 8px 12px;
+    cursor: pointer;
+    font-family: "GDS Transport", arial, sans-serif;
+    font-size: 19px;
+    border-bottom: 1px solid #bfc1c3;
+  }
+  .govuk-autocomplete__item:hover, .govuk-autocomplete__item:focus {
+    background-color: #1d70b8;
+    color: white;
+    outline: none;
+  }
+  .govuk-table-remove-link {
+    font-family: "GDS Transport", arial, sans-serif;
+    color: #d4351c;
+    background: none;
+    border: none;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+  }
+  .govuk-table-remove-link:hover {
+    color: #942514;
+  }
+</style>
+
+<script>
+// --- Dataset Configuration ---
+const priorities = ["HMRC", "LA", "Performance Measurement", "UCCR"];
+
+const inputEl = document.getElementById('priority-search');
+const resultsEl = document.getElementById('autocomplete-results');
+
+const selectSort = document.getElementById('sort');
+const selectLocation = document.getElementById('location');
+const btnAddSelection = document.getElementById('btn-add-selection');
+const tableBody = document.getElementById('table-results-body');
+
+const errorSummary = document.getElementById('error-summary');
+const errorSummaryList = document.getElementById('error-summary-list');
+
+// --- Reset Form Errors ---
+function resetValidationErrors() {
+    errorSummary.style.display = 'none';
+    errorSummaryList.innerHTML = '';
+
+    ['sort', 'priority-search', 'location'].forEach(id => {
+        document.getElementById(`group-${id}`).classList.remove('govuk-form-group--error');
+        document.getElementById(`error-${id}`).style.display = 'none';
+        document.getElementById(id).classList.remove('govuk-input--error', 'govuk-select--error');
+    });
+}
+
+// --- Trigger Individual Field Errors ---
+function triggerGdsFieldError(id, messageText) {
+    document.getElementById(`group-${id}`).classList.add('govuk-form-group--error');
+    document.getElementById(`error-${id}`).style.display = 'block';
+    document.getElementById(id).classList.add(id === 'priority-search' ? 'govuk-input--error' : 'govuk-select--error');
+
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.href = `#${id}`;
+    a.textContent = messageText;
+    li.appendChild(a);
+    errorSummaryList.appendChild(li);
+}
+
+// --- Add 10 Rows to the Table Body ---
+function addTenItemsToTable(criteria, choice, ranking) {
+    // Clear out placeholder templates if they exist
+    tableBody.innerHTML = '';
+
+    for (let i = 1; i <= 10; i++) {
+        const row = document.createElement('tr');
+        row.className = 'govuk-table__row';
+
+        // Column 1: Source (Criteria name)
+        const cellCriteria = document.createElement('td');
+        cellCriteria.className = 'govuk-table__cell';
+        cellCriteria.textContent = `${criteria} #${i}`; // Appended number tracker for readability
+        row.appendChild(cellCriteria);
+
+        // Column 2: Prioritised choice
+        const cellChoice = document.createElement('td');
+        cellChoice.className = 'govuk-table__cell';
+        cellChoice.textContent = choice;
+        row.appendChild(cellChoice);
+
+        // Column 3: Ranking scale
+        const cellRanking = document.createElement('td');
+        cellRanking.className = 'govuk-table__cell';
+        cellRanking.textContent = ranking;
+        row.appendChild(cellRanking);
+
+        // Column 4: Remove Action Button Link (GDS Compliant Style Override)
+        const cellRemove = document.createElement('td');
+        cellRemove.className = 'govuk-table__cell';
+        
+        const removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.className = 'govuk-table-remove-link';
+        removeBtn.textContent = 'Remove';
+        
+        removeBtn.addEventListener('click', () => {
+            row.remove();
+        });
+
+        cellRemove.appendChild(removeBtn);
+        row.appendChild(cellRemove);
+
+        // Inject the completed row string frame structures directly to browser DOM
+        tableBody.appendChild(row);
+    }
+}
+
+// --- Action Submission Event Evaluator ---
+btnAddSelection.addEventListener('click', (e) => {
+    resetValidationErrors();
+    let hasErrors = false;
+
+    if (selectSort.value === 'choose') {
+        triggerGdsFieldError('sort', 'Select a criteria type');
+        hasErrors = true;
+    }
+
+    if (!inputEl.value.trim()) {
+        triggerGdsFieldError('priority-search', 'Enter or choose an item to prioritise');
+        hasErrors = true;
+    }
+
+    if (selectLocation.value === 'choose') {
+        triggerGdsFieldError('location', 'Select a ranking order value');
+        hasErrors = true;
+    }
+
+    if (hasErrors) {
+        errorSummary.style.display = 'block';
+        errorSummary.focus();
+    } else {
+        // Collect selection variables and dispatch row injector task
+        addTenItemsToTable(selectSort.value, inputEl.value.trim(), selectLocation.value);
+    }
+});
+
+// --- Autocomplete Feature Logic ---
+function renderSuggestions(query) {
+    resultsEl.innerHTML = '';
+    const cleanQuery = query.trim();
+    const matches = cleanQuery 
+        ? priorities.filter(item => item.toLowerCase().includes(cleanQuery.toLowerCase()))
+        : priorities;
+
+    if (matches.length === 0) {
+        resultsEl.style.display = 'none';
+        return;
+    }
+
+    matches.forEach(match => {
+        const item = document.createElement('div');
+        item.className = 'govuk-autocomplete__item';
+        
+        if (cleanQuery) {
+            const escapedQuery = cleanQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const regex = new RegExp(`(${escapedQuery})`, 'gi');
+            item.innerHTML = match.replace(regex, '<strong>$1</strong>');
+        } else {
+            item.textContent = match;
+        }
+        
+        item.addEventListener('click', () => {
+            inputEl.value = match;
+            resultsEl.style.display = 'none';
+        });
+        resultsEl.appendChild(item);
+    });
+    resultsEl.style.display = 'block';
+}
+
+function debounce(func, timeout = 150) {
+    let timer;
+    return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => { func.apply(this, args); }, timeout);
+    };
+}
+
+inputEl.addEventListener('focus', (e) => renderSuggestions(e.target.value));
+inputEl.addEventListener('click', (e) => renderSuggestions(e.target.value));
+inputEl.addEventListener('input', debounce((e) => renderSuggestions(e.target.value)));
+
+document.addEventListener('click', (e) => {
+    if (!inputEl.contains(e.target) && !resultsEl.contains(e.target)) {
+        resultsEl.style.display = 'none';
+    }
+});
+</script>
+
+{% endblock %}

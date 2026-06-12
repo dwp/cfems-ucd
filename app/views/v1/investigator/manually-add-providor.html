@@ -1,0 +1,300 @@
+{% extends "layouts/main-cfems.html" %}
+
+{% set pageName="Home" %}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full ">
+
+    <section class="dwp-quick-reference" aria-label="Case information">
+  <dl class="dwp-quick-reference__block">
+    <dt class="dwp-quick-reference__label govuk-visually-hidden">Name:</dt>
+    <dd class="dwp-quick-reference__primary">I-187054 John Smith</dd>
+    <dt class="dwp-quick-reference__label dwp-quick-reference__label--primary govuk-visually-hidden">National Insurance number:</dt>
+    <dd class="dwp-quick-reference__secondary">NI number QQ190226A</dd>
+  </dl>
+</section>
+
+
+    <nav class="dwp-horizontal-navigation" aria-label="Horizontal">
+  <ul class="dwp-horizontal-navigation__list">
+    <li class="dwp-horizontal-navigation__item">
+      <a id="s-item-1" href="#s-item-1" class="dwp-horizontal-navigation__link" aria-current="true">Inital review</a>
+    </li>
+    <li class="dwp-horizontal-navigation__item dwp-horizontal-navigation__item--selected">
+      <a id="s-item-2" href="#s-item-2" class="dwp-horizontal-navigation__link">Build case</a>
+    </li>
+    <li class="dwp-horizontal-navigation__item">
+      <a id="s-item-3" href="#s-item-3" class="dwp-horizontal-navigation__link">Decision</a>
+    </li>
+     <li class="dwp-horizontal-navigation__item">
+      <a id="s-item-3" href="#s-item-3" class="dwp-horizontal-navigation__link">Close case</a>
+    </li>
+  </ul>
+</nav>
+
+<br>
+<div style="background-color: rgb(242, 243, 245);  padding: 20px 30px 12px 30px;">
+
+  
+    
+  <div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+  <h2 class="govuk-heading-m">Add new providor manually</h2>
+
+   <form action="" method="post">
+
+  
+            <div class="govuk-form-group">
+            <label class="govuk-label" for="sort">
+           
+                      
+                       <h1 class="govuk-label-wrapper">
+                         <label class="govuk-label govuk-label--s" for="event-name">
+                           What providor do you want to send the request to?
+                         </label>
+                       </h1>
+                       <div id="event-name-hint" class="govuk-hint">
+                            Known providers will appear as you type.</div>
+                                         
+                             <div class="govuk-form-group">
+                                               
+                       <input class="govuk-input govuk-!-width-one-third" id="event-name" name="eventName" type="text">
+                       </div>
+
+                       <div class="govuk-form-group">
+  <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+      <h1 class="govuk-fieldset__heading">
+      Do you have an email address for the provider?
+      </h1>
+    </legend>
+   
+    <div class="govuk-radios" data-module="govuk-radios">
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="contact" name="contact" type="radio" value="email" data-aria-controls="conditional-contact">
+        <label class="govuk-label govuk-radios__label" for="contact">
+          Yes
+        </label>
+      </div>
+      <div class="govuk-radios__conditional" id="conditional-contact">
+        <div class="govuk-form-group govuk-form-group">
+          <label class="govuk-label" for="contact-by-email">
+            Email address
+          </label>
+         
+          <input class="govuk-input govuk-!-width-one-half govuk-input" id="contact-by-email" name="contactByEmail" type="email" spellcheck="false" aria-describedby="contact-by-email-error" autocomplete="email">
+        </div>
+      </div>
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="contact-2" name="contact" type="radio" value="phone" data-aria-controls="conditional-contact-2">
+        <label class="govuk-label govuk-radios__label" for="contact-2">
+          No, I want the request to be posted
+        </label>
+      </div>
+      <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-contact-2">
+       
+      </div>
+      
+  </fieldset>
+</div>         
+           
+</div>
+</form>
+    
+
+              
+      <div class="govuk-button-group">
+       <button type="submit" class="govuk-button" data-module="govuk-button">
+         Save and continue
+       </button>
+       <button href="javascript:history.back()" type="submit" class="govuk-button govuk-button" style="background-color: rgb(168, 169, 169)" data-module="govuk-button">
+         Back
+       </button>
+      </div>
+
+
+</div>
+</div>
+
+</div>
+
+<br>
+
+
+
+
+
+<div class="govuk-tabs" data-module="govuk-tabs">
+  <h2 class="govuk-tabs__title">
+    Contents
+  </h2>
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+      <a class="govuk-tabs__tab" href="#past-day">
+        Case history
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#past-week">
+       Claimant
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#past-month">
+        Relationships
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#past-year">
+        Payments
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#past-year">
+        Risks
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#past-year">
+        Referal data
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#past-year">
+        Documents
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#past-year">
+        Decisions
+      </a>
+    </li>
+  </ul>
+  <div class="govuk-tabs__panel" id="past-day">
+    <h2 class="govuk-heading-l">Case history</h2>
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+       <tr class="govuk-table__row">
+          <td class="govuk-table__cell">David Francis</td>
+          <td class="govuk-table__cell">1234567</td>
+          <td class="govuk-table__cell">01 Jan 2026 12:03 PM</td>
+          <td class="govuk-table__cell">Review Activity [DF-23050] -EX-01</td>
+          <td class="govuk-table__cell"></td>
+          <td class="govuk-table__cell govuk-link" href="#past-year">View details</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Paul Farmer</td>
+          <td class="govuk-table__cell">098765</td>
+          <td class="govuk-table__cell">14 Feb 2025 16:05 PM</td>
+           <td class="govuk-table__cell">RFI sent</td>
+          <td class="govuk-table__cell">Request for bank statements related to case investigation.</td>
+           <td class="govuk-table__cell govuk-link" href="#past-year">View details</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Rita Patel</td>
+          <td class="govuk-table__cell">298765</td>
+          <td class="govuk-table__cell">03 Jun 2023 09:18 AM</td>
+           <td class="govuk-table__cell">Record a request for evidence updated</td>
+          <td class="govuk-table__cell">Logged response</td>
+          <td class="govuk-table__cell govuk-link" href="#past-year">View details</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="past-week">
+    <h2 class="govuk-heading-l">Past week</h2>
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Case manager</th>
+          <th scope="col" class="govuk-table__header">Cases opened</th>
+          <th scope="col" class="govuk-table__header">Cases closed</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">David Francis</td>
+          <td class="govuk-table__cell">24</td>
+          <td class="govuk-table__cell">18</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Paul Farmer</td>
+          <td class="govuk-table__cell">16</td>
+          <td class="govuk-table__cell">20</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Rita Patel</td>
+          <td class="govuk-table__cell">24</td>
+          <td class="govuk-table__cell">27</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="past-month">
+    <h2 class="govuk-heading-l">Past month</h2>
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Case manager</th>
+          <th scope="col" class="govuk-table__header">Cases opened</th>
+          <th scope="col" class="govuk-table__header">Cases closed</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">David Francis</td>
+          <td class="govuk-table__cell">98</td>
+          <td class="govuk-table__cell">95</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Paul Farmer</td>
+          <td class="govuk-table__cell">122</td>
+          <td class="govuk-table__cell">131</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Rita Patel</td>
+          <td class="govuk-table__cell">126</td>
+          <td class="govuk-table__cell">142</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="past-year">
+    <h2 class="govuk-heading-l">Past year</h2>
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Case manager</th>
+          <th scope="col" class="govuk-table__header">Cases opened</th>
+          <th scope="col" class="govuk-table__header">Cases closed</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">David Francis</td>
+          <td class="govuk-table__cell">1380</td>
+          <td class="govuk-table__cell">1472</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Paul Farmer</td>
+          <td class="govuk-table__cell">1129</td>
+          <td class="govuk-table__cell">1083</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Rita Patel</td>
+          <td class="govuk-table__cell">1539</td>
+          <td class="govuk-table__cell">1265</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+    
+  </div>
+</div>
+
+{% endblock %}

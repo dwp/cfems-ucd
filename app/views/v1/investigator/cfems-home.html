@@ -1,0 +1,107 @@
+{% extends "layouts/main-cfems.html" %}
+
+{% set pageName="Home" %}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full ">
+
+    <section class="dwp-quick-reference" aria-label="Case information">
+  <dl class="dwp-quick-reference__block">
+    <dt class="dwp-quick-reference__label govuk-visually-hidden">Name:</dt>
+    <dd class="dwp-quick-reference__primary">I-187054 John Smith</dd>
+    <dt class="dwp-quick-reference__label dwp-quick-reference__label--primary govuk-visually-hidden">National Insurance number:</dt>
+    <dd class="dwp-quick-reference__secondary">NI number QQ190226A</dd>
+  </dl>
+</section>
+
+    <nav class="dwp-horizontal-navigation" aria-label="Horizontal">
+  <ul class="dwp-horizontal-navigation__list">
+    <li class="dwp-horizontal-navigation__item dwp-horizontal-navigation__item--selected">
+      <a id="s-item-1" href="#s-item-1" class="dwp-horizontal-navigation__link" aria-current="true">Initial review</a>
+    </li>
+    <li class="dwp-horizontal-navigation__item">
+      <a id="s-item-2" href="#s-item-2" class="dwp-horizontal-navigation__link">Build case</a>
+    </li>
+    <li class="dwp-horizontal-navigation__item">
+      <a id="s-item-3" href="#s-item-3" class="dwp-horizontal-navigation__link">Decision</a>
+    </li>
+     <li class="dwp-horizontal-navigation__item">
+      <a id="s-item-3" href="#s-item-3" class="dwp-horizontal-navigation__link">Close case</a>
+    </li>
+  </ul>
+</nav>
+
+<br>
+<div style="background-color: rgb(242, 243, 245);  padding: 20px 30px 12px 30px;">
+    <table class="govuk-table">
+  <caption class="govuk-table__caption govuk-table__caption--m">Activities in progress</caption>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Activity</th>
+      <th scope="col" class="govuk-table__header">Assigned to</th>
+      <th scope="col" class="govuk-table__header">Due</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">There are no activities in progress</td>
+      <td class="govuk-table__cell"></td>
+      <td class="govuk-table__cell"></td>
+    </tr>
+    
+  </tbody>
+</table>
+</div>
+
+<br>
+
+<div class="govuk-!-margin-bottom-6"style="background-color: rgb(242, 243, 245); padding: 12px 30px 12px 30px;">
+<div class="govuk-width-container">
+  <main class="govuk-main-wrapper govuk-!-padding-0">
+    <h2 class="govuk-heading-m"> What would you like to do?</h2>
+    <div class="govuk-grid-row ">
+      <div class="govuk-grid-column-one-third">
+        <ul class="govuk-list">
+          <li><a class="govuk-link" href="">Add or remove vulnerability flag</a></li>
+          <li><a class="govuk-link" href="">Record a request for evidence</a></li>
+          <li><a class="govuk-link" href="">Add a case note</a></li>
+          <li><a class="govuk-link" href="">Add or remove a flag</a></li>
+          <li><a class="govuk-link" href="">Add a case note</a></li>
+          <li><a class="govuk-link" href="">Record contact</a></li>
+          <li><a class="govuk-link" href="">Manage people</a></li>
+          <li><a class="govuk-link" href="">Set an activity</a></li>
+        </ul>
+      </div>
+
+      <div class="govuk-grid-column-one-third">
+        <ul class="govuk-list">
+          <li><a class="govuk-link" href="">Ask for some advice</a></li>
+          <li><a class="govuk-link" href="/v1/investigator/add-providor">Send a request for information</a></li>
+          <li><a class="govuk-link" href="">Ask a team leader to do something</a></li>
+          <li><a class="govuk-link" href="">Ask for the benefit to be suspended</a></li>
+          <li><a class="govuk-link" href="">Refer for financial investigation</a></li>
+        </ul>
+      </div>
+
+      <div class="govuk-grid-column-one-third">
+        <ul class="govuk-list">
+          <li><a class="govuk-link" href="">Plan an interview</a></li>
+          <li><a class="govuk-link" href="">Request or record a decision</a></li>
+          <li><a class="govuk-link" href="">Record outcome</a></li>
+        </ul>
+       </div>
+       </div>
+    </main>
+  </div>
+</div>
+
+
+{% include '/includes/case-table.html' %}
+    
+  </div>
+</div>
+
+{% endblock %}

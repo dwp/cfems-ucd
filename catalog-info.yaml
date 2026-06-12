@@ -1,20 +1,20 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: cfems.ucd
-  title: Cfems-Ucd
+  name: FED.bill
+  title: Fed-Bill
   description: |
     A blank prototype kit version 13.18.1 with DWP Frontend installed
 
   annotations:
-    gitlab.com/project-slug: dwp/user-centred-design/blank-prototype-kit
+    gitlab.com/project-slug: dwp/user-centred-design/fed-bill
 
   labels:
     dwp.gov.uk/version: 1.0.0
     dwp.gov.uk/license: unknown
 
-    dwp.gov.uk/last-verified.by: Ben Raine
-    dwp.gov.uk/last-verified.on: 2026-06-09
+    dwp.gov.uk/last-verified.by: mark.keeling1
+    dwp.gov.uk/last-verified.on: 2026-04-20
 
     dwp.gov.uk/open-source.approved: "true"
     dwp.gov.uk/open-source.location: none
@@ -31,12 +31,12 @@ metadata:
   links:
     - icon: externalLink
       title: Repository
-      url: https://gitlab.com/dwp/user-centred-design/blank-prototype-kit
+      url: https://gitlab.com/dwp/user-centred-design/fed-bill
 
 spec:
   owner: group:default/backstage.group.user-centred-design
   system: system:default/unallocated
-  type: prototype
+  type: service
   lifecycle: experimental
 
   dependsOn:

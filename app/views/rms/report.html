@@ -1,0 +1,84 @@
+{% extends "layouts/rms-nav.html" %}
+
+{% set pageName="Home" %}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full ">
+
+    <h1 class="govuk-heading-l">Report</h1>
+
+    <div class="govuk-form-group">
+  <label class="govuk-label" for="sort">
+    Select source to prioritise backlog
+  </label>
+  <select class="govuk-select" id="sort" name="sort">
+    <option value="published" selected>Select</option>
+    <option value="published">LA</option>
+    <option value="updated">HMRC</option>
+    <option value="views">UCCR</option>
+    <option value="comments">Performance measurement</option>
+  </select>
+</div>
+<div class="govuk-form-group">
+  <label class="govuk-label" for="location">
+    Select a priority ranking for the source (1-5) 
+  </label>
+  <div id="location-hint" class="govuk-hint">
+    You can prioritise up to 5 sources from 1 to 5, with 1 being the highest priority. Any sources given the same priority will be equally weighted.
+  </div>
+  <select class="govuk-select" id="location" name="location" aria-describedby="location-hint">
+    <option value="choose" selected>Select</option>
+    <option value="london">1</option>
+    <option value="northeast">2</option>
+    <option value="northwest">3</option>
+    <option value="southeast">4</option>
+    <option value="southwest">5</option>
+  </select>
+</div>
+
+<button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+  Add selection to the table
+</button>
+
+<table class="govuk-table">
+  <label class="govuk-label" for="location">
+    Prioritised sources
+  </label>
+  <div id="location-hint" class="govuk-hint">
+    Once you apply the changes you've made, they will take place immediately for new cases and overnight for existing ones. To change the priority of a source, remove it from the table and start again.
+  </div>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Source</th>
+      <th scope="col" class="govuk-table__header">Ranking</th>
+      <th scope="col" class="govuk-table__header">Remove</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"></td>
+      <td class="govuk-table__cell"></td>
+      <td class="govuk-table__cell"></td>
+      <td class="govuk-table__cell"></td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"></td>
+      <td class="govuk-table__cell"></td>
+      <td class="govuk-table__cell"></td>
+      <td class="govuk-table__cell"></td>
+    </tr>
+  </tbody>
+</table>
+
+<button type="submit" class="govuk-button" data-module="govuk-button">
+  Apply
+</button>
+<!-- conditional table? {% include '/includes/case-table.html' %}-->
+    
+  </div>
+</div>
+
+{% endblock %}
