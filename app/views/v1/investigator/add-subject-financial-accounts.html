@@ -1,0 +1,190 @@
+{% extends "layouts/main-cfems.html" %}
+
+{% set pageName="Home" %}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full ">
+
+  {% include '/includes/name-and-nino.html' %}
+    
+    {% include '/includes/cfem-investigator-layout.html' %}
+
+  <div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+  <h2 class="govuk-heading-l">Enter the account holders details</h2>
+
+    <form method="post">
+
+      <p>Answer at least two of the following questions. You do not need to complete every field.</p>     
+
+          <div class="govuk-form-group">
+            <h1 class="govuk-label-wrapper">
+              <label class="govuk-label govuk-label--m" for="event-name">
+                Full name
+              </label>
+            </h1>
+            <div id="event-name-hint" class="govuk-hint">
+              This can be their first name, last name, full name or initials.
+            </div> <input class="govuk-input govuk-!-width-one-half" id="fullName" name="fullName" type="text"            aria-describedby="event-name-hint"></div>
+
+            
+  <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
+    
+  
+  <div class="govuk-form-group">
+  <fieldset class="govuk-fieldset" role="group" aria-describedby="passport-issued-hint">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+      <h1 class="govuk-fieldset__heading">
+        Date of Birth
+      </h1>
+    </legend>
+    <div id="passport-issued-hint" class="govuk-hint">
+      For example, 27 3 2007
+    </div>
+    <div class="govuk-date-input" id="passport-issued">
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-date-input__label" for="passport-issued-day">
+            Day
+          </label>
+          <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dob-day" name="dob-day" type="text" inputmode="numeric">
+        </div>
+      </div>
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-date-input__label" for="passport-issued-month">
+            Month
+          </label>
+          <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dob-month" name="dob-month" type="text" inputmode="numeric">
+        </div>
+      </div>
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-date-input__label" for="passport-issued-year">
+            Year
+          </label>
+          <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="dob-year" name="dob-year" type="text" inputmode="numeric">
+        </div>
+      </div>
+    </div>
+  </fieldset>
+</div>
+
+
+            <br>
+
+<fieldset class="govuk-fieldset">
+  <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+    <h1 class="govuk-fieldset__heading">
+      Address
+    </h1>
+  </legend>
+  <div id="event-name-hint" class="govuk-hint">
+   Enter the address details you know. You do not need to enter a full address.
+  </div>
+  <div class="govuk-form-group">
+    <label class="govuk-label" for="address-line-1">
+      Address line 1
+    </label>
+    <input class="govuk-input govuk-!-width-two-thirds" id="address-line-1" name="address-line-1" type="text" autocomplete="address-line1">
+  </div>
+  <div class="govuk-form-group govuk-!-width-two-thirds">
+    <label class="govuk-label" for="address-line-2">
+      Address line 2 
+    </label>
+    <input class="govuk-input" id="address-line-2" name="address-line-2" type="text" autocomplete="address-line2">
+  </div>
+  <div class="govuk-form-group">
+    <label class="govuk-label" for="address-town">
+      Town or city
+    </label>
+    <input class="govuk-input govuk-!-width-one-half" id="address-town" name="addressTown" type="text" autocomplete="address-level2">
+  </div>
+  <div class="govuk-form-group">
+    <label class="govuk-label" for="address-postcode">
+      Postcode
+    </label>
+    <input class="govuk-input govuk-input--width-10" id="address-postcode" name="addressPostcode" type="text" autocomplete="postal-code">
+  </div>
+</fieldset>
+
+
+<br>
+
+           <div class="govuk-form-group">
+            <h1 class="govuk-label-wrapper">
+              <label class="govuk-label govuk-label--m" for="event-name">
+                Sort code
+              </label>
+            </h1>
+            <div id="event-name-hint" class="govuk-hint">
+              Must be 6 digits long
+            </div> <input class="govuk-input govuk-input--width-5 govuk-input--extra-letter-spacing" id="event-name" name="sortCode" type="text"            aria-describedby="event-name-hint"></div>
+           
+            <div class="govuk-form-group">
+            <h1 class="govuk-label-wrapper">
+              <label class="govuk-label govuk-label--m" for="event-name">
+                Account number
+              </label>
+            </h1>
+            <div id="event-name-hint" class="govuk-hint">
+              Must be between 6 and 8 digits long
+            </div> <input class="govuk-input govuk-input--width-10 govuk-input--extra-letter-spacing" id="event-name" name="accountNo" type="text"            aria-describedby="event-name-hint"></div>
+
+            <div class="govuk-form-group">
+            <h1 class="govuk-label-wrapper">
+              <label class="govuk-label govuk-label--m" for="event-name">
+                Card number
+              </label>
+            </h1>
+            <div id="event-name-hint" class="govuk-hint">
+              Enter the last 4 digits or the full 16 digits
+            </div> <input class="govuk-input govuk-input--width-10 govuk-input--extra-letter-spacing" id="event-name" name="cardNo" type="text"            aria-describedby="event-name-hint"></div>
+
+            
+    <br>
+     
+        
+   
+    </div>
+  </fieldset>
+</div>
+            
+            
+          
+           
+ 
+              
+      <div class="govuk-button-group">
+       <button type="submit" class="govuk-button" data-module="govuk-button">
+         Save and continue
+       </button>
+       <a href="start-request-for-info" class="govuk-button govuk-button" style="background-color: rgb(168, 169, 169)">
+         Back
+       </a>
+      </div>
+
+   </form>
+
+</div>
+
+
+
+<br>
+
+
+
+{% include '/includes/case-table.html' %}
+
+
+
+    
+  </div>
+</div>
+
+{% endblock %}
+    
+  

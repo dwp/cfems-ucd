@@ -1,0 +1,49 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Home" %}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <a href="./portal-start.html" class="govuk-back-link">Back</a>
+    
+
+    <h1 class="govuk-heading-l">
+      Enter your reference number
+    </h1>
+
+     <form method="post">
+      
+    <p>You can find this in your email or letter</p>
+
+          <div class="govuk-form-group">
+             <!-- <h1 class="govuk-label-wrapper">
+                <label class="govuk-label govuk-label--m" for="event-name">
+                  What is your reference number?
+                </label>
+              </h1>-->
+              <input class="govuk-input govuk-!-width-one-half" id="event-name" name="eventName" type="text">
+            </div>
+
+            <br>
+             
+          <div class="govuk-button-group">
+              <button type="submit" class="govuk-button" data-module="govuk-button">
+                Continue
+              </button>
+               <a class="govuk-link" href="./portal-start.html">Cancel</a>
+           </div>
+       
+    
+  </form>
+
+
+     
+    
+  </div>
+</div>
+
+{% endblock %}

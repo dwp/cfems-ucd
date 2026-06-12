@@ -1,0 +1,99 @@
+{% extends "layouts/main-cfems.html" %}
+
+{% set pageName="Home" %}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full ">
+
+     {% include '/includes/name-and-nino.html' %}
+    
+    {% include '/includes/cfem-investigator-layout.html' %}
+
+     <div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+ 
+
+   <form method="post">
+
+            <div class="govuk-form-group govuk-!-width-one-half">
+            <label class="govuk-label" for="sort">
+           
+                      
+  <h1 class="govuk-label-wrapper">
+    <label class="govuk-label govuk-label--l" for="event-name">
+      Who do you want to send the request to? 
+    </label>
+  </h1>
+  <p>Start typing and choose a provider.</p>
+                    
+         <select class="govuk-select" id="provider" name="provider"
+           data-module="autocomplete" data-autoselect="" data-display-menu="" data-min-length="" data-show-all-values="" data-show-no-options-found="">
+           <option value="" selected disabled>Select an option</option>
+           <option value="Barclays">Barclays</option>
+           <option value="Monzo">Monzo</option>
+           <option value="Santandar">Santandar</option>
+           <option value="Tescos">Tescos</option>
+           <option value="Ryainair">Ryanair</option>
+           <option value="British Airways">British Airways</option>
+           <option value="Bank of Scotland">Bank of Scotland</option>
+           <option value="Royal Bank of Scotland">Royal Bank of Scotland</option>
+           <option value="Finland">Bank of England</option>
+           <option value="France">France</option>
+           <option value="Germany">Germany</option>
+           <option value="Greece">Greece</option>
+           <option value="Hungary">Hungary</option>
+           <option value="Ireland">Ireland</option>
+           <option value="Italy">Italy</option>
+           <option value="Latvia">Latvia</option>
+           <option value="Lithuania">Lithuania</option>
+           <option value="Luxembourg">Luxembourg</option>
+           <option value="Malta">Malta</option>
+           <option value="Netherlands">Netherlands</option>
+           <option value="Poland">Poland</option>
+           <option value="Portugal">Portugal</option>
+           <option value="Romania">Romania</option>
+           <option value="Slovakia">Slovakia</option>
+           <option value="Slovenia">Slovenia</option>
+           <option value="Spain">Spain</option>
+           <option value="Sweden">Sweden</option>
+         </select>   
+           
+          </div>
+
+          <p class="govuk-body">
+               <a href="manually-add-providor.html" class="govuk-link">Enter details for a new provider manually</a>
+           </p>
+           
+              
+
+    <br>
+              
+     
+       <button type="submit" class="govuk-button" data-module="govuk-button">
+         Save and continue
+       </button>
+
+       <button href="javascript:history.back()" type="" class="govuk-button" style="background-color: rgb(168, 169, 169)" data-module="govuk-button">
+         Back
+       </button>
+    
+    </form>
+
+</div>
+</div>
+
+</div>
+
+<br>
+
+{% include '/includes/case-table.html' %}
+
+
+    
+  </div>
+</div>
+
+{% endblock %}

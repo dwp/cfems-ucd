@@ -1,0 +1,150 @@
+{% extends "layouts/main-cfems.html" %}
+
+{% set pageName="Home" %}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full ">
+
+   
+   {% include '/includes/name-and-nino.html' %}
+    
+    {% include '/includes/cfem-investigator-layout.html' %}
+
+  <div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+  <h2 class="govuk-heading-l">Check the request</h2>
+
+   <form method="post">
+
+      <h2 class="govuk-heading-m">We need some information</h2>
+    
+      <hr>
+
+      <p>Dear {{data['provider']}}</p>
+
+<p>We are authorised under Section 109 BZA of the Social Security Administration Act 1992 (as amended by the Social Security Fraud Act 2001) to issue you with this request for information (RFI). </p>
+
+<p>You need to respond to this request by <b>6 May 2026</b>. You may be prosecuted if you do not respond.</p>
+
+<h2 class="govuk-heading-s">Your reference number</h2>
+<p>79Q5S7Y9X1</p>
+
+<h2 class="govuk-heading-s">What we need from you</h2>
+
+<p>We have reasonable grounds to believe that the following subject has committed, is committing or intends to commit a benefit offence. We are contacting you because we believe you may have information about them.</p>
+
+
+<h2 class="govuk-heading-s">Information we're asking for:</h2>
+
+<p>You need to provide all details related to the transaction below:</p>
+
+<p>Date the transaction was made <b> {{data['transaction-day']}}/{{data['transaction-month']}}/{{data['transaction-year']}}</b></p>
+
+<p>The transaction was a <b>{{data['creditType']}}</b> payment of <b>{{data['payment-amount']}}</b> with reference number <b>{{data['pay-ref']}}</b>.</p>
+
+<p>This transaction relates to the bank statement with account number <b>{{data['accountNo']}}</b> and sort code <b>{{data['sortCode']}}</b>. </p>
+
+
+
+<h2 class="govuk-heading-s">Respond to this request</h2>
+
+<p>Go to <b>www.gov.uk/respond‑to‑request‑for‑information</b> or search ‘Respond to a request for information’.</p>
+
+<p class="govuk-body"></p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>enter your reference number</li>
+  <li>confirm the name of your organisation</li>
+  <li>upload the information we have asked for</li>
+</ul>
+
+<p>You do not have to send all the information we have asked for at once. You can send more than one response to a request.</p>
+
+<p>30MB is the maximum file size for each file. We do not accept MP4 files.</p>
+
+<h2 class="govuk-heading-s">If you need more support</h2>
+
+<p class="govuk-body">Contact us if you: </p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>need more time to respond</li>
+  <li>do not know if you can provide the information we have asked for</li>
+  <li>do not have the information we have asked for</li>
+  <li>cannot use the service</li>
+</ul>
+
+<p>Call  <b>03794 432 433</b>  to speak to the Authorised Investigator for this case.</p>
+
+<h2 class="govuk-heading-s">About this request</h2>
+
+<p>This request is in relation to the provision of information under the Social Security Administration Act 1992 made by an Authorised Officer. It does not request, nor authorise the provision of information that would be defined as Communications Data under section 16 of the Investigatory Powers Act 2018.</p>
+
+<p>Yours sincerely, </p>
+
+<p>A Brodie (123)<br>
+Authorised Officer<br>
+Authorised under Section 109 B and C of the Social Security Administration Act 1992.</p>
+
+<br>
+
+            <div class="govuk-form-group">
+  <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+      <h1 class="govuk-fieldset__heading">
+      Is the information in this request correct? 
+      </h1>
+    </legend>
+  
+    <div class="govuk-radios" data-module="govuk-radios">
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="add-another" name="add-another" type="radio" value="Yes"  data-aria-controls="conditional-contact">
+        <label class="govuk-label govuk-radios__label" for="contact">
+          Yes
+        </label>
+      </div>
+      
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="add-another-no" name="add-another" type="radio" value="No" >
+        <label class="govuk-label govuk-radios__label" for="contact-2">
+          No
+        </label>
+      </div>
+      <div class="govuk-radios" id="conditional-contact-2">
+      </div>
+
+      </div>
+    </div>
+  </fieldset>
+</div>
+            
+            
+          </div>
+           
+ 
+              
+      <div class="govuk-button-group">
+       <button type="submit" class="govuk-button" data-module="govuk-button">
+         Save and continue
+       </button>
+       <a href="start-request-for-info" class="govuk-button govuk-button" style="background-color: rgb(168, 169, 169)">
+         Back
+       </a>
+      </div>
+
+   </form>
+
+</div>
+</div>
+
+</div>
+
+<br>
+
+{% include '/includes/case-table.html' %}
+
+    
+  </div>
+</div>
+
+{% endblock %}

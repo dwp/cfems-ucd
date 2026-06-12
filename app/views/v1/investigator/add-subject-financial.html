@@ -1,0 +1,80 @@
+{% extends "layouts/main-cfems.html" %}
+
+{% set pageName="Home" %}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full ">
+
+     {% include '/includes/name-and-nino.html' %}
+    
+    {% include '/includes/cfem-investigator-layout.html' %}
+
+   <form method="post">
+
+           
+             <div class="govuk-form-group">
+  <fieldset class="govuk-fieldset">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+      <h1 class="govuk-fieldset__heading">
+       What financial information do you need?      
+      </h1>
+    </legend>
+  
+   
+    <div class="govuk-radios" data-module="govuk-radios">
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="requestType" name="requestType" type="radio" value="Accounts and bank statements">
+        <label class="govuk-label govuk-radios__label" for="requestType">
+          Accounts and bank statements
+        </label>
+      </div>
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="requestType-2" name="requestType" type="radio" value="Specific transaction details">
+        <label class="govuk-label govuk-radios__label" for="requestType-2">
+          Specific transaction details
+        </label>
+      </div>
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="requestType-3" name="requestType" type="radio" value="Loans and mortgages">
+        <label class="govuk-label govuk-radios__label" for="requestType-3">
+          Loans and mortgages
+        </label>
+      </div>
+    </div>
+  </fieldset>
+</div>
+              
+            
+              
+ 
+              
+      <div class="govuk-button-group">
+       <button type="submit" class="govuk-button" data-module="govuk-button">
+         Save and continue
+       </button>
+       <a href="start-request-for-info" class="govuk-button govuk-button" style="background-color: rgb(168, 169, 169)">
+         Back
+       </a>
+      </div>
+
+   </form>
+
+
+</div>
+</div>
+
+</div>
+
+<br>
+
+
+{% include '/includes/case-table.html' %}
+
+    
+  </div>
+</div>
+
+{% endblock %}

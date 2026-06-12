@@ -1,0 +1,185 @@
+{% extends "layouts/main-cfems.html" %}
+
+{% set pageName="Home" %}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full ">
+
+  {% include '/includes/name-and-nino.html' %}
+    
+    {% include '/includes/cfem-investigator-layout.html' %}
+
+  <div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+  <h2 class="govuk-heading-l">Request for specific transaction details</h2>
+
+    <form method="post">
+
+      <p>This request will ask {{data['provider']}} to provide all details of the transaction you have specified. For example, where the transaction has come from or been sent to.</p>     
+            
+  <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
+    
+  
+  <div class="govuk-form-group">
+  <fieldset class="govuk-fieldset" role="group" aria-describedby="passport-issued-hint">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+      <h1 class="govuk-fieldset__heading">
+        When was the transaction made?
+      </h1>
+    </legend>
+    <div id="passport-issued-hint" class="govuk-hint">
+      For example, 27 3 2007
+    </div>
+    <div class="govuk-date-input" id="passport-issued">
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-date-input__label" for="passport-issued-day">
+            Day
+          </label>
+          <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="transaction-day" name="transaction-day" type="text" inputmode="numeric">
+        </div>
+      </div>
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-date-input__label" for="passport-issued-month">
+            Month
+          </label>
+          <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="transaction-month" name="transaction-month" type="text" inputmode="numeric">
+        </div>
+      </div>
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-date-input__label" for="passport-issued-year">
+            Year
+          </label>
+          <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="transaction-year" name="transaction-year" type="text" inputmode="numeric">
+        </div>
+      </div>
+    </div>
+  </fieldset>
+</div>
+
+            <div class="govuk-form-group">
+            <h1 class="govuk-label-wrapper">
+              <label class="govuk-label govuk-label--m" for="event-name">
+               What was the payment amount?
+              </label>
+            </h1>
+            <div id="event-name-hint" class="govuk-hint">
+              
+            </div> <input class="govuk-input govuk-input--width-10 govuk-input--extra-letter-spacing" id="payment-amount" name="payment-amount" type="text"            aria-describedby="event-name-hint"></div>
+
+            
+                    <div class="govuk-form-group">
+  <fieldset class="govuk-fieldset">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+      <h1 class="govuk-fieldset__heading">
+       Was the payment credit or debit? 
+      </h1>
+    </legend>
+   
+    <div class="govuk-radios" data-module="govuk-radios">
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="creditType" name="creditType" type="radio" value="Credit">
+        <label class="govuk-label govuk-radios__label" for="categoryType">
+          Credit
+        </label>
+      </div>
+            <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="creditType-debit" name="creditType" type="radio" value="Debit">
+        <label class="govuk-label govuk-radios__label" for="categoryType-7">
+          Debit
+        </label>
+      </div>
+    </div>
+  </fieldset>
+</div>
+            
+            
+            <div class="govuk-form-group">
+            <h1 class="govuk-label-wrapper">
+              <label class="govuk-label govuk-label--m" for="event-name">
+                Payment reference (optional)
+              </label>
+            </h1>
+            <div id="event-name-hint" class="govuk-hint">
+             
+            </div> <input class="govuk-input govuk-!-width-two-thirds" id="pay-ref" name="pay-ref" type="text" aria-describedby="event-name-hint"></div>
+<br>
+
+            <h2 class="govuk-heading-m"> Which account is this transaction related to?</h2>
+
+            <p>Provide account details related to the bank statement that held the transaction.</p>
+
+
+        <div class="govuk-form-group">
+            <h1 class="govuk-label-wrapper">
+              <label class="govuk-label govuk-label--s" for="event-name">
+                Sort code
+              </label>
+            </h1>
+            <div id="event-name-hint" class="govuk-hint">
+              Must be 6 digits long
+            </div> <input class="govuk-input govuk-input--width-5 govuk-input--extra-letter-spacing" id="event-name" name="sortCode" type="text"            aria-describedby="event-name-hint"></div>
+           
+            <div class="govuk-form-group">
+            <h1 class="govuk-label-wrapper">
+              <label class="govuk-label govuk-label--s" for="event-name">
+                Account number
+              </label>
+            </h1>
+            <div id="event-name-hint" class="govuk-hint">
+              Must be between 6 and 8 digits long
+            </div> <input class="govuk-input govuk-input--width-10 govuk-input--extra-letter-spacing" id="event-name" name="accountNo" type="text"            aria-describedby="event-name-hint"></div>
+
+<br>
+
+         
+
+            
+    <br>
+     
+        
+   
+    </div>
+  </fieldset>
+</div>
+            
+            
+          
+           
+ 
+              
+      <div class="govuk-button-group">
+       <button type="submit" class="govuk-button" data-module="govuk-button">
+         Save and continue
+       </button>
+       <a href="start-request-for-info" class="govuk-button govuk-button" style="background-color: rgb(168, 169, 169)">
+         Back
+       </a>
+      </div>
+
+   </form>
+
+</div>
+
+
+
+<br>
+
+
+
+{% include '/includes/case-table.html' %}
+
+
+
+    
+  </div>
+</div>
+
+{% endblock %}
+    
+  

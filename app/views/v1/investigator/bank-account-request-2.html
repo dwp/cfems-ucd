@@ -1,0 +1,155 @@
+{% extends "layouts/main-cfems.html" %}
+
+{% set pageName="Home" %}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-one-half">
+
+     {% include '/includes/name-and-nino.html' %}
+    
+    {% include '/includes/cfem-investigator-layout.html' %}
+
+    <div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+
+   <form method="post">
+
+           
+             <div class="govuk-form-group">
+  <fieldset class="govuk-fieldset">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+      <h1 class="govuk-fieldset__heading">
+       Enter additional information about your request      
+      </h1>
+    </legend>
+    <br>
+
+    
+   
+    <div class="govuk-form-group">
+  <fieldset class="govuk-fieldset" role="group" aria-describedby="dob-hint">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+      <h1 class="govuk-fieldset__heading">
+        Select the date range for the requested bank statements
+      </h1>
+    </legend>
+     <legend class="govuk-fieldset__legend">
+      Start date
+    </legend>
+    <div id="dob-hint" class="govuk-hint">
+      
+    </div>
+    <div class="govuk-date-input" id="dob">
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-date-input__label" for="dob-day">
+            Day
+          </label>
+          <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="start-day" name="start-day" type="text" autocomplete="bday-day" inputmode="numeric">
+        </div>
+      </div>
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-date-input__label" for="dob-month">
+            Month
+          </label>
+          <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="start-month" name="start-month" type="text" autocomplete="bday-month" inputmode="numeric">
+        </div>
+      </div>
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-date-input__label" for="dob-year">
+            Year
+          </label>
+          <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="start-year" name="start-year" type="text" autocomplete="bday-year" inputmode="numeric">
+        </div>
+      </div>
+    </div>
+  
+  </fieldset>
+</div>
+
+     <legend class="govuk-fieldset__legend">
+      End date (optional)
+    </legend>
+    <div id="dob-hint" class="govuk-hint">
+      Leave blank to ask for information up to the current date. 
+    </div>
+    <div class="govuk-date-input" id="end-date">
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-date-input__label" for="dob-day">
+            Day
+          </label>
+          <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="end-day" name="end-day" type="text" autocomplete="bday-day" inputmode="numeric">
+        </div>
+      </div>
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-date-input__label" for="dob-month">
+            Month
+          </label>
+          <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="end-month" name="end-month" type="text" autocomplete="bday-month" inputmode="numeric">
+        </div>
+      </div>
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-date-input__label" for="dob-year">
+            Year
+          </label>
+          <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="end-year" name="end-year" type="text" autocomplete="bday-year" inputmode="numeric">
+        </div>
+      </div>
+    </div>
+
+
+  </fieldset>
+</div>
+              
+         
+<div class="govuk-form-group govuk-character-count" data-module="govuk-character-count" data-maxlength="2000">
+  <h1 class="govuk-label-wrapper">
+    <label class="govuk-label govuk-label--m" for="with-hint">
+      Add any additional information about your request (optional)
+    </label>
+  </h1>
+  <div id="with-hint-hint" class="govuk-hint">
+ What you write here will be sent in a letter to the provider. Write clearly and avoid acronyms. You can add any information you have about the account and information you are requesting from the provider.
+  </div>
+  <textarea class="govuk-textarea govuk-js-character-count" id="more-info" name="more-info" rows="5" aria-describedby="with-hint-info with-hint-hint"></textarea>
+  <div id="with-hint-info" class="govuk-hint govuk-character-count__message">
+    You can enter up to 2000 characters
+  </div>
+</div>
+ 
+              
+      <div class="govuk-button-group">
+       <button type="submit" class="govuk-button" data-module="govuk-button">
+         Save and continue
+       </button>
+       <a href="start-request-for-info" class="govuk-button govuk-button" style="background-color: rgb(168, 169, 169)">
+         Back
+       </a>
+      </div>
+
+   </form>
+
+
+</div>
+</div>
+
+</div>
+
+<br>
+
+
+{% include '/includes/case-table.html' %}
+
+    
+  </div>
+</div>
+
+{% endblock %}

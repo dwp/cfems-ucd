@@ -1,0 +1,104 @@
+{% extends "layouts/main-cfems.html" %}
+
+{% set pageName="Home" %}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full ">
+
+     {% include '/includes/name-and-nino.html' %}
+    
+    {% include '/includes/cfem-investigator-layout.html' %}
+
+   <form method="post">
+
+           
+             <div class="govuk-form-group">
+  <fieldset class="govuk-fieldset">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+      <h1 class="govuk-fieldset__heading">
+       What is your request about?      
+      </h1>
+    </legend>
+   
+    <div class="govuk-radios" data-module="govuk-radios">
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="categoryType" name="categoryType" type="radio" value="Finance">
+        <label class="govuk-label govuk-radios__label" for="categoryType">
+          Finance
+        </label>
+      </div>
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="categoryType-2" name="categoryType" type="radio" value="education">
+        <label class="govuk-label govuk-radios__label" for="categoryType-2">
+          Educational
+        </label>
+      </div>
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="categoryType-3" name="categoryType" type="radio" value="employment">
+        <label class="govuk-label govuk-radios__label" for="categoryType-3">
+          Employment
+        </label>
+      </div>
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="categoryType-4" name="categoryType" type="radio" value="travel">
+        <label class="govuk-label govuk-radios__label" for="categoryType-4">
+          Travel
+        </label>
+      </div>
+       <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="categoryType-6" name="categoryType" type="radio" value="insurance">
+        <label class="govuk-label govuk-radios__label" for="categoryType-5">
+          Insurance
+        </label>
+      </div>
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="categoryType-6" name="categoryType" type="radio" value="utility">
+        <label class="govuk-label govuk-radios__label" for="categoryType-6">
+          Utilities
+        </label>
+      </div>
+      <div class="govuk-radios__divider">or</div>
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="categoryType-7" name="categoryType" type="radio" value="other">
+        <label class="govuk-label govuk-radios__label" for="categoryType-7">
+          My request is about something else
+        </label>
+      </div>
+    </div>
+  </fieldset>
+</div>
+              
+            
+              
+ 
+              
+      <div class="govuk-button-group">
+       <button type="submit" class="govuk-button" data-module="govuk-button">
+         Save and continue
+       </button>
+       <a href="start-request-for-info" class="govuk-button govuk-button" style="background-color: rgb(168, 169, 169)">
+         Back
+       </a>
+      </div>
+
+   </form>
+
+
+</div>
+</div>
+
+</div>
+
+<br>
+
+
+{% include '/includes/case-table.html' %}
+
+    
+  </div>
+</div>
+
+{% endblock %}

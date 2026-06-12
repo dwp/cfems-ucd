@@ -1,0 +1,238 @@
+{% extends "layouts/main-cfems.html" %}
+
+{% set pageName="Home" %}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full ">
+
+  {% include '/includes/name-and-nino.html' %}
+    
+    {% include '/includes/cfem-investigator-layout.html' %}
+
+  <div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+
+    <h1 class="govuk-heading-l">Request loan information</h1>
+
+    <p>Here are the account details you have entered:</p>
+
+    <div class="govuk-inset-text">
+      <p>Sort Code: 11 22 33 <br>
+      Account number: 12345678</p>
+    </div>
+  
+
+    <form method="post">
+
+      <div class="govuk-form-group">
+  <fieldset class="govuk-fieldset" aria-describedby="countries-hint">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+      <h1 class="govuk-fieldset__heading">
+        What infomation do you need about the account?
+      </h1>
+    </legend>
+    <div id="countries-hint" class="govuk-hint">
+      Select all that apply
+    </div>
+    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="account-info" name="account-info" type="checkbox" value="  Name on the account">
+        <label class="govuk-label govuk-checkboxes__label" for="countries">
+          Name on the account
+        </label>
+      </div>
+      <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="account-info" name="account-info" type="checkbox" value="Bank details used for repayment">
+        <label class="govuk-label govuk-checkboxes__label" for="countries">
+          Bank details used for repayment (sort code and account number)
+        </label>
+      </div>
+      <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="account-info" name="account-info" type="checkbox" value="Dates the account was opened and closed">
+        <label class="govuk-label govuk-checkboxes__label" for="countries">
+          Dates the account was opened and closed
+        </label>
+      </div>
+      <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="account-info" name="account-info" type="checkbox" value=" Address history" data-aria-controls="conditional-contact">
+        <label class="govuk-label govuk-checkboxes__label" for="contact">
+          Address history
+        </label>
+      </div>
+      <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-contact">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+      <h1 class="govuk-fieldset__heading">
+        Start date
+      </h1>
+    </legend>
+    <div class="govuk-date-input" id="passport-issued">
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-date-input__label" for="passport-issued-day">
+            Day
+          </label>
+          <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="loan-sah-day" name="loan-sah-day" type="text" inputmode="numeric">
+        </div>
+      </div>
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-date-input__label" for="passport-issued-month">
+            Month
+          </label>
+          <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="loan-sah-month" name="loan-sah-month" type="text" inputmode="numeric">
+        </div>
+      </div>
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-date-input__label" for="passport-issued-year">
+            Year
+          </label>
+          <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="loan-sah-year" name="loan-sah-year" type="text" inputmode="numeric">
+        </div>
+      </div>
+    </div>
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+      <h1 class="govuk-fieldset__heading">
+        End date
+      </h1>
+    </legend>
+    <div class="govuk-date-input" id="passport-issued">
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-date-input__label" for="passport-issued-day">
+            Day
+          </label>
+          <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="loan-eah-day" name="loan-eah-day" type="text" inputmode="numeric">
+        </div>
+      </div>
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-date-input__label" for="passport-issued-month">
+            Month
+          </label>
+          <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="loan-eah-month" name="loan-eah-month" type="text" inputmode="numeric">
+        </div>
+      </div>
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-date-input__label" for="passport-issued-year">
+            Year
+          </label>
+          <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="loan-eah-year" name="loan-eah-year" type="text" inputmode="numeric">
+        </div>
+      </div>
+    </div>
+      </div>
+      <div class="govuk-checkboxes__divider">or</div>
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="account-info" name="account-info" type="checkbox" value="None" data-behaviour="exclusive">
+        <label class="govuk-label govuk-checkboxes__label" for="countries-5">
+          None of the above
+        </label>
+      </div>
+    </div>
+  </fieldset>
+</div>
+
+
+<div class="govuk-form-group">
+  <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+      <h1 class="govuk-fieldset__heading">
+        What loan infomation do you want to request within the investigation period?
+      </h1>
+    </legend>
+
+    <div class="govuk-warning-text">
+  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+  <strong class="govuk-warning-text__text">
+    <span class="govuk-visually-hidden">Warning</span>
+    You can only request this information if the loan opening date is known to be within the investigation period.
+  </strong>
+</div>
+
+ <div id="waste-hint" class="govuk-hint">
+      Select all that apply
+    </div>
+
+    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="loan-info" name="loan-info" type="checkbox" value="Loan application or agreement">
+        <label class="govuk-label govuk-checkboxes__label" for="waste">
+          Loan application or agreement
+        </label>
+      </div>
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="loan-info" name="loan-info" type="checkbox" value="Copies of ID provided">
+        <label class="govuk-label govuk-checkboxes__label" for="waste-2">
+          Copies of ID provided
+        </label>
+      </div>
+    </div>
+  </fieldset>
+</div>
+<br>
+
+<div class="govuk-form-group govuk-character-count" data-module="govuk-character-count" data-maxlength="2000">
+  <h1 class="govuk-label-wrapper">
+    <label class="govuk-label govuk-label--m" for="with-hint">
+       Add any additional information about your request (optional)
+    </label>
+  </h1>
+  <div id="with-hint-hint" class="govuk-hint">
+    For example, loan or mortgage type, property address, outstanding balance, repayment history. 
+    <br>
+    <br>What you write here will be sent to the provider. Write clearly and avoid acronyms. 
+  </div>
+  <textarea class="govuk-textarea govuk-js-character-count" id="additial-loan-info" name="additial-loan-info" rows="5" aria-describedby="with-hint-info with-hint-hint"></textarea>
+  <div id="with-hint-info" class="govuk-hint govuk-character-count__message">
+    You can enter up to 2000 characters
+  </div>
+</div>
+
+
+    </div>
+  </fieldset>
+</div>
+            
+        <br>    
+          
+           
+ 
+              
+      <div class="govuk-button-group">
+       <button type="submit" class="govuk-button" data-module="govuk-button">
+         Save and continue
+       </button>
+       <a href="start-request-for-info" class="govuk-button govuk-button" style="background-color: rgb(168, 169, 169)">
+         Back
+       </a>
+      </div>
+
+   </form>
+
+</div>
+
+
+
+<br>
+
+
+
+{% include '/includes/case-table.html' %}
+
+
+
+    
+  </div>
+</div>
+
+{% endblock %}
+    
+  

@@ -1,0 +1,75 @@
+{% extends "layouts/main-cfems.html" %}
+
+{% set pageName="Home" %}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full ">
+
+    {% include '/includes/name-and-nino.html' %}
+    
+    {% include '/includes/cfem-investigator-layout.html' %}
+
+
+  <h2 class="govuk-heading-l">Send a request for information</h2>
+
+
+
+<p class="govuk-body">Use this form to send a Request for Information (RFI) to a provider under the Social Security Administration Act (SSAA) 1992, Section 190 B and C.
+
+<p>If you have already contacted a provider through other channels, you need to record your request.
+
+</p>
+
+<div class="govuk-inset-text">
+You cannot use this form to request communications data under the Investigatory Powers Act (IPA) 2016. You will need to complete an IPA RFI instead. If you are not sure if your request falls under the IPA, email the Communications Data Unit IPA desk for more support: IPA.desk@dwp.gov.uk</div>
+
+<h2 class="govuk-heading-m">Before you start</h2>
+<p class="govuk-body">Before you send an RFI to a provider, you should have: </p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>carried out all the relevant less intrusive checks </li>
+  <li>considered if your request is necessary and proportionate</li>
+  <li>considered if your request is lawful and complies with current legislation </li>
+</ul>
+<h2 class="govuk-heading-m">What you will need</h2>
+<p class="govuk-body">You will need to tell us: </p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>what benefit your request relates to</li>
+  <li>what provider you want to send the request to, as well as their email or postal address if they are not known to us </li>
+  <li>the information you want to request</li>
+  <li>any information you already have about the request </li>
+</ul>
+<p>We will use your answers to create a letter for the provider. This letter will explain your request and tell the provider how to respond.</p>
+<p class="govuk-body">You will need to: </p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>check that the information in the letter is correct</li>
+  <li>confirm that we can send the letter to the provider</li>
+</ul>
+<h2 class="govuk-heading-m">Save an RFI</h2>
+<p>You can save your progress throughout the form and come back later.</p>
+
+<h2 class="govuk-heading-m">Send an RFI</h2>
+
+
+<a href="/v1/investigator/add-providor" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">
+  Start now
+  <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+    <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+  </svg>
+</a>
+</div>
+
+
+<br>
+
+{% include '/includes/case-table.html' %}
+    
+  </div>
+</div>
+
+
+
+
+{% endblock %}
