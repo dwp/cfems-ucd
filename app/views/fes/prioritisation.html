@@ -1,0 +1,107 @@
+{% extends "layouts/fes-nav.html" %}
+
+{% set pageName="Home" %}
+
+{% block content %}
+
+<a href="javascript:history.back()" class="govuk-back-link">Back</a>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full ">
+
+    <span class="govuk-caption-xl">Fraud & Error System</span>
+    <h1 class="govuk-heading-l">Prioritisation</h1>
+    <p class="govuk-body-l">Choose what you want to prioritise from the workbasket.</p>
+
+  <div class="govuk-form-group">
+    <label class="govuk-label" for="sort">
+      Select a function
+    </label>
+    <select class="govuk-select" id="sort" name="sort">
+      <option value="select" selected>Select a function</option>
+      <option value="campaigns">Campaigns</option>
+      <option value="compliance">Compliance</option>
+      <option value="investigations">Investigations</option>
+    </select>
+  </div>
+
+  <!-- Criteria -->
+    <div class="govuk-form-group">
+      <label class="govuk-label" for="sort">Select criteria</label>
+      <select id="sort" class="govuk-select">
+        <option value="choose">Select</option>
+        <option value="Benefit type">Benefit type</option>
+        <option value="Risk or allegation ID">Risk or allegation ID</option>
+        <option value="Source">Source</option>
+      </select>
+    </div>
+
+    <div class="govuk-form-group">
+
+    <label class="govuk-label" for="sort">Select the specific benefit type, risk or allegation ID or source</label>
+
+      <input id="priority-search" class="govuk-input" autocomplete="off" style="width: 220px;" placeholder="Start typing">
+
+      <div id="autocomplete-results"
+        style="display:none; position:absolute; background:white; border:2px solid #0b0c0c; width:100%; z-index:100;">
+      </div>
+    </div>
+
+  <div class="govuk-form-group">
+  <label class="govuk-label" for="location">
+    Select a priority ranking for the source (1 to 5) 
+  </label>
+  <div id="location-hint" class="govuk-hint">
+    You can prioritise up to 5 sources from 1 to 5, with 1 being the highest priority. Any sources given the same priority will be equally weighted.
+  </div>
+  <select class="govuk-select" id="location" name="location" aria-describedby="location-hint">
+    <option value="choose" selected>Select</option>
+    <option value="london">1</option>
+    <option value="northeast">2</option>
+    <option value="northwest">3</option>
+    <option value="southeast">4</option>
+    <option value="southwest">5</option>
+  </select>
+</div>
+
+<button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+  Add selection to the table
+</button>
+
+<table class="govuk-table">
+  <label class="govuk-label" for="location">
+    Prioritised sources
+  </label>
+  <div id="location-hint" class="govuk-hint">
+    Once you apply the changes you've made, they will take place immediately for new cases and overnight for existing ones. To change the priority of a source, remove it from the table and start again.
+  </div>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Source</th>
+      <th scope="col" class="govuk-table__header">Ranking</th>
+      <th scope="col" class="govuk-table__header">Remove</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"></td>
+      <td class="govuk-table__cell"></td>
+      <td class="govuk-table__cell"></td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"></td>
+      <td class="govuk-table__cell"></td>
+      <td class="govuk-table__cell"></td>
+    </tr>
+  </tbody>
+</table>
+
+<button type="submit" class="govuk-button" data-module="govuk-button">
+  Apply
+</button>
+<!-- conditional table? {% include '/includes/case-table.html' %}-->
+    
+  </div>
+</div>
+
+{% endblock %}
