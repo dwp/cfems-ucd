@@ -5,7 +5,7 @@
 
 {% block content %}
 
-<a href="javascript:history.back()" class="govuk-back-link">Back</a>
+javascript:history.back()Back</a>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full ">
@@ -16,9 +16,7 @@
 
     <!-- Function -->
     <div class="govuk-form-group">
-      <label class="govuk-label" for="function-select">
-        Select a function
-      </label>
+      <label class="govuk-label" for="function-select">Select a function</label>
       <select class="govuk-select" id="function-select">
         <option value="select" selected>Select a function</option>
         <option value="campaigns">Campaigns</option>
@@ -29,9 +27,7 @@
 
     <!-- Criteria -->
     <div class="govuk-form-group">
-      <label class="govuk-label" for="criteria">
-        Select criteria
-      </label>
+      <label class="govuk-label" for="criteria">Select criteria</label>
       <select id="criteria" class="govuk-select">
         <option value="choose">Select</option>
         <option value="Benefit type">Benefit type</option>
@@ -42,33 +38,20 @@
 
     <!-- Autocomplete -->
     <div class="govuk-form-group" style="position:relative;">
-      <label class="govuk-label" for="priority-search">
-        Select what you want to prioritise
-      </label>
-
+      <label class="govuk-label" for="priority-search">Select what you want to prioritise</label>
       <div id="priority-hint" class="govuk-hint">
         Select the specific benefit type, risk or allegation ID or source.
       </div>
 
-      <input id="priority-search"
-             class="govuk-input"
-             autocomplete="off"
-             style="width: 220px;"
-             placeholder="Start typing">
+      <input id="priority-search" class="govuk-input" autocomplete="off" style="width: 220px;" placeholder="Start typing">
 
-      <div id="autocomplete-results"
-           style="display:none; position:absolute; background:white; border:2px solid #0b0c0c; max-width:400px; z-index:100;">
-      </div>
+      <div id="autocomplete-results" style="display:none; position:absolute; background:white; border:2px solid #0b0c0c; max-width:400px; z-index:100;"></div>
     </div>
 
     <!-- Ranking -->
     <div class="govuk-form-group">
-      <label class="govuk-label" for="ranking">
-        Select a priority ranking (1 to 5)
-      </label>
-      <div class="govuk-hint">
-        You can prioritise up to 5 sources from 1 to 5, with 1 being the highest priority.
-      </div>
+      <label class="govuk-label" for="ranking">Select a priority ranking (1 to 5)</label>
+      <div class="govuk-hint">You can prioritise up to 5 sources from 1 to 5, with 1 being the highest priority.</div>
       <select class="govuk-select" id="ranking">
         <option value="choose" selected>Select</option>
         <option>1</option>
@@ -79,16 +62,11 @@
       </select>
     </div>
 
-    <button type="button" class="govuk-button govuk-button--secondary" id="add-btn">
-      Add selection to the table
-    </button>
+    <button type="button" class="govuk-button govuk-button--secondary" id="add-btn">Add selection to the table</button>
 
     <!-- Table -->
     <table class="govuk-table">
-      <caption class="govuk-table__caption govuk-label">
-        Prioritised choices
-      </caption>
-
+      <caption class="govuk-table__caption govuk-label" id="table-caption">Prioritised choices</caption>
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th class="govuk-table__header">Criteria</th>
@@ -97,43 +75,21 @@
           <th class="govuk-table__header">Action</th>
         </tr>
       </thead>
-
       <tbody id="table-body" class="govuk-table__body"></tbody>
-        
-      </tbody>
     </table>
 
-    <button type="submit" class="govuk-button">
-      Apply
-    </button>
+    <button type="submit" class="govuk-button">Apply</button>
 
   </div>
 </div>
 
 <script>
-// ---------------- DATASETS ----------------
-const benefitTypes = [
-  "Access to Work","Attendance Allowance","Disability Living Allowance",
-  "Personal Independence Payment","State Pension","Carer's Allowance",
-  "Employment and Support Allowance","Housing Benefit","Income Support",
-  "Jobseeker's Allowance","Pension Credit","Universal Credit",
-  "Widow's Benefit","Bereavement Benefit","Maternity Allowance","Incapacity Benefit"
-];
+// ---------------- DATA ----------------
+const benefitTypes = ["Access to Work","Attendance Allowance","Disability Living Allowance","Personal Independence Payment","State Pension","Carer's Allowance","Employment and Support Allowance","Housing Benefit","Income Support","Jobseeker's Allowance","Pension Credit","Universal Credit","Widow's Benefit","Bereavement Benefit","Maternity Allowance","Incapacity Benefit"];
 
 const riskIds = ["AAHO001","AAHO002","AAHS001","AAHS002","AAJW001","AASF001","AASF002"];
 
-const sourceList = [
-  "Public Referrals","CRE","Manual","A & I Hub","Verification Assurance Officer",
-  "HM Revenue and Customs (HMRC)","National Benefit Fraud Hotline (NBFH)",
-  "Local authority - Unsolicited post","Police","Member of public","Home office",
-  "Northern Ireland Benefit Fraud Hotline",
-  "Northern Ireland Department for Communities (Dfc) staff member",
-  "Northern Ireland Financial Investigations Unit (FIU)",
-  "Northern Ireland Housing Executive",
-  "Northern Ireland Standards Assurance Unit",
-  "Universal Credit Case Review","DWP Staff Member",
-  "Performance measurement","Centric"
-];
+const sourceList = ["Public Referrals","CRE","Manual","A & I Hub","Verification Assurance Officer","HM Revenue and Customs (HMRC)","National Benefit Fraud Hotline (NBFH)","Local authority - Unsolicited post","Police","Member of public","Home office","Northern Ireland Benefit Fraud Hotline","Northern Ireland Department for Communities (Dfc) staff member","Northern Ireland Financial Investigations Unit (FIU)","Northern Ireland Housing Executive","Northern Ireland Standards Assurance Unit","Universal Credit Case Review","DWP Staff Member","Performance measurement","Centric"];
 
 let priorities = [];
 
@@ -141,44 +97,62 @@ let priorities = [];
 const inputEl = document.getElementById('priority-search');
 const resultsEl = document.getElementById('autocomplete-results');
 const criteriaSelect = document.getElementById('criteria');
+const functionSelect = document.getElementById('function-select');
+const rankingSelect = document.getElementById('ranking');
 const hintEl = document.getElementById('priority-hint');
+const tableBody = document.getElementById('table-body');
+const addBtn = document.getElementById('add-btn');
+const tableCaption = document.getElementById('table-caption');
 
-// ---------------- SWITCH DATA ----------------
+// ---------------- HELPERS ----------------
+function resetAutocomplete() {
+  inputEl.value = "";
+  resultsEl.innerHTML = "";
+  resultsEl.style.display = "none";
+}
+
+function resetRanking() {
+  rankingSelect.value = "choose";
+}
+
+// ---------------- CRITERIA CHANGE ----------------
 criteriaSelect.addEventListener('change', () => {
+  resetAutocomplete();
+  resetRanking();
 
   if (criteriaSelect.value === "Benefit type") {
     priorities = benefitTypes;
     hintEl.textContent = "Select the specific benefit type.";
-  } 
-  else if (criteriaSelect.value === "Risk or allegation ID") {
+  } else if (criteriaSelect.value === "Risk or allegation ID") {
     priorities = riskIds;
     hintEl.textContent = "Select a risk or allegation ID.";
-  } 
-  else if (criteriaSelect.value === "Source") {
+  } else if (criteriaSelect.value === "Source") {
     priorities = sourceList;
     hintEl.textContent = "Select the source.";
-  } 
-  else {
-    priorities = [];
-    hintEl.textContent = "Select the specific benefit type, risk or allegation ID or source.";
-  }
-
-  // Reset input
-  inputEl.value = "";
-
-  // ✅ Show suggestions immediately
-  if (priorities.length) {
-    renderSuggestions("");
-    resultsEl.style.display = "block";
   } else {
-    resultsEl.style.display = "none";
+    priorities = [];
+        hintEl.textContent = "Select the specific benefit type, risk or allegation ID or source.";
   }
+
+  if (priorities.length) renderSuggestions("");
+});
+
+// ---------------- FUNCTION CHANGE ----------------
+functionSelect.addEventListener("change", () => {
+  resetAutocomplete();
+  resetRanking();
+  criteriaSelect.value = "choose";
+  priorities = [];
+
+  const selectedText = functionSelect.options[functionSelect.selectedIndex].text;
+  tableCaption.textContent = functionSelect.value !== "select"
+    ? `Prioritised choices for ${selectedText}`
+    : "Prioritised choices";
 });
 
 // ---------------- AUTOCOMPLETE ----------------
 function renderSuggestions(query) {
   resultsEl.innerHTML = "";
-
   const q = query.toLowerCase();
 
   const matches = q
@@ -216,43 +190,24 @@ function renderSuggestions(query) {
 inputEl.addEventListener("input", e => renderSuggestions(e.target.value));
 inputEl.addEventListener("focus", () => renderSuggestions(inputEl.value));
 
-document.addEventListener("click", e => {
+// close dropdown
+ document.addEventListener("click", e => {
   if (!inputEl.contains(e.target) && !resultsEl.contains(e.target)) {
     resultsEl.style.display = "none";
   }
 });
 
-
-// ---------------- TABLE ADD ----------------
-const addBtn = document.getElementById("add-btn");
-const tableBody = document.getElementById("table-body");
-const rankingSelect = document.getElementById("ranking");
-
+// ---------------- ADD ROW ----------------
 addBtn.addEventListener("click", () => {
-
   const criteria = criteriaSelect.value;
   const value = inputEl.value.trim();
   const ranking = rankingSelect.value;
 
-  // Basic validation (prevents empty rows)
-  if (!criteria || criteria === "choose") {
-    alert("Select a criteria");
-    return;
-  }
+  if (!criteria || criteria === "choose") return alert("Select a criteria");
+  if (!value) return alert("Select a value to prioritise");
+  if (!ranking || ranking === "choose") return alert("Select a ranking");
 
-  if (!value) {
-    alert("Select a value to prioritise");
-    return;
-  }
-
-  if (!ranking || ranking === "choose") {
-    alert("Select a ranking");
-    return;
-  }
-
-  // ✅ Create row
   const row = document.createElement("tr");
-
   row.innerHTML = `
     <td class="govuk-table__cell">${criteria}</td>
     <td class="govuk-table__cell">${value}</td>
@@ -262,7 +217,6 @@ addBtn.addEventListener("click", () => {
     </td>
   `;
 
-  // ✅ Remove row
   row.querySelector(".remove-link").addEventListener("click", (e) => {
     e.preventDefault();
     row.remove();
@@ -270,12 +224,8 @@ addBtn.addEventListener("click", () => {
 
   tableBody.appendChild(row);
 
-  // ✅ Reset inputs
-  inputEl.value = "";
-  rankingSelect.value = "choose";
+  // ✅ DO NOT reset input or ranking here (as requested)
 });
-
-
 </script>
 
 {% endblock %}
