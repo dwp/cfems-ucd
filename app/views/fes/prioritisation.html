@@ -1,18 +1,32 @@
 
 {% extends "layouts/fes-nav.html" %}
-
 {% set pageName="Home" %}
 
+
 {% block content %}
+
 
 <a href="javascript:history.back()" class="govuk-back-link">Back</a>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full ">
 
+
     <span class="govuk-caption-xl">Fraud & Error System</span>
     <h1 class="govuk-heading-l">Prioritisation</h1>
     <p class="govuk-body-l">Choose what you want to prioritise from the workbasket.</p>
+
+    <!-- ✅ Success banner (top placement) -->
+    <div id="success-message" class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" style="display:none; margin-bottom:20px;">
+      <div class="govuk-notification-banner__header">
+        <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">Success</h2>
+      </div>
+      <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">
+          Your prioritisation has been applied.
+        </p>
+      </div>
+    </div>
 
     <!-- Function -->
     <div class="govuk-form-group">
@@ -43,7 +57,9 @@
         Select the specific benefit type, risk or allegation ID or source.
       </div>
 
+
       <input id="priority-search" class="govuk-input" autocomplete="off" style="width: 220px;" placeholder="Start typing">
+
 
       <div id="autocomplete-results" style="display:none; position:absolute; background:white; border:2px solid #0b0c0c; max-width:400px; z-index:100;"></div>
     </div>
@@ -64,6 +80,7 @@
 
     <button type="button" class="govuk-button govuk-button--secondary" id="add-btn">Add selection to the table</button>
 
+
     <!-- Table -->
     <table class="govuk-table">
       <caption class="govuk-table__caption govuk-label" id="table-caption">Prioritised choices</caption>
@@ -78,8 +95,8 @@
       <tbody id="table-body" class="govuk-table__body"></tbody>
     </table>
 
-    <button type="submit" class="govuk-button">Apply</button>
-
+    <!-- ✅ Apply button (JS-controlled) -->
+    <button type="button" class="govuk-button" id="apply-btn">Apply</button>
   </div>
 </div>
 
@@ -87,11 +104,15 @@
 // ---------------- DATA ----------------
 const benefitTypes = ["Access to Work","Attendance Allowance","Disability Living Allowance","Personal Independence Payment","State Pension","Carer's Allowance","Employment and Support Allowance","Housing Benefit","Income Support","Jobseeker's Allowance","Pension Credit","Universal Credit","Widow's Benefit","Bereavement Benefit","Maternity Allowance","Incapacity Benefit"];
 
+
 const riskIds = ["AAHO001","AAHO002","AAHS001","AAHS002","AAJW001","AASF001","AASF002"];
+
 
 const sourceList = ["Public Referrals","CRE","Manual","A & I Hub","Verification Assurance Officer","HM Revenue and Customs (HMRC)","National Benefit Fraud Hotline (NBFH)","Local authority - Unsolicited post","Police","Member of public","Home office","Northern Ireland Benefit Fraud Hotline","Northern Ireland Department for Communities (Dfc) staff member","Northern Ireland Financial Investigations Unit (FIU)","Northern Ireland Housing Executive","Northern Ireland Standards Assurance Unit","Universal Credit Case Review","DWP Staff Member","Performance measurement","Centric"];
 
+
 let priorities = [];
+
 
 // ---------------- ELEMENTS ----------------
 const inputEl = document.getElementById('priority-search');
@@ -103,6 +124,9 @@ const hintEl = document.getElementById('priority-hint');
 const tableBody = document.getElementById('table-body');
 const addBtn = document.getElementById('add-btn');
 const tableCaption = document.getElementById('table-caption');
+const applyBtn = document.getElementById('apply-btn');
+const successMessage = document.getElementById('success-message');
+
 
 // ---------------- HELPERS ----------------
 function resetAutocomplete() {
@@ -111,14 +135,17 @@ function resetAutocomplete() {
   resultsEl.style.display = "none";
 }
 
+
 function resetRanking() {
   rankingSelect.value = "choose";
 }
+
 
 // ---------------- CRITERIA CHANGE ----------------
 criteriaSelect.addEventListener('change', () => {
   resetAutocomplete();
   resetRanking();
+
 
   if (criteriaSelect.value === "Benefit type") {
     priorities = benefitTypes;
@@ -131,8 +158,9 @@ criteriaSelect.addEventListener('change', () => {
     hintEl.textContent = "Select the source.";
   } else {
     priorities = [];
-        hintEl.textContent = "Select the specific benefit type, risk or allegation ID or source.";
+    hintEl.textContent = "Select the specific benefit type, risk or allegation ID or source.";
   }
+
 
   if (priorities.length) renderSuggestions("");
 });
@@ -144,51 +172,63 @@ functionSelect.addEventListener("change", () => {
   criteriaSelect.value = "choose";
   priorities = [];
 
+
   const selectedText = functionSelect.options[functionSelect.selectedIndex].text;
   tableCaption.textContent = functionSelect.value !== "select"
     ? `Prioritised choices for ${selectedText}`
     : "Prioritised choices";
 });
 
+
 // ---------------- AUTOCOMPLETE ----------------
 function renderSuggestions(query) {
   resultsEl.innerHTML = "";
   const q = query.toLowerCase();
 
+
   const matches = q
     ? priorities.filter(i => i.toLowerCase().includes(q)).slice(0, 20)
     : priorities.slice(0, 20);
+
 
   if (!matches.length) {
     resultsEl.style.display = "none";
     return;
   }
 
+
   matches.forEach(match => {
     const item = document.createElement("div");
     item.style.padding = "8px";
     item.style.cursor = "pointer";
 
+
     item.innerHTML = q
       ? match.replace(new RegExp(`(${q})`, "gi"), "<strong>$1</strong>")
       : match;
+
 
     item.onclick = () => {
       inputEl.value = match;
       resultsEl.style.display = "none";
     };
 
+
     item.onmouseover = () => item.style.background = "#f3f2f1";
     item.onmouseout = () => item.style.background = "white";
+
 
     resultsEl.appendChild(item);
   });
 
+
   resultsEl.style.display = "block";
 }
 
+
 inputEl.addEventListener("input", e => renderSuggestions(e.target.value));
 inputEl.addEventListener("focus", () => renderSuggestions(inputEl.value));
+
 
 // close dropdown
  document.addEventListener("click", e => {
@@ -203,9 +243,11 @@ addBtn.addEventListener("click", () => {
   const value = inputEl.value.trim();
   const ranking = rankingSelect.value;
 
+
   if (!criteria || criteria === "choose") return alert("Select a criteria");
   if (!value) return alert("Select a value to prioritise");
   if (!ranking || ranking === "choose") return alert("Select a ranking");
+
 
   const row = document.createElement("tr");
   row.innerHTML = `
@@ -217,15 +259,26 @@ addBtn.addEventListener("click", () => {
     </td>
   `;
 
+
   row.querySelector(".remove-link").addEventListener("click", (e) => {
     e.preventDefault();
     row.remove();
   });
-
   tableBody.appendChild(row);
-
-  // ✅ DO NOT reset input or ranking here (as requested)
 });
+
+// ✅ APPLY BUTTON → SHOW SUCCESS BANNER AT TOP
+applyBtn.addEventListener("click", () => {
+  successMessage.style.display = "block";
+
+
+  window.scrollTo({
+    top: successMessage.offsetTop - 20,
+    behavior: "smooth"
+  });
+});
+
+
 </script>
 
 {% endblock %}
