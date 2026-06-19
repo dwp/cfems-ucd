@@ -1,0 +1,371 @@
+{% extends "layouts/fes-nav.html" %}
+
+{% set pageName="Workbasket control" %}
+
+{% block content %}
+<a href="javascript:history.back()" class="govuk-back-link">Back</a>
+<style>
+  /* Optional complementary GOV.UK style alignment patches */
+  .govuk-autocomplete__item {
+    padding: 8px 12px;
+    cursor: pointer;
+    font-family: "GDS Transport", arial, sans-serif;
+    font-size: 19px;
+    border-bottom: 1px solid #bfc1c3;
+  }
+  .govuk-autocomplete__item:hover, .govuk-autocomplete__item:focus {
+    background-color: #1d70b8;
+    color: white;
+    outline: none;
+  }
+  a.govuk-link
+  {
+    color: #1d70b8;
+  }
+</style>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full ">
+
+    <span class="govuk-caption-xl">Fraud & Error System</span>
+    <h1 class="govuk-heading-l">Workbasket control</h1>
+    <p class="govuk-body">Filter workbasket or search using Case ID, Fraud Referral Form ID or National Insurance number to find cases you want to view, assign or close.</p>
+
+    <!-- Function -->
+    <div class="govuk-form-group">
+      <label class="govuk-label" for="function-select">Select a function</label>
+      <select class="govuk-select" id="function-select">
+        <option value="select" selected>Select a function</option>
+        <option value="campaigns">Campaigns</option>
+        <option value="compliance">Compliance</option>
+        <option value="investigations">Investigations</option>
+      </select>
+    </div>
+
+    <h2 class="govuk-heading-m">Filter your basket</h2>
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-third">
+
+    <!-- Criteria -->
+    <div class="govuk-form-group">
+      <label class="govuk-label" for="sort">Select the criteria</label>
+      
+      <select id="criteria" class="govuk-select">
+        <option value="Select">Select</option>
+        <option value="Benefit type">Benefit type</option>
+        <option value="Risk or allegation ID">Risk or allegation ID</option>
+        <option value="Source">Source</option>
+      </select>
+    </div>
+        </div>
+
+    <!-- Autocomplete -->
+       <div class="govuk-grid-column-one-third">
+
+    <div class="govuk-form-group" style="position:relative;">
+      <label class="govuk-label" for="priority-search">Select what you want to prioritise</label>
+      <div id="priority-hint" class="govuk-hint">
+        Select the specific benefit type, risk or allegation ID or source.
+      </div>
+
+
+      <input id="priority-search" class="govuk-input" autocomplete="off" style="width: 220px;" placeholder="Start typing">
+
+
+      <div id="autocomplete-results" style="display:none; position:absolute; background:white; border:2px solid #0b0c0c; max-width:400px; z-index:100;"></div>
+    </div>
+          </div>
+
+
+    <!-- Postcode -->
+            <div class="govuk-grid-column-one-third">
+
+    <div class="govuk-form-group" style="position:relative;">
+      <label class="govuk-label" for="priority-search">Filter by postcode</label>
+      <div id="priority-hint" class="govuk-hint">
+        For example, AA1 2BC.
+      </div>
+
+
+      <input id="priority-search" class="govuk-input" autocomplete="off" style="width: 220px;" placeholder="Start typing">
+
+
+      <div id="autocomplete-results" style="display:none; position:absolute; background:white; border:2px solid #0b0c0c; max-width:400px; z-index:100;"></div>
+    </div>
+    </div>
+</div>
+
+
+    <h2 class="govuk-heading-m">Search for individual cases</h2>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-third">
+
+<div class="govuk-form-group">
+  <h1 class="govuk-label-wrapper">
+    <label class="govuk-label" for="caseid">
+      Search by Case ID (optional)
+    </label>
+  </h1>
+  <div id="caseid-hint" class="govuk-hint">
+    For example, I-123
+  </div>
+  <input class="govuk-input govuk-input--width-10" id="caseid" name="caseId" type="text" spellcheck="false" aria-describedby="account-number-hint" inputmode="numeric">
+</div>
+</div>
+  <div class="govuk-grid-column-one-third">
+
+<div class="govuk-form-group">
+  <h1 class="govuk-label-wrapper">
+    <label class="govuk-label" for="frfid">
+      Search by Fraud Referral Form ID (optional)
+    </label>
+  </h1>
+  <div id="frfid-hint" class="govuk-hint">
+    For example, FR-76929D8300004786.
+  </div>
+  <input class="govuk-input govuk-input--width-10" id="frfid" name="frfId" type="text" spellcheck="false" aria-describedby="account-number-hint" inputmode="numeric">
+</div>
+</div>
+  <div class="govuk-grid-column-one-third">
+
+<div class="govuk-form-group">
+  <h1 class="govuk-label-wrapper">
+    <label class="govuk-label" for="nino">
+      Search by National Insurance number (optional)
+    </label>
+  </h1>
+  <div id="nino-hint" class="govuk-hint">
+    For example, QQ123456C.
+  </div>
+  <input class="govuk-input govuk-input--width-10" id="nino" name="nino" type="text" spellcheck="false" aria-describedby="account-number-hint" inputmode="numeric">
+</div>
+<div>
+  </div>
+  </div>
+
+<button type="submit" class="govuk-button govuk-button--primary" data-module="govuk-button">
+  Search
+</button>
+
+
+<table class="govuk-table">
+  <caption class="govuk-table__caption">Workbasket results</caption>
+
+  <thead class="govuk-table__head">
+    <tr>
+      <th class="govuk-table__header">Item</th>
+      <th class="govuk-table__header">Case ID</th>
+      <th class="govuk-table__header">FRF ID</th>
+      <th class="govuk-table__header">NI number</th>
+      <th class="govuk-table__header">Date created</th>
+    </tr>
+  </thead>
+
+  <tbody id="table-body" class="govuk-table__body"></tbody>
+</table>
+
+<nav class="govuk-pagination" aria-label="Pagination">
+  <div id="prev-container"></div>
+  <ul id="pagination-list" class="govuk-pagination__list"></ul>
+  <div id="next-container"></div>
+</nav>
+
+<script>
+// ---------------- DATA (30 rows = 3 pages) ----------------
+
+const allRows = [
+  // PAGE 1
+  ["LA","LA123","AB111111A","7 May 26"],
+  ["HMRC","HMRC123","AB111112B","5 May 26"],
+  ["UCCR","UCCR123","AB111112C","4 May 26"],
+  ["Performance measurement","PM123","AB111112D","1 May 26"],
+  ["LA","LA124","AB111113E","8 May 26"],
+  ["HMRC","HMRC124","AB111114F","6 May 26"],
+  ["UCCR","UCCR124","AB111115G","3 May 26"],
+  ["Performance measurement","PM124","AB111116H","2 May 26"],
+  ["LA","LA125","AB111117J","9 May 26"],
+  ["HMRC","HMRC125","AB111118K","10 May 26"],
+
+  // PAGE 2
+  ["LA","LA126","AB111119L","11 May 26"],
+  ["HMRC","HMRC126","AB111120M","12 May 26"],
+  ["UCCR","UCCR125","AB111121N","13 May 26"],
+  ["Performance measurement","PM125","AB111122P","14 May 26"],
+  ["LA","LA127","AB111123Q","15 May 26"],
+  ["HMRC","HMRC127","AB111124R","16 May 26"],
+  ["UCCR","UCCR126","AB111125S","17 May 26"],
+  ["Performance measurement","PM126","AB111126T","18 May 26"],
+  ["LA","LA128","AB111127U","19 May 26"],
+  ["HMRC","HMRC128","AB111128V","20 May 26"],
+
+  // PAGE 3
+  ["LA","LA129","AB111129W","21 May 26"],
+  ["HMRC","HMRC129","AB111130X","22 May 26"],
+  ["UCCR","UCCR127","AB111131Y","23 May 26"],
+  ["Performance measurement","PM127","AB111132Z","24 May 26"],
+  ["LA","LA130","AB111133A","25 May 26"],
+  ["HMRC","HMRC130","AB111134B","26 May 26"],
+  ["UCCR","UCCR128","AB111135C","27 May 26"],
+  ["Performance measurement","PM128","AB111136D","28 May 26"],
+  ["LA","LA131","AB111137E","29 May 26"],
+  ["HMRC","HMRC131","AB111138F","30 May 26"]
+];
+
+
+// ---------------- CONFIG ----------------
+const rowsPerPage = 10;
+let currentPage = 1;
+
+// ---------------- ELEMENTS ----------------
+const tableBody = document.getElementById("table-body");
+const paginationList = document.getElementById("pagination-list");
+const prevContainer = document.getElementById("prev-container");
+const nextContainer = document.getElementById("next-container");
+const resultsCount = document.getElementById("results-count");
+
+// ---------------- RENDER TABLE ----------------
+
+
+
+function renderTable() {
+  tableBody.innerHTML = "";
+
+  const start = (currentPage - 1) * rowsPerPage;
+  const end = start + rowsPerPage;
+
+  const rows = allRows.slice(start, end);
+
+  // ✅ Start from EARLIEST date
+  const baseDate = new Date("2026-01-19");
+
+  rows.forEach((row, index) => {
+    const generatedId = `ID${start + index + 123}`;
+
+    // ✅ Ascending dates across ALL pages
+    const date = new Date(baseDate);
+    date.setDate(baseDate.getDate() + start + index);
+
+    const formattedDate = date.toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "long",
+      year: "numeric"
+    });
+
+    const tr = document.createElement("tr");
+
+    tr.innerHTML = `
+      <td class="govuk-table__cell">${row[0]}</td>
+
+      <td class="govuk-table__cell">
+        <a href="/case/${generatedId}" class="govuk-link">${generatedId}</a>
+      </td>
+
+      <!-- moved data -->
+      <td class="govuk-table__cell">${row[1]}</td>
+      <td class="govuk-table__cell">${row[2]}</td>
+
+      <!-- ✅ new ascending date -->
+      <td class="govuk-table__cell">${formattedDate}</td>
+    `;
+
+    tableBody.appendChild(tr);
+  });
+
+  // ✅ Counter
+  resultsCount.textContent =
+    `${start + 1}–${Math.min(end, allRows.length)} of ${allRows.length} cases`;
+}
+
+// ---------------- PAGINATION ----------------
+
+function renderPagination() {
+  paginationList.innerHTML = "";
+  prevContainer.innerHTML = "";
+  nextContainer.innerHTML = "";
+
+  const totalPages = Math.ceil(allRows.length / rowsPerPage);
+
+  // ✅ Previous (GOV.UK style)
+  if (currentPage > 1) {
+    prevContainer.innerHTML = `
+      <div class="govuk-pagination__prev">
+        <a class="govuk-link govuk-pagination__link" href="#" rel="prev">
+          <span class="govuk-pagination__link-title">
+            Previous<span class="govuk-visually-hidden"> page</span>
+          </span>
+        </a>
+      </div>
+    `;
+
+    prevContainer.querySelector("a").addEventListener("click", e => {
+      e.preventDefault();
+      changePage(currentPage - 1);
+    });
+  }
+
+  // ✅ Page numbers
+  for (let i = 1; i <= totalPages; i++) {
+    const li = document.createElement("li");
+    li.className = "govuk-pagination__item";
+
+    if (i === currentPage) {
+      li.classList.add("govuk-pagination__item--current");
+    }
+
+    const link = document.createElement("a");
+    link.href = "#";
+    link.className = "govuk-link govuk-pagination__link";
+    link.textContent = i;
+
+    link.addEventListener("click", e => {
+      e.preventDefault();
+      changePage(i);
+    });
+
+    li.appendChild(link);
+    paginationList.appendChild(li);
+  }
+
+  // ✅ Next (GOV.UK style)
+  if (currentPage < totalPages) {
+    nextContainer.innerHTML = `
+      <div class="govuk-pagination__next">
+        <a class="govuk-link govuk-pagination__link" href="#" rel="next">
+          <span class="govuk-pagination__link-title">
+            Next<span class="govuk-visually-hidden"> page</span>
+          </span>
+        </a>
+      </div>
+    `;
+
+    nextContainer.querySelector("a").addEventListener("click", e => {
+      e.preventDefault();
+      changePage(currentPage + 1);
+    });
+  }
+}
+
+
+// ---------------- CHANGE PAGE ----------------
+function changePage(page) {
+  currentPage = page;
+  renderTable();
+  renderPagination();
+}
+
+// ---------------- INIT ----------------
+document.addEventListener("DOMContentLoaded", () => {
+  renderTable();
+  renderPagination();
+});
+
+</script>
+
+
+<!-- conditional table? {% include '/includes/case-table.html' %}-->
+    
+  </div>
+</div>
+
+{% endblock %}
