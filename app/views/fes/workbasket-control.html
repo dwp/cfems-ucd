@@ -4,27 +4,6 @@
 
 {% block content %}
 <a href="javascript:history.back()" class="govuk-back-link">Back</a>
-<style>
-  /* Optional complementary GOV.UK style alignment patches */
-  .govuk-autocomplete__item {
-    padding: 8px 12px;
-    cursor: pointer;
-    font-family: "GDS Transport", arial, sans-serif;
-    font-size: 19px;
-    border-bottom: 1px solid #bfc1c3;
-  }
-
-  .govuk-autocomplete__item:hover,
-  .govuk-autocomplete__item:focus {
-    background-color: #1d70b8;
-    color: white;
-    outline: none;
-  }
-
-  a.govuk-link {
-    color: #1d70b8;
-  }
-</style>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full ">
@@ -52,7 +31,7 @@
 
         <!-- Criteria -->
         <div class="govuk-form-group">
-          <label class="govuk-label" for="sort">Select the criteria</label>
+          <label class="govuk-label" for="criteria">Select the criteria</label>
           <div id="priority-hint" class="govuk-hint">
             Placeholder hint text (for horizontal alignment).
           </div>
@@ -91,69 +70,398 @@
       <div class="govuk-grid-column-one-third">
 
         <div class="govuk-form-group" style="position:relative;">
-          <label class="govuk-label" for="priority-search">Filter by postcode</label>
-          <div id="priority-hint" class="govuk-hint">
+          <label class="govuk-label" for="postcode">Filter by postcode</label>
+          <div id="postcode-hint" class="govuk-hint">
             For example, AA1 2BC.
           </div>
 
 
-          <input id="priority-search" class="govuk-input" autocomplete="off" style="width: 220px;"
+
+          <input id="postcode-input" class="govuk-input" autocomplete="off" style="width: 220px;"
             placeholder="Start typing">
 
-
-          <div id="autocomplete-results"
+          <div id="postcode-results"
             style="display:none; position:absolute; background:white; border:2px solid #0b0c0c; max-width:400px; z-index:100;">
           </div>
+
         </div>
       </div>
     </div>
 
+    <script>
+      /* ---------------- POSTCODE AUTOCOMPLETE ---------------- */
+
+      // Sample postcode dataset
+      const postcodeList = [
+        "SW1A 1AA", "SW1A 2AA", "EC1A 1BB", "EC2N 2DB",
+        "W1A 0AX", "SE1 9SG", "E14 5AB", "N1 9GU",
+        "M1 1AE", "B1 1AA", "LS1 4AP", "BS1 5TR",
+        "CF10 1EP", "EH1 1YZ", "G1 2FF"
+      ];
+
+      // Elements
+      const postcodeInput = document.getElementById("postcode-input");
+      const postcodeResults = document.getElementById("postcode-results");
+
+      // Render suggestions
+      function renderPostcodeSuggestions(query) {
+        postcodeResults.innerHTML = "";
+
+        const q = query.trim().toUpperCase();
+
+        const matches = postcodeList
+          .filter(p => p.startsWith(q))
+          .slice(0, 10);
+
+        if (!matches.length || q === "") {
+          postcodeResults.style.display = q === "" ? "block" : "none";
+        }
+
+        const listToShow = q === "" ? postcodeList.slice(0, 10) : matches;
+
+        listToShow.forEach(postcode => {
+          const item = document.createElement("div");
+          item.className = "govuk-autocomplete__item";
+
+          // highlight match
+          if (q) {
+            item.innerHTML = postcode.replace(
+              new RegExp(`(${q})`, "gi"),
+              "<strong>$1</strong>"
+            );
+          } else {
+            item.textContent = postcode;
+          }
+
+          item.addEventListener("click", () => {
+            postcodeInput.value = postcode;
+            postcodeResults.style.display = "none";
+          });
+
+          postcodeResults.appendChild(item);
+        });
+
+        postcodeResults.style.display = "block";
+      }
+
+      // Input events
+      postcodeInput.addEventListener("input", (e) => {
+        e.target.value = e.target.value.toUpperCase(); // enforce format
+        renderPostcodeSuggestions(e.target.value);
+      });
+
+      // Show suggestions on focus
+      postcodeInput.addEventListener("focus", () => {
+        renderPostcodeSuggestions(postcodeInput.value);
+      });
+
+      // Close on click outside
+      document.addEventListener("click", (e) => {
+        if (
+          !postcodeInput.contains(e.target) &&
+          !postcodeResults.contains(e.target)
+        ) {
+          postcodeResults.style.display = "none";
+        }
+      });
+    </script>
 
     <h2 class="govuk-heading-m">Search for individual cases</h2>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-one-third">
 
-        <div class="govuk-form-group">
+        <div class="govuk-form-group" style="position:relative;">
           <label class="govuk-label" for="caseid">
             Search by Case ID
           </label>
           <div id="caseid-hint" class="govuk-hint">
             For example, I123
           </div>
-          <input class="govuk-input govuk-input--width-10" id="caseid" name="caseId" type="text" spellcheck="false"
-            aria-describedby="account-number-hint" inputmode="numeric">
+
+          <input class="govuk-input govuk-input--width-10" id="caseid" name="caseId" type="text" autocomplete="off">
+
+          <div id="caseid-results"
+            style="display:none; position:absolute; background:white; border:2px solid #0b0c0c; max-width:220px; z-index:100;">
+          </div>
         </div>
+
+        <script>
+          /* ---------------- CASE ID AUTOCOMPLETE ---------------- */
+
+          // Sample Case IDs
+          const caseIdList = [
+            "I123", "I124", "I125", "I126",
+            "C200", "C201", "C202",
+            "F310", "F311"
+          ];
+
+          // Elements
+          const caseInput = document.getElementById("caseid");
+          const caseResults = document.getElementById("caseid-results");
+
+          // Render suggestions
+          function renderCaseSuggestions(query) {
+            caseResults.innerHTML = "";
+
+            const q = query.trim().toUpperCase();
+
+            const matches = caseIdList
+              .filter(id => id.startsWith(q))
+              .slice(0, 10);
+
+            if (!matches.length || q === "") {
+              caseResults.style.display = q === "" ? "block" : "none";
+            }
+
+            const listToShow = q === "" ? caseIdList.slice(0, 10) : matches;
+
+            listToShow.forEach(id => {
+              const item = document.createElement("div");
+              item.className = "govuk-autocomplete__item";
+
+              // Highlight match
+              if (q) {
+                item.innerHTML = id.replace(
+                  new RegExp(`(${q})`, "gi"),
+                  "<strong>$1</strong>"
+                );
+              } else {
+                item.textContent = id;
+              }
+
+              item.addEventListener("click", () => {
+                caseInput.value = id;
+                caseResults.style.display = "none";
+              });
+
+              caseResults.appendChild(item);
+            });
+
+            caseResults.style.display = "block";
+          }
+
+          // Input behaviour
+          caseInput.addEventListener("input", (e) => {
+            e.target.value = e.target.value.toUpperCase();
+            renderCaseSuggestions(e.target.value);
+          });
+
+          // Show suggestions on focus
+          caseInput.addEventListener("focus", () => {
+            renderCaseSuggestions(caseInput.value);
+          });
+
+          // Close on outside click
+          document.addEventListener("click", (e) => {
+            if (
+              !caseInput.contains(e.target) &&
+              !caseResults.contains(e.target)
+            ) {
+              caseResults.style.display = "none";
+            }
+          });
+        </script>
+
       </div>
       <div class="govuk-grid-column-one-third">
 
-        <div class="govuk-form-group">
+        <div class="govuk-form-group" style="position:relative;">
           <label class="govuk-label" for="frfid">
             Search by Fraud Referral Form ID
           </label>
           <div id="frfid-hint" class="govuk-hint">
             For example, FR-76929D8300004786.
           </div>
-          <input class="govuk-input govuk-input--width-10" id="frfid" name="frfId" type="text" spellcheck="false"
-            aria-describedby="account-number-hint" inputmode="numeric">
+
+          <input class="govuk-input govuk-input--width-10" id="frfid" name="frfId" type="text" autocomplete="off">
+
+          <div id="frfid-results"
+            style="display:none; position:absolute; background:white; border:2px solid #0b0c0c; max-width:260px; z-index:100;">
+          </div>
         </div>
+
+        <script>
+          /* ---------------- FRF ID AUTOCOMPLETE ---------------- */
+
+          // Sample FRF IDs
+          const frfIdList = [
+            "FR-76929D8300004786",
+            "FR-76929D8300004787",
+            "FR-76929D8300004788",
+            "FR-88901A1200001234",
+            "FR-88901A1200001235",
+            "FR-90000Z9900005678"
+          ];
+
+          // Elements
+          const frfInput = document.getElementById("frfid");
+          const frfResults = document.getElementById("frfid-results");
+
+          // Render suggestions
+          function renderFrfSuggestions(query) {
+            frfResults.innerHTML = "";
+
+            const q = query.trim().toUpperCase();
+
+            const matches = frfIdList
+
+              .filter(id => id.startsWith(q))
+
+              .slice(0, 10);
+
+            if (!matches.length || q === "") {
+              frfResults.style.display = q === "" ? "block" : "none";
+            }
+
+            const listToShow = q === "" ? frfIdList.slice(0, 10) : matches;
+
+            listToShow.forEach(id => {
+              const item = document.createElement("div");
+              item.className = "govuk-autocomplete__item";
+
+              // highlight match
+              if (q) {
+                item.innerHTML = id.replace(
+                  new RegExp(`(${q})`, "gi"),
+                  "<strong>$1</strong>"
+                );
+              } else {
+                item.textContent = id;
+              }
+
+              item.addEventListener("click", () => {
+                frfInput.value = id;
+                frfResults.style.display = "none";
+              });
+
+              frfResults.appendChild(item);
+            });
+
+            frfResults.style.display = "block";
+          }
+
+          // Input behaviour
+          frfInput.addEventListener("input", (e) => {
+            e.target.value = e.target.value.toUpperCase();
+            renderFrfSuggestions(e.target.value);
+          });
+
+          // Show suggestions on focus
+          frfInput.addEventListener("focus", () => {
+            renderFrfSuggestions(frfInput.value);
+          });
+
+          // Close on outside click (append into your existing handler)
+          document.addEventListener("click", (e) => {
+            if (
+              !frfInput.contains(e.target) &&
+              !frfResults.contains(e.target)
+            ) {
+              frfResults.style.display = "none";
+            }
+          });
+        </script>
+
       </div>
       <div class="govuk-grid-column-one-third">
 
-        <div class="govuk-form-group">
+        <div class="govuk-form-group" style="position:relative;">
           <label class="govuk-label" for="nino">
             Search by National Insurance number
           </label>
           <div id="nino-hint" class="govuk-hint">
             For example, QQ123456C.
           </div>
-          <input class="govuk-input govuk-input--width-10" id="nino" name="nino" type="text" spellcheck="false"
-            aria-describedby="account-number-hint" inputmode="numeric">
-        </div>
-        <div>
+
+          <input class="govuk-input govuk-input--width-10" id="nino" name="nino" type="text" autocomplete="off">
+
+          <div id="nino-results"
+            style="display:none; position:absolute; background:white; border:2px solid #0b0c0c; max-width:260px; z-index:100;">
+          </div>
         </div>
 
+        <script>
+          /* ---------------- NINO AUTOCOMPLETE ---------------- */
+
+          // Sample NINOs
+          const ninoList = [
+            "QQ123456C",
+            "QQ123457C",
+            "AB123456D",
+            "AB123457D",
+            "ZX987654A",
+            "ZX987655A"
+          ];
+
+          // Elements
+          const ninoInput = document.getElementById("nino");
+          const ninoResults = document.getElementById("nino-results");
+
+          // Render suggestions
+          function renderNinoSuggestions(query) {
+            ninoResults.innerHTML = "";
+
+            const q = query.trim().toUpperCase();
+
+            const matches = ninoList
+              .filter(n => n.startsWith(q))
+              .slice(0, 10);
+
+            if (!matches.length || q === "") {
+              ninoResults.style.display = q === "" ? "block" : "none";
+            }
+
+            const listToShow = q === "" ? ninoList.slice(0, 10) : matches;
+
+            listToShow.forEach(nino => {
+              const item = document.createElement("div");
+              item.className = "govuk-autocomplete__item";
+
+              // highlight match
+              if (q) {
+                item.innerHTML = nino.replace(
+                  new RegExp(`(${q})`, "gi"),
+                  "<strong>$1</strong>"
+                );
+              } else {
+                item.textContent = nino;
+              }
+
+              item.addEventListener("click", () => {
+                ninoInput.value = nino;
+                ninoResults.style.display = "none";
+              });
+
+              ninoResults.appendChild(item);
+            });
+
+            ninoResults.style.display = "block";
+          }
+
+          // Input behaviour
+          ninoInput.addEventListener("input", (e) => {
+            e.target.value = e.target.value.toUpperCase();
+            renderNinoSuggestions(e.target.value);
+          });
+
+          // Show suggestions on focus
+          ninoInput.addEventListener("focus", () => {
+            renderNinoSuggestions(ninoInput.value);
+          });
+
+          // Close on outside click (add into your existing handler if you have one)
+          document.addEventListener("click", (e) => {
+            if (
+              !ninoInput.contains(e.target) &&
+              !ninoResults.contains(e.target)
+            ) {
+              ninoResults.style.display = "none";
+            }
+          });
+        </script>
+
       </div>
-      <button type="submit" class="govuk-button govuk-button--primary" data-module="govuk-button">
+      <button id="workbasket-control-search-btn" type="submit" class="govuk-button govuk-button--primary">
         Search
       </button>
     </div>
@@ -161,34 +469,35 @@
 
 
 
-    <h2 class="govuk-heading-m">Workbasket ("search"?) results</h2>
-    <table class="govuk-table">
+    <h2 class="govuk-heading-m">Workbasket results</h2>
 
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-one-half">
-          <p class="govuk-body">
-            <a href="#" class="govuk-link">Show oldest 1,000 cases</a>
-          </p>
-          <p class="govuk-body">
-          <h3 class="govuk-heading-s">Total 2,000 cases</h3>
-          </p>
-        </div>
-        <div class="govuk-grid-column-one-half table-right">
-          <p class="govuk-body">
-            <a href="#" class="govuk-link">Export to Excel</a>
-          </p>
-          <p class="govuk-body">
-            <a href="#" class="govuk-link">Refresh list</a>
-          </p>
-        </div>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half">
+        <p class="govuk-body">
+          <a href="#" id="load-cases" class="govuk-link">
+            Show oldest 1,000 cases
+          </a>
+        </p>
+
+        <h3 class="govuk-heading-s" id="results-caption">
+          Total 15,525 cases
+        </h3>
       </div>
 
+      <div class="govuk-grid-column-one-half table-right">
+        <p><a href="#" class="govuk-link" id="export-excel">Export to Excel</a></p>
+        <p><a href="#" id="refresh-list" class="govuk-link">Refresh list</a></p>
+      </div>
+    </div>
+
+    <table class="govuk-table">
       <thead class="govuk-table__head">
         <tr>
           <th class="govuk-table__header">Item</th>
           <th class="govuk-table__header">Case ID</th>
           <th class="govuk-table__header">FRF ID</th>
           <th class="govuk-table__header">NI number</th>
+          <th class="govuk-table__header">Postcode</th>
           <th class="govuk-table__header">Date created</th>
         </tr>
       </thead>
@@ -196,12 +505,550 @@
       <tbody id="table-body" class="govuk-table__body"></tbody>
     </table>
 
-    <nav class="govuk-pagination" aria-label="Pagination">
-      <div id="prev-container"></div>
+
+    <nav class="govuk-pagination" role="navigation" aria-label="Results pages">
+
+      <div id="prev-container" class="govuk-pagination__prev"></div>
+
       <ul id="pagination-list" class="govuk-pagination__list"></ul>
-      <div id="next-container"></div>
+
+      <div id="next-container" class="govuk-pagination__next"></div>
+
     </nav>
+
+
+
+    <script>
+
+      function hasActiveFilters() {
+        return (
+          document.getElementById("function-select").value !== "select" ||
+          document.getElementById("criteria").value !== "Select" ||
+          document.getElementById("priority-search").value.trim() !== "" ||
+          document.getElementById("postcode-input").value.trim() !== "" ||
+          document.getElementById("caseid").value.trim() !== "" ||
+          document.getElementById("frfid").value.trim() !== "" ||
+          document.getElementById("nino").value.trim() !== ""
+        );
+      }
+
+      /* ================= CASE TABLE + PAGINATION ================= */
+
+      const loadBtn = document.getElementById("load-cases");
+      const tableBodyEl = document.getElementById("table-body");
+      const paginationList = document.getElementById("pagination-list");
+      const prevContainer = document.getElementById("prev-container");
+      const nextContainer = document.getElementById("next-container");
+
+
+      document.addEventListener("DOMContentLoaded", () => {
+
+        /* ================= STATE ================= */
+        let allCases = [];
+        let currentPage = 1;
+        const pageSize = 10;
+
+        const tableBodyEl = document.getElementById("table-body");
+        const paginationList = document.getElementById("pagination-list");
+        const prevContainer = document.getElementById("prev-container");
+        const nextContainer = document.getElementById("next-container");
+        const captionEl = document.getElementById("results-caption");
+
+        const searchBtn = document.getElementById("workbasket-control-search-btn");
+        const loadBtn = document.getElementById("load-cases");
+        const refreshBtn = document.getElementById("refresh-list");
+
+        const exportBtn = document.getElementById("export-excel");
+
+        exportBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+
+          if (allCases.length === 0) {
+            alert("No data to export");
+            return;
+          }
+
+          // ✅ Convert data to CSV (Excel-friendly)
+          const headers = ["Item", "Case ID", "FRF ID", "NI number", "Postcode", "Date"];
+
+          const rows = allCases.map(c => [
+            c.item,
+            c.caseId,
+            c.frf,
+            c.nino,
+            c.postcode,
+            new Date(c.date).toLocaleDateString("en-GB")
+          ]);
+
+          const csvContent = [
+            headers.join(","),
+            ...rows.map(r => r.join(","))
+          ].join("\n");
+
+          // ✅ Create file blob
+          const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+
+          // ✅ Create download link
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+
+          link.href = url;
+          link.download = "workbasket-cases.csv"; // 👈 Excel opens this perfectly
+
+          document.body.appendChild(link);
+          link.click();
+
+          document.body.removeChild(link);
+          URL.revokeObjectURL(url);
+        });
+
+        refreshBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+
+          // ✅ Generate a single new case
+          const newCase = {
+            item: "NEW", // temporary label (will reindex)
+            caseId: "I" + Math.floor(Math.random() * 9000),
+            frf: "FR-" + Math.floor(Math.random() * 999999999),
+            nino: "QQ" + Math.floor(Math.random() * 999999) + "C",
+            postcode: ["SW1A 1AA", "EC1A 1BB", "W1A 0AX"][Math.floor(Math.random() * 3)],
+            date: new Date(),
+            isNew: true // ✅ flag for styling
+          };
+
+
+
+          // ✅ Add to top of dataset
+          allCases.unshift(newCase);
+
+          // ✅ Re-number items
+          allCases.forEach((c, i) => {
+            c.item = i + 1;
+          });
+
+          // ✅ Stay on first page so user sees it
+          currentPage = 1;
+
+          // ✅ Update caption
+          captionEl.textContent = `Showing ${allCases.length} results (out of 15,525 total cases)`;
+
+          update();
+        });
+
+        /* ================= FILTER CHECK ================= */
+        function hasActiveFilters() {
+          return (
+            document.getElementById("function-select").value !== "select" ||
+            document.getElementById("criteria").value !== "Select" ||
+            document.getElementById("priority-search").value.trim() !== "" ||
+            document.getElementById("postcode-input").value.trim() !== "" ||
+            document.getElementById("caseid").value.trim() !== "" ||
+            document.getElementById("frfid").value.trim() !== "" ||
+            document.getElementById("nino").value.trim() !== ""
+          );
+        }
+
+        /* ================= DATA ================= */
+        function generateCases(count = 1000) {
+          const postcodes = ["SW1A 1AA", "EC1A 1BB", "W1A 0AX", "SE1 9SG"];
+
+          return Array.from({ length: count }, (_, i) => ({
+            item: i + 1,
+            caseId: "I" + (1000 + Math.floor(Math.random() * 9000)),
+            frf: "FR-" + (7000000000000000 + Math.floor(Math.random() * 100000)),
+            nino: "QQ" + (100000 + Math.floor(Math.random() * 900000)) + "C",
+            postcode: postcodes[Math.floor(Math.random() * postcodes.length)],
+            date: new Date(Date.now() - Math.floor(Math.random() * 365) * 86400000)
+          }));
+        }
+
+        /* ================= TABLE ================= */
+        function renderTable(page) {
+          tableBodyEl.innerHTML = "";
+
+          const start = (page - 1) * pageSize;
+          const pageData = allCases.slice(start, start + pageSize);
+
+          pageData.forEach(row => {
+            const tr = document.createElement("tr");
+
+            const date = new Date(row.date).toLocaleDateString("en-GB", {
+              day: "numeric",
+              month: "long",
+              year: "numeric"
+            });
+
+            tr.innerHTML = `
+        
+<td class="govuk-table__cell">
+  ${row.isNew ? '<strong class="govuk-tag">New</strong> ' : ''}
+  ${row.item}
+</td>
+
+        <td class="govuk-table__cell">${row.caseId}</td>
+        <td class="govuk-table__cell">${row.frf}</td>
+        <td class="govuk-table__cell">${row.nino}</td>
+        <td class="govuk-table__cell">${row.postcode}</td>
+        <td class="govuk-table__cell">${date}</td>
+      `;
+
+            tableBodyEl.appendChild(tr);
+          });
+        }
+
+        /* ================= PAGINATION ================= */
+
+
+        function renderPagination() {
+          paginationList.innerHTML = "";
+          prevContainer.innerHTML = "";
+          nextContainer.innerHTML = "";
+
+          const totalPages = Math.ceil(allCases.length / pageSize);
+
+          if (totalPages <= 1) return;
+
+          /* ---------- PREVIOUS ---------- */
+          if (currentPage > 1) {
+            prevContainer.innerHTML = `
+      <a class="govuk-link govuk-pagination__link" href="#" rel="prev">
+        <span class="govuk-pagination__link-title">
+          Previous<span class="govuk-visually-hidden"> page</span>
+        </span>
+      </a>
+    `;
+
+            prevContainer.querySelector("a").onclick = (e) => {
+              e.preventDefault();
+              currentPage--;
+              update();
+            };
+          }
+
+          /* ---------- HELPERS ---------- */
+          function addPage(page) {
+            const li = document.createElement("li");
+            li.className = "govuk-pagination__item";
+
+            if (page === currentPage) {
+              li.innerHTML = `
+        <span class="govuk-pagination__link govuk-pagination__link--current"
+              aria-current="page"
+              aria-label="Page ${page}">
+          ${page}
+        </span>
+      `;
+            } else {
+              li.innerHTML = `
+        <a class="govuk-link govuk-pagination__link"
+           href="#"
+           aria-label="Page ${page}">
+          ${page}
+        </a>
+      `;
+
+              li.querySelector("a").onclick = (e) => {
+                e.preventDefault();
+                currentPage = page;
+                update();
+              };
+            }
+
+            paginationList.appendChild(li);
+          }
+
+          function addDots() {
+            const li = document.createElement("li");
+            li.className = "govuk-pagination__item govuk-pagination__item--ellipses";
+            li.innerHTML = "&hellip;";
+            paginationList.appendChild(li);
+          }
+
+          /* ---------- TRUNCATED LOGIC ---------- */
+          const range = 1; // pages either side of current
+
+          const start = Math.max(1, currentPage - range);
+          const end = Math.min(totalPages, currentPage + range);
+
+          // Always show first page
+          addPage(1);
+
+          if (start > 2) addDots();
+
+          for (let i = start; i <= end; i++) {
+            if (i !== 1 && i !== totalPages) {
+              addPage(i);
+            }
+          }
+
+          if (end < totalPages - 1) addDots();
+
+          // Always show last page
+          if (totalPages > 1) addPage(totalPages);
+
+          /* ---------- NEXT ---------- */
+          if (currentPage < totalPages) {
+            nextContainer.innerHTML = `
+      <a class="govuk-link govuk-pagination__link" href="#" rel="next">
+        <span class="govuk-pagination__link-title">
+          Next<span class="govuk-visually-hidden"> page</span>
+        </span>
+      </a>
+    `;
+
+            nextContainer.querySelector("a").onclick = (e) => {
+              e.preventDefault();
+              currentPage++;
+              update();
+            };
+          }
+        }
+
+
+
+
+        function update() {
+          renderTable(currentPage);
+          renderPagination();
+        }
+
+
+        /* ================= EVENTS ================= */
+
+        // 🔍 SEARCH → 25 CASES
+        searchBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+
+          if (!hasActiveFilters()) {
+            tableBodyEl.innerHTML = "";
+            captionEl.textContent = "No filters selected";
+            return;
+          }
+
+          allCases = generateCases(25);
+          currentPage = 1;
+
+
+          captionEl.textContent = "Showing 25 results (out of 15,525 total cases)";
+
+          update();
+        });
+
+        // 📦 LOAD 1000
+        loadBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+
+          allCases = generateCases(1000);
+          currentPage = 1;
+
+          captionEl.textContent = "Showing 1,000 oldest cases (out of 15,525 total cases)";
+
+          update();
+        });
+
+      });
+
+
+    </script>
+
 
   </div>
 
+  <script>
+    // ---------------- DATA ----------------
+    const benefitTypes = ["Access to Work", "Attendance Allowance", "Disability Living Allowance", "Personal Independence Payment", "State Pension", "Carer's Allowance", "Employment and Support Allowance", "Housing Benefit", "Income Support", "Jobseeker's Allowance", "Pension Credit", "Universal Credit", "Widow's Benefit", "Bereavement Benefit", "Maternity Allowance", "Incapacity Benefit"];
+
+
+    const riskIds = ["AAHO001", "AAHO002", "AAHS001", "AAHS002", "AAJW001", "AASF001", "AASF002"];
+
+
+    const sourceList = ["Public Referrals", "CRE", "Manual", "A & I Hub", "Verification Assurance Officer", "HM Revenue and Customs (HMRC)", "National Benefit Fraud Hotline (NBFH)", "Local authority - Unsolicited post", "Police", "Member of public", "Home office", "Northern Ireland Benefit Fraud Hotline", "Northern Ireland Department for Communities (Dfc) staff member", "Northern Ireland Financial Investigations Unit (FIU)", "Northern Ireland Housing Executive", "Northern Ireland Standards Assurance Unit", "Universal Credit Case Review", "DWP Staff Member", "Performance measurement", "Centric"];
+
+
+    let priorities = [];
+
+
+    // ---------------- ELEMENTS ----------------
+
+
+    const dataMap = {
+      "Benefit type": benefitTypes,
+      "Risk or allegation ID": riskIds,
+      "Source": sourceList
+    };
+
+
+    const inputEl = document.getElementById('priority-search');
+    const resultsEl = document.getElementById('autocomplete-results');
+    const criteriaSelect = document.getElementById('criteria');
+    const functionSelect = document.getElementById('function-select');
+    const rankingSelect = document.getElementById('ranking');
+    const hintEl = document.getElementById('priority-hint');
+    const tableBody = document.getElementById('table-body');
+    const addBtn = document.getElementById('add-btn');
+    const tableCaption = document.getElementById('table-caption');
+    const applyBtn = document.getElementById('apply-btn');
+    const successMessage = document.getElementById('success-message');
+
+    inputEl.disabled = true;
+
+    criteriaSelect.addEventListener('change', () => {
+      const selected = criteriaSelect.value;
+      priorities = dataMap[selected] || [];
+
+      inputEl.disabled = priorities.length === 0;
+    });
+
+
+    // ---------------- HELPERS ----------------
+    function resetAutocomplete() {
+      inputEl.value = "";
+      resultsEl.innerHTML = "";
+      resultsEl.style.display = "none";
+    }
+
+
+    function resetRanking() {
+      rankingSelect.value = "choose";
+    }
+
+
+    // ---------------- CRITERIA CHANGE ----------------
+
+    criteriaSelect.addEventListener('change', () => {
+      resetAutocomplete();
+
+      const selected = criteriaSelect.value;
+
+      priorities = dataMap[selected] || [];
+
+      switch (selected) {
+        case "Benefit type":
+          hintEl.textContent = "Select the specific benefit type.";
+          break;
+        case "Risk or allegation ID":
+          hintEl.textContent = "Select a risk or allegation ID.";
+          break;
+        case "Source":
+          hintEl.textContent = "Select the source.";
+          break;
+        default:
+          hintEl.textContent = "Select the specific benefit type, risk or allegation ID or source.";
+      }
+
+      // ONLY show suggestions if valid criteria
+      if (priorities.length > 0) {
+        renderSuggestions("");
+      } else {
+        resultsEl.style.display = "none";
+      }
+    });
+
+
+    // ---------------- FUNCTION CHANGE ----------------
+    functionSelect.addEventListener("change", () => {
+      resetAutocomplete();
+      resetRanking();
+      criteriaSelect.value = "choose";
+      priorities = [];
+
+
+      const selectedText = functionSelect.options[functionSelect.selectedIndex].text;
+      tableCaption.textContent = functionSelect.value !== "select"
+        ? `Prioritised choices for ${selectedText}`
+        : "Prioritised choices";
+    });
+
+
+    // ---------------- AUTOCOMPLETE ----------------
+    function renderSuggestions(query) {
+      resultsEl.innerHTML = "";
+      const q = query.toLowerCase();
+
+
+      const matches = q
+        ? priorities.filter(i => i.toLowerCase().includes(q)).slice(0, 20)
+        : priorities.slice(0, 20);
+
+
+      if (!matches.length) {
+        resultsEl.style.display = "none";
+        return;
+      }
+
+
+      matches.forEach(match => {
+        const item = document.createElement("div");
+        item.style.padding = "8px";
+        item.style.cursor = "pointer";
+
+
+        item.innerHTML = q
+          ? match.replace(new RegExp(`(${q})`, "gi"), "<strong>$1</strong>")
+          : match;
+
+
+        item.onclick = () => {
+          inputEl.value = match;
+          resultsEl.style.display = "none";
+        };
+
+
+        item.onmouseover = () => item.style.background = "#f3f2f1";
+        item.onmouseout = () => item.style.background = "white";
+
+
+        resultsEl.appendChild(item);
+      });
+
+
+      resultsEl.style.display = "block";
+    }
+
+
+
+    inputEl.addEventListener("input", e => {
+      if (!priorities.length) return; // ⛔ block if no criteria selected
+      renderSuggestions(e.target.value);
+    });
+
+    inputEl.addEventListener("focus", () => {
+      if (!priorities.length) return;
+      renderSuggestions(inputEl.value);
+    });
+
+
+    // close dropdown
+    document.addEventListener("click", e => {
+      if (!inputEl.contains(e.target) && !resultsEl.contains(e.target)) {
+        resultsEl.style.display = "none";
+      }
+    });
+
+
+    const searchBtn = document.getElementById("workbasket-control-search-btn");
+
+    searchBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      // Only run if there are filters
+      if (!hasActiveFilters()) {
+        tableBodyEl.innerHTML = "";
+        captionEl.textContent = "No filters selected";
+        return;
+      }
+
+      // ✅ Populate ONLY if empty OR new search
+      if (allCases.length === 0 || hasActiveFilters()) {
+        allCases = generateCases(25); // 👈 25 random cases
+      }
+
+      currentPage = 1;
+
+      captionEl.textContent = "Showing 25 results based on your search filters";
+
+      update();
+    });
+
+  </script>
   {% endblock %}

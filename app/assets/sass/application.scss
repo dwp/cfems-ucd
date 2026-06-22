@@ -15,3 +15,28 @@
     float: right;
     text-align: right;
 }
+
+/* Optional complementary GOV.UK style alignment patches */
+  .govuk-autocomplete__item {
+    padding: 8px 12px;
+    cursor: pointer;
+    font-family: "GDS Transport", arial, sans-serif;
+    font-size: 19px;
+    border-bottom: 1px solid #bfc1c3;
+  }
+
+  .govuk-autocomplete__item:hover,
+  .govuk-autocomplete__item:focus {
+    background-color: #1d70b8;
+    color: white;
+    outline: none;
+  }
+
+  a.govuk-link {
+    color: #1d70b8;
+  }
+
+  button#workbasket-control-search-btn
+  {
+    margin-left: 16px;
+  }
