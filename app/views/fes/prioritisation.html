@@ -1,11 +1,9 @@
-
-
 {% extends "layouts/fes-nav.html" %}
 {% set pageName="Home" %}
 
 {% block content %}
 
-<a href="javascript:history.back()" class="govuk-back-link">Back</a>
+javascript:history.back()Back</a>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full ">
@@ -23,7 +21,8 @@
     </div>
 
     <!-- SUCCESS -->
-    <div id="success-message" class="govuk-notification-banner govuk-notification-banner--success" role="alert" style="display:none; margin-bottom:20px;">
+    <div id="success-message" class="govuk-notification-banner govuk-notification-banner--success" role="alert"
+      style="display:none; margin-bottom:20px;">
       <div class="govuk-notification-banner__content">
         <p class="govuk-notification-banner__heading">Your prioritisation has been applied.</p>
       </div>
@@ -54,8 +53,11 @@
     <!-- Autocomplete -->
     <div class="govuk-form-group" id="value-group" style="position:relative;">
       <label class="govuk-label" for="priority-search">Select sub-category</label>
-      <input id="priority-search" class="govuk-input" autocomplete="off" style="width:220px;" placeholder="Start typing">
-      <div id="autocomplete-results" style="display:none; position:absolute; background:white; border:2px solid #0b0c0c; max-width:400px; z-index:100;"></div>
+      <input id="priority-search" class="govuk-input" autocomplete="off" style="width:220px;"
+        placeholder="Start typing">
+      <div id="autocomplete-results"
+        style="display:none; position:absolute; background:white; border:2px solid #0b0c0c; max-width:400px; z-index:100;">
+      </div>
     </div>
 
     <!-- Ranking -->
@@ -78,8 +80,8 @@
       <caption class="govuk-table__caption govuk-table__caption--m">Prioritised choices</caption>
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-          <th scope="col" class="govuk-table__header">Category</th>
-          <th scope="col" class="govuk-table__header">Sub-category</th>
+          <th scope="col" class="govuk-table__header">Criteria</th>
+          <th scope="col" class="govuk-table__header">Value</th>
           <th scope="col" class="govuk-table__header">Ranking</th>
           <th scope="col" class="govuk-table__header">Action</th>
         </tr>
@@ -93,171 +95,169 @@
 </div>
 
 <script>
-// DATA
-const benefitTypes = ["Access to Work","Attendance Allowance","Disability Living Allowance","Personal Independence Payment"];
-const riskIds = ["AAHO001","AAHO002","AAHS001","AAHS002"];
-const sourceList = ["Public Referrals","CRE","Manual"];
+  // DATA
+  const benefitTypes = ["Access to Work", "Attendance Allowance", "Disability Living Allowance", "Personal Independence Payment"];
+  const riskIds = ["AAHO001", "AAHO002", "AAHS001", "AAHS002"];
+  const sourceList = ["Public Referrals", "CRE", "Manual"];
 
-let priorities = [];
+  let priorities = [];
 
-// ELEMENTS
-const inputEl = document.getElementById('priority-search');
-const resultsEl = document.getElementById('autocomplete-results');
-const criteriaSelect = document.getElementById('criteria');
-const functionSelect = document.getElementById('function-select');
-const rankingSelect = document.getElementById('ranking');
-const tableBody = document.getElementById('table-body');
-const addBtn = document.getElementById('add-btn');
-const applyBtn = document.getElementById('apply-btn');
-const successMessage = document.getElementById('success-message');
+  // ELEMENTS
+  const inputEl = document.getElementById('priority-search');
+  const resultsEl = document.getElementById('autocomplete-results');
+  const criteriaSelect = document.getElementById('criteria');
+  const functionSelect = document.getElementById('function-select');
+  const rankingSelect = document.getElementById('ranking');
+  const tableBody = document.getElementById('table-body');
+  const addBtn = document.getElementById('add-btn');
+  const applyBtn = document.getElementById('apply-btn');
+  const successMessage = document.getElementById('success-message');
 
-const errorSummary = document.getElementById('error-summary');
-const errorList = document.getElementById('error-list');
+  const errorSummary = document.getElementById('error-summary');
+  const errorList = document.getElementById('error-list');
 
-// AUTOCOMPLETE
-function renderSuggestions(query) {
-  resultsEl.innerHTML = '';
-  const matches = priorities.filter(item => item.toLowerCase().includes(query.toLowerCase()));
+  // AUTOCOMPLETE
+  function renderSuggestions(query) {
+    resultsEl.innerHTML = '';
+    const matches = priorities.filter(item => item.toLowerCase().includes(query.toLowerCase()));
 
 
-  if (!matches.length) {
-    resultsEl.style.display = 'none';
-    return;
+    if (!matches.length) {
+      resultsEl.style.display = 'none';
+      return;
+    }
+
+    matches.forEach(match => {
+      const item = document.createElement('div');
+      item.textContent = match;
+      item.style.padding = '8px';
+      item.style.cursor = 'pointer';
+
+
+      item.onclick = () => {
+        inputEl.value = match;
+        resultsEl.style.display = 'none';
+      };
+
+
+      resultsEl.appendChild(item);
+    });
+
+
+    resultsEl.style.display = 'block';
   }
 
-  matches.forEach(match => {
-    const item = document.createElement('div');
-    item.textContent = match;
-    item.style.padding = '8px';
-    item.style.cursor = 'pointer';
+
+  criteriaSelect.addEventListener('change', () => {
+    inputEl.value = '';
 
 
-    item.onclick = () => {
-      inputEl.value = match;
-      resultsEl.style.display = 'none';
-    };
-
-
-    resultsEl.appendChild(item);
+    if (criteriaSelect.value === "Benefit type") priorities = benefitTypes;
+    else if (criteriaSelect.value === "Risk or allegation ID") priorities = riskIds;
+    else if (criteriaSelect.value === "Source") priorities = sourceList;
+    else priorities = [];
   });
 
 
-  resultsEl.style.display = 'block';
-}
+  inputEl.addEventListener('input', e => {
+    if (priorities.length) renderSuggestions(e.target.value);
+  });
 
 
-criteriaSelect.addEventListener('change', () => {
-  inputEl.value = '';
+  inputEl.addEventListener('focus', () => {
+    if (priorities.length) renderSuggestions(inputEl.value);
+  });
 
+  // CLOSE DROPDOWN
+  document.addEventListener('click', e => {
+    if (!inputEl.contains(e.target) && !resultsEl.contains(e.target)) {
+      resultsEl.style.display = 'none';
+    }
+  });
 
-  if (criteriaSelect.value === "Benefit type") priorities = benefitTypes;
-  else if (criteriaSelect.value === "Risk or allegation ID") priorities = riskIds;
-  else if (criteriaSelect.value === "Source") priorities = sourceList;
-  else priorities = [];
-});
+  // ERROR HANDLING
+  function showError(id, message, groupId) {
+    const li = document.createElement('li');
+    li.innerHTML = `<a href="#${id}">${message}</a>`;
+    errorList.appendChild(li);
 
+    const group = document.getElementById(groupId);
+    group.classList.add('govuk-form-group--error');
 
-inputEl.addEventListener('input', e => {
-  if (priorities.length) renderSuggestions(e.target.value);
-});
-
-
-inputEl.addEventListener('focus', () => {
-  if (priorities.length) renderSuggestions(inputEl.value);
-});
-
-// CLOSE DROPDOWN
-document.addEventListener('click', e => {
-  if (!inputEl.contains(e.target) && !resultsEl.contains(e.target)) {
-    resultsEl.style.display = 'none';
-  }
-});
-
-// ERROR HANDLING
-function showError(id, message, groupId) {
-  const li = document.createElement('li');
-  li.innerHTML = `<a href="#${id}">${message}</a>`;
-  errorList.appendChild(li);
-
-  const group = document.getElementById(groupId);
-  group.classList.add('govuk-form-group--error');
-
-  const error = document.createElement('p');
-  error.className = 'govuk-error-message';
-  error.innerHTML = `<span class="govuk-visually-hidden">Error:</span> ${message}`;
-  group.insertBefore(error, group.children[1]);
-}
-
-function clearErrors() {
-  errorList.innerHTML = '';
-  errorSummary.hidden = true;
-  document.querySelectorAll('.govuk-error-message').forEach(e => e.remove());
-  document.querySelectorAll('.govuk-form-group').forEach(g => g.classList.remove('govuk-form-group--error'));
-}
-
-// ADD ROW
-addBtn.addEventListener('click', () => {
-  clearErrors();
-
-  const func = functionSelect.value;
-  const criteria = criteriaSelect.value;
-  const value = inputEl.value.trim();
-  const ranking = rankingSelect.value;
-
-  let hasError = false;
-
-  if (func === 'select') {
-    showError('function-select','Select a function','function-group');
-    hasError = true;
+    const error = document.createElement('p');
+    error.className = 'govuk-error-message';
+    error.innerHTML = `<span class="govuk-visually-hidden">Error:</span> ${message}`;
+    group.insertBefore(error, group.children[1]);
   }
 
-
-  if (criteria === 'choose') {
-    showError('criteria','Select a category','criteria-group');
-    hasError = true;
+  function clearErrors() {
+    errorList.innerHTML = '';
+    errorSummary.hidden = true;
+    document.querySelectorAll('.govuk-error-message').forEach(e => e.remove());
+    document.querySelectorAll('.govuk-form-group').forEach(g => g.classList.remove('govuk-form-group--error'));
   }
 
-  if (!value) {
-    showError('priority-search','Select a value','value-group');
-    hasError = true;
-  }
+  // ADD ROW
+  addBtn.addEventListener('click', () => {
+    clearErrors();
 
-  if (ranking === 'choose') {
-    showError('ranking','Select a ranking','ranking-group');
-    hasError = true;
-  }
+    const func = functionSelect.value;
+    const criteria = criteriaSelect.value;
+    const value = inputEl.value.trim();
+    const ranking = rankingSelect.value;
 
-  if (hasError) {
-    errorSummary.hidden = false;
-    errorSummary.focus();
-    return;
-  }
+    let hasError = false;
 
-  const row = document.createElement('tr');
-  row.className = 'govuk-table__row';
-  row.innerHTML = `
+    if (func === 'select') {
+      showError('function-select', 'Select a function', 'function-group');
+      hasError = true;
+    }
+
+
+    if (criteria === 'choose') {
+      showError('criteria', 'Select a category', 'criteria-group');
+      hasError = true;
+    }
+
+    if (!value) {
+      showError('priority-search', 'Select a value', 'value-group');
+      hasError = true;
+    }
+
+    if (ranking === 'choose') {
+      showError('ranking', 'Select a ranking', 'ranking-group');
+      hasError = true;
+    }
+
+    if (hasError) {
+      errorSummary.hidden = false;
+      errorSummary.focus();
+      return;
+    }
+
+    const row = document.createElement('tr');
+    row.className = 'govuk-table__row';
+    row.innerHTML = `
     <td class="govuk-table__cell">${criteria}</td>
     <td class="govuk-table__cell">${value}</td>
     <td class="govuk-table__cell">${ranking}</td>
     <td class="govuk-table__cell"><a href="#" class="govuk-link remove-link">Remove</a></td>
   `;
 
-  row.querySelector('.remove-link').addEventListener('click', e => {
-    e.preventDefault();
-    row.remove();
+    row.querySelector('.remove-link').addEventListener('click', e => {
+      e.preventDefault();
+      row.remove();
+    });
+
+    tableBody.appendChild(row);
   });
 
-  tableBody.appendChild(row);
-});
-
-// APPLY
-applyBtn.addEventListener('click', () => {
-  successMessage.style.display = 'block';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-
+  // APPLY
+  applyBtn.addEventListener('click', () => {
+    successMessage.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 
 </script>
-
 
 {% endblock %}
