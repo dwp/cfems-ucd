@@ -1,38 +1,39 @@
 
+
 {% extends "layouts/fes-nav.html" %}
 {% set pageName="Home" %}
 
-
 {% block content %}
-
 
 <a href="javascript:history.back()" class="govuk-back-link">Back</a>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full ">
 
-
     <span class="govuk-caption-xl">Fraud & Error System</span>
     <h1 class="govuk-heading-l">Prioritisation</h1>
     <p class="govuk-body-l">Choose what you want to prioritise from the workbasket.</p>
 
-    <!-- ✅ Success banner (top placement) -->
-    <div id="success-message" class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" style="display:none; margin-bottom:20px;">
-      <div class="govuk-notification-banner__header">
-        <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">Success</h2>
-      </div>
-      <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">
-          Your prioritisation has been applied.
-        </p>
+    <!-- ERROR SUMMARY -->
+    <div id="error-summary" class="govuk-error-summary" role="alert" tabindex="-1" hidden>
+      <h2 class="govuk-error-summary__title">There is a problem</h2>
+      <div class="govuk-error-summary__body">
+        <ul class="govuk-list govuk-error-summary__list" id="error-list"></ul>
       </div>
     </div>
 
-    <!-- Function -->
-    <div class="govuk-form-group">
+    <!-- SUCCESS -->
+    <div id="success-message" class="govuk-notification-banner govuk-notification-banner--success" role="alert" style="display:none; margin-bottom:20px;">
+      <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Your prioritisation has been applied.</p>
+      </div>
+    </div>
+
+    <!-- Function (NOW WITH ERROR SUPPORT) -->
+    <div class="govuk-form-group" id="function-group">
       <label class="govuk-label" for="function-select">Select a function</label>
       <select class="govuk-select" id="function-select">
-        <option value="select" selected>Select a function</option>
+        <option value="select">Select a function</option>
         <option value="campaigns">Campaigns</option>
         <option value="compliance">Compliance</option>
         <option value="investigations">Investigations</option>
@@ -40,8 +41,8 @@
     </div>
 
     <!-- Criteria -->
-    <div class="govuk-form-group">
-      <label class="govuk-label" for="criteria">Select criteria</label>
+    <div class="govuk-form-group" id="criteria-group">
+      <label class="govuk-label" for="criteria">Select a category</label>
       <select id="criteria" class="govuk-select">
         <option value="choose">Select</option>
         <option value="Benefit type">Benefit type</option>
@@ -51,25 +52,17 @@
     </div>
 
     <!-- Autocomplete -->
-    <div class="govuk-form-group" style="position:relative;">
-      <label class="govuk-label" for="priority-search">Select what you want to prioritise</label>
-      <div id="priority-hint" class="govuk-hint">
-        Select the specific benefit type, risk or allegation ID or source.
-      </div>
-
-
-      <input id="priority-search" class="govuk-input" autocomplete="off" style="width: 220px;" placeholder="Start typing">
-
-
+    <div class="govuk-form-group" id="value-group" style="position:relative;">
+      <label class="govuk-label" for="priority-search">Select sub-category</label>
+      <input id="priority-search" class="govuk-input" autocomplete="off" style="width:220px;" placeholder="Start typing">
       <div id="autocomplete-results" style="display:none; position:absolute; background:white; border:2px solid #0b0c0c; max-width:400px; z-index:100;"></div>
     </div>
 
     <!-- Ranking -->
-    <div class="govuk-form-group">
+    <div class="govuk-form-group" id="ranking-group">
       <label class="govuk-label" for="ranking">Select a priority ranking (1 to 5)</label>
-      <div class="govuk-hint">You can prioritise up to 5 sources from 1 to 5, with 1 being the highest priority.</div>
       <select class="govuk-select" id="ranking">
-        <option value="choose" selected>Select</option>
+        <option value="choose">Select</option>
         <option>1</option>
         <option>2</option>
         <option>3</option>
@@ -80,204 +73,191 @@
 
     <button type="button" class="govuk-button govuk-button--secondary" id="add-btn">Add selection to the table</button>
 
-
-    <!-- Table -->
+    <!-- FIXED GDS TABLE -->
     <table class="govuk-table">
-      <caption class="govuk-table__caption govuk-label" id="table-caption">Prioritised choices</caption>
+      <caption class="govuk-table__caption govuk-table__caption--m">Prioritised choices</caption>
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-          <th class="govuk-table__header">Criteria</th>
-          <th class="govuk-table__header">Prioritised value</th>
-          <th class="govuk-table__header">Ranking</th>
-          <th class="govuk-table__header">Action</th>
+          <th scope="col" class="govuk-table__header">Criteria</th>
+          <th scope="col" class="govuk-table__header">Value</th>
+          <th scope="col" class="govuk-table__header">Ranking</th>
+          <th scope="col" class="govuk-table__header">Action</th>
         </tr>
       </thead>
       <tbody id="table-body" class="govuk-table__body"></tbody>
     </table>
 
-    <!-- ✅ Apply button (JS-controlled) -->
     <button type="button" class="govuk-button" id="apply-btn">Apply</button>
+
   </div>
 </div>
 
 <script>
-// ---------------- DATA ----------------
-const benefitTypes = ["Access to Work","Attendance Allowance","Disability Living Allowance","Personal Independence Payment","State Pension","Carer's Allowance","Employment and Support Allowance","Housing Benefit","Income Support","Jobseeker's Allowance","Pension Credit","Universal Credit","Widow's Benefit","Bereavement Benefit","Maternity Allowance","Incapacity Benefit"];
-
-
-const riskIds = ["AAHO001","AAHO002","AAHS001","AAHS002","AAJW001","AASF001","AASF002"];
-
-
-const sourceList = ["Public Referrals","CRE","Manual","A & I Hub","Verification Assurance Officer","HM Revenue and Customs (HMRC)","National Benefit Fraud Hotline (NBFH)","Local authority - Unsolicited post","Police","Member of public","Home office","Northern Ireland Benefit Fraud Hotline","Northern Ireland Department for Communities (Dfc) staff member","Northern Ireland Financial Investigations Unit (FIU)","Northern Ireland Housing Executive","Northern Ireland Standards Assurance Unit","Universal Credit Case Review","DWP Staff Member","Performance measurement","Centric"];
-
+// DATA
+const benefitTypes = ["Access to Work","Attendance Allowance","Disability Living Allowance","Personal Independence Payment"];
+const riskIds = ["AAHO001","AAHO002","AAHS001","AAHS002"];
+const sourceList = ["Public Referrals","CRE","Manual"];
 
 let priorities = [];
 
-
-// ---------------- ELEMENTS ----------------
+// ELEMENTS
 const inputEl = document.getElementById('priority-search');
 const resultsEl = document.getElementById('autocomplete-results');
 const criteriaSelect = document.getElementById('criteria');
 const functionSelect = document.getElementById('function-select');
 const rankingSelect = document.getElementById('ranking');
-const hintEl = document.getElementById('priority-hint');
 const tableBody = document.getElementById('table-body');
 const addBtn = document.getElementById('add-btn');
-const tableCaption = document.getElementById('table-caption');
 const applyBtn = document.getElementById('apply-btn');
 const successMessage = document.getElementById('success-message');
 
+const errorSummary = document.getElementById('error-summary');
+const errorList = document.getElementById('error-list');
 
-// ---------------- HELPERS ----------------
-function resetAutocomplete() {
-  inputEl.value = "";
-  resultsEl.innerHTML = "";
-  resultsEl.style.display = "none";
-}
-
-
-function resetRanking() {
-  rankingSelect.value = "choose";
-}
-
-
-// ---------------- CRITERIA CHANGE ----------------
-criteriaSelect.addEventListener('change', () => {
-  resetAutocomplete();
-  resetRanking();
-
-
-  if (criteriaSelect.value === "Benefit type") {
-    priorities = benefitTypes;
-    hintEl.textContent = "Select the specific benefit type.";
-  } else if (criteriaSelect.value === "Risk or allegation ID") {
-    priorities = riskIds;
-    hintEl.textContent = "Select a risk or allegation ID.";
-  } else if (criteriaSelect.value === "Source") {
-    priorities = sourceList;
-    hintEl.textContent = "Select the source.";
-  } else {
-    priorities = [];
-    hintEl.textContent = "Select the specific benefit type, risk or allegation ID or source.";
-  }
-
-
-  if (priorities.length) renderSuggestions("");
-});
-
-// ---------------- FUNCTION CHANGE ----------------
-functionSelect.addEventListener("change", () => {
-  resetAutocomplete();
-  resetRanking();
-  criteriaSelect.value = "choose";
-  priorities = [];
-
-
-  const selectedText = functionSelect.options[functionSelect.selectedIndex].text;
-  tableCaption.textContent = functionSelect.value !== "select"
-    ? `Prioritised choices for ${selectedText}`
-    : "Prioritised choices";
-});
-
-
-// ---------------- AUTOCOMPLETE ----------------
+// AUTOCOMPLETE
 function renderSuggestions(query) {
-  resultsEl.innerHTML = "";
-  const q = query.toLowerCase();
-
-
-  const matches = q
-    ? priorities.filter(i => i.toLowerCase().includes(q)).slice(0, 20)
-    : priorities.slice(0, 20);
+  resultsEl.innerHTML = '';
+  const matches = priorities.filter(item => item.toLowerCase().includes(query.toLowerCase()));
 
 
   if (!matches.length) {
-    resultsEl.style.display = "none";
+    resultsEl.style.display = 'none';
     return;
   }
 
-
   matches.forEach(match => {
-    const item = document.createElement("div");
-    item.style.padding = "8px";
-    item.style.cursor = "pointer";
-
-
-    item.innerHTML = q
-      ? match.replace(new RegExp(`(${q})`, "gi"), "<strong>$1</strong>")
-      : match;
+    const item = document.createElement('div');
+    item.textContent = match;
+    item.style.padding = '8px';
+    item.style.cursor = 'pointer';
 
 
     item.onclick = () => {
       inputEl.value = match;
-      resultsEl.style.display = "none";
+      resultsEl.style.display = 'none';
     };
-
-
-    item.onmouseover = () => item.style.background = "#f3f2f1";
-    item.onmouseout = () => item.style.background = "white";
 
 
     resultsEl.appendChild(item);
   });
 
 
-  resultsEl.style.display = "block";
+  resultsEl.style.display = 'block';
 }
 
 
-inputEl.addEventListener("input", e => renderSuggestions(e.target.value));
-inputEl.addEventListener("focus", () => renderSuggestions(inputEl.value));
+criteriaSelect.addEventListener('change', () => {
+  inputEl.value = '';
 
 
-// close dropdown
- document.addEventListener("click", e => {
+  if (criteriaSelect.value === "Benefit type") priorities = benefitTypes;
+  else if (criteriaSelect.value === "Risk or allegation ID") priorities = riskIds;
+  else if (criteriaSelect.value === "Source") priorities = sourceList;
+  else priorities = [];
+});
+
+
+inputEl.addEventListener('input', e => {
+  if (priorities.length) renderSuggestions(e.target.value);
+});
+
+
+inputEl.addEventListener('focus', () => {
+  if (priorities.length) renderSuggestions(inputEl.value);
+});
+
+// CLOSE DROPDOWN
+document.addEventListener('click', e => {
   if (!inputEl.contains(e.target) && !resultsEl.contains(e.target)) {
-    resultsEl.style.display = "none";
+    resultsEl.style.display = 'none';
   }
 });
 
-// ---------------- ADD ROW ----------------
-addBtn.addEventListener("click", () => {
+// ERROR HANDLING
+function showError(id, message, groupId) {
+  const li = document.createElement('li');
+  li.innerHTML = `<a href="#${id}">${message}</a>`;
+  errorList.appendChild(li);
+
+  const group = document.getElementById(groupId);
+  group.classList.add('govuk-form-group--error');
+
+  const error = document.createElement('p');
+  error.className = 'govuk-error-message';
+  error.innerHTML = `<span class="govuk-visually-hidden">Error:</span> ${message}`;
+  group.insertBefore(error, group.children[1]);
+}
+
+function clearErrors() {
+  errorList.innerHTML = '';
+  errorSummary.hidden = true;
+  document.querySelectorAll('.govuk-error-message').forEach(e => e.remove());
+  document.querySelectorAll('.govuk-form-group').forEach(g => g.classList.remove('govuk-form-group--error'));
+}
+
+// ADD ROW
+addBtn.addEventListener('click', () => {
+  clearErrors();
+
+  const func = functionSelect.value;
   const criteria = criteriaSelect.value;
   const value = inputEl.value.trim();
   const ranking = rankingSelect.value;
 
+  let hasError = false;
 
-  if (!criteria || criteria === "choose") return alert("Select a criteria");
-  if (!value) return alert("Select a value to prioritise");
-  if (!ranking || ranking === "choose") return alert("Select a ranking");
+  if (func === 'select') {
+    showError('function-select','Select a function','function-group');
+    hasError = true;
+  }
 
 
-  const row = document.createElement("tr");
+  if (criteria === 'choose') {
+    showError('criteria','Select a category','criteria-group');
+    hasError = true;
+  }
+
+  if (!value) {
+    showError('priority-search','Select a value','value-group');
+    hasError = true;
+  }
+
+  if (ranking === 'choose') {
+    showError('ranking','Select a ranking','ranking-group');
+    hasError = true;
+  }
+
+  if (hasError) {
+    errorSummary.hidden = false;
+    errorSummary.focus();
+    return;
+  }
+
+  const row = document.createElement('tr');
+  row.className = 'govuk-table__row';
   row.innerHTML = `
     <td class="govuk-table__cell">${criteria}</td>
     <td class="govuk-table__cell">${value}</td>
     <td class="govuk-table__cell">${ranking}</td>
-    <td class="govuk-table__cell">
-      <a href="#" class="govuk-link remove-link">Remove</a>
-    </td>
+    <td class="govuk-table__cell"><a href="#" class="govuk-link remove-link">Remove</a></td>
   `;
 
-
-  row.querySelector(".remove-link").addEventListener("click", (e) => {
+  row.querySelector('.remove-link').addEventListener('click', e => {
     e.preventDefault();
     row.remove();
   });
+
   tableBody.appendChild(row);
 });
 
-// ✅ APPLY BUTTON → SHOW SUCCESS BANNER AT TOP
-applyBtn.addEventListener("click", () => {
-  successMessage.style.display = "block";
-
-
-  window.scrollTo({
-    top: successMessage.offsetTop - 20,
-    behavior: "smooth"
-  });
+// APPLY
+applyBtn.addEventListener('click', () => {
+  successMessage.style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
+
 </script>
+
 
 {% endblock %}
