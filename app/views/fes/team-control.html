@@ -12,7 +12,14 @@
 
     <span class="govuk-caption-xl">Fraud & Error System</span>
     <h1 class="govuk-heading-l">Team control</h1>
-    <p class="govuk-body-l">Choose what you want to prioritise from the workbasket.</p>
+    <p class="govuk-body-l">Choose what you want to prioritise and assign to a specific team.</p>
+    <div class="govuk-warning-text">
+  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+  <strong class="govuk-warning-text__text">
+    <span class="govuk-visually-hidden">Warning</span>
+    Changes you make here will override any prioritisation previously set
+  </strong>
+</div>
 
     <!-- ERROR SUMMARY -->
     <div id="error-summary" class="govuk-error-summary" role="alert" tabindex="-1" hidden>
@@ -33,7 +40,7 @@
     <div class="govuk-form-group" id="function-group">
       <label class="govuk-label" for="function-select">Select a function</label>
       <select class="govuk-select" id="function-select">
-        <option value="select">Select a function</option>
+        <option value="select">Select</option>
         <option value="campaigns">Campaigns</option>
         <option value="compliance">Compliance</option>
         <option value="investigations">Investigations</option>
@@ -53,21 +60,20 @@
 
     <!-- Autocomplete -->
     <div class="govuk-form-group" id="value-group" style="position:relative;">
-      <label class="govuk-label" for="priority-search">Select sub-category</label>
+      <label class="govuk-label" for="priority-search">Select a sub-category</label>
       <input id="priority-search" class="govuk-input" autocomplete="off" style="width:220px;" placeholder="Start typing">
       <div id="autocomplete-results" style="display:none; position:absolute; background:white; border:2px solid #0b0c0c; max-width:400px; z-index:100;"></div>
     </div>
 
     <!-- Ranking -->
     <div class="govuk-form-group" id="ranking-group">
-      <label class="govuk-label" for="ranking">Select a priority ranking (1 to 5)</label>
+      <label class="govuk-label" for="ranking">Select a team to assign to</label>
       <select class="govuk-select" id="ranking">
         <option value="choose">Select</option>
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
+        <option>FES Team 1</option>
+        <option>FES Team 2</option>
+        <option>FES Team 3</option>
+        <option>FES Team 4</option>
       </select>
     </div>
 
@@ -96,8 +102,7 @@
 // DATA
 const benefitTypes = ["Access to Work","Attendance Allowance","Disability Living Allowance","Personal Independence Payment"];
 const riskIds = ["AAHO001","AAHO002","AAHS001","AAHS002"];
-const sourceList = ["Public Referrals","CRE","Manual"];
-
+const sourceList = ["LA", "HMRC", "UCCR", "Performance Measurement"];
 let priorities = [];
 
 // ELEMENTS

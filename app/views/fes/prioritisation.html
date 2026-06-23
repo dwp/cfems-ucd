@@ -3,7 +3,7 @@
 
 {% block content %}
 
-javascript:history.back()Back</a>
+<a href="javascript:history.back()" class="govuk-back-link">Back</a>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full ">
@@ -32,7 +32,7 @@ javascript:history.back()Back</a>
     <div class="govuk-form-group" id="function-group">
       <label class="govuk-label" for="function-select">Select a function</label>
       <select class="govuk-select" id="function-select">
-        <option value="select">Select a function</option>
+        <option value="select">Select</option>
         <option value="campaigns">Campaigns</option>
         <option value="compliance">Compliance</option>
         <option value="investigations">Investigations</option>
@@ -53,6 +53,9 @@ javascript:history.back()Back</a>
     <!-- Autocomplete -->
     <div class="govuk-form-group" id="value-group" style="position:relative;">
       <label class="govuk-label" for="priority-search">Select sub-category</label>
+      <div id="event-name-hint" class="govuk-hint">
+    For example, benefit type, risk ID or source.
+  </div>
       <input id="priority-search" class="govuk-input" autocomplete="off" style="width:220px;"
         placeholder="Start typing">
       <div id="autocomplete-results"
@@ -63,6 +66,9 @@ javascript:history.back()Back</a>
     <!-- Ranking -->
     <div class="govuk-form-group" id="ranking-group">
       <label class="govuk-label" for="ranking">Select a priority ranking (1 to 5)</label>
+      <div id="event-name-hint" class="govuk-hint">
+    You can prioritise up to 5 choices from 1 to 5, with 1 being the highest priority. Any choices given the same priority will be equally weighted.
+  </div>
       <select class="govuk-select" id="ranking">
         <option value="choose">Select</option>
         <option>1</option>
@@ -77,7 +83,11 @@ javascript:history.back()Back</a>
 
     <!-- FIXED GDS TABLE -->
     <table class="govuk-table">
-      <caption class="govuk-table__caption govuk-table__caption--m">Prioritised choices</caption>
+      <caption class="govuk-table__caption govuk-table__caption--m">
+        Prioritisation choice
+        <span id="prioritisation-table-hint" class="govuk-body">Once you apply the changes you've made, they will take place immediately for new cases and overnight for existing ones. To change the priority of a choice, remove it from the table and start again.</span>
+      </caption>
+
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">Criteria</th>
@@ -98,7 +108,7 @@ javascript:history.back()Back</a>
   // DATA
   const benefitTypes = ["Access to Work", "Attendance Allowance", "Disability Living Allowance", "Personal Independence Payment"];
   const riskIds = ["AAHO001", "AAHO002", "AAHS001", "AAHS002"];
-  const sourceList = ["Public Referrals", "CRE", "Manual"];
+  const sourceList = ["LA", "HMRC", "UCCR", "Performance Measurement"];
 
   let priorities = [];
 
