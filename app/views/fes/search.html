@@ -27,9 +27,7 @@
 
       <input class="govuk-input govuk-input--width-10" id="caseid" name="caseId" type="text" autocomplete="off">
 
-      <div id="caseid-results"
-        style="display:none; position:absolute; background:white; border:2px solid #0b0c0c; max-width:220px; z-index:100;">
-      </div>
+
     </div>
 
     <div class="govuk-form-group" style="position:relative;">
@@ -54,9 +52,7 @@
 
       <input class="govuk-input govuk-input--width-10" id="nino" name="nino" type="text" autocomplete="off">
 
-      <div id="nino-results"
-        style="display:none; position:absolute; background:white; border:2px solid #0b0c0c; max-width:260px; z-index:100;">
-      </div>
+
     </div>
 
     <div class="govuk-form-group" style="position:relative;">
@@ -82,9 +78,7 @@
 
       <input class="govuk-input govuk-input--width-10" id="frfid" name="frfId" type="text" autocomplete="off">
 
-      <div id="frfid-results"
-        style="display:none; position:absolute; background:white; border:2px solid #0b0c0c; max-width:260px; z-index:100;">
-      </div>
+
     </div>
   </div>
 
@@ -111,5 +105,108 @@
 <button id="search-search-btn" type="submit" class="govuk-button govuk-button--primary">
   Search
 </button>
+
+<!-- FIXED GDS TABLE -->
+<table class="govuk-table">
+  <caption class="govuk-table__caption govuk-table__caption--m">
+    Prioritisation choice
+    <span id="prioritisation-table-hint" class="govuk-body">Once you apply the changes you've made, they will take place
+      immediately for new cases and overnight for existing ones. To change the priority of a choice, remove it from the
+      table and start again.</span>
+  </caption>
+
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Case ID</th>
+      <th scope="col" class="govuk-table__header">NI number</th>
+      <th scope="col" class="govuk-table__header">Role</th>
+      <th scope="col" class="govuk-table__header">Function</th>
+      <th scope="col" class="govuk-table__header">Case owner</th>
+      <th scope="col" class="govuk-table__header">Status</th>
+    </tr>
+  </thead>
+  <tbody id="table-body" class="govuk-table__body"></tbody>
+</table>
+
+<script>
+  
+const dataset = [
+  { caseId: "I101", firstName: "John", lastName: "Smith", nino: "QQ123456C", frfId: "FR-1000000000000001", postcode: "AA1 2BC", role: "Claimant", function: "Fraud check", owner: "Alice Brown", status: "Open" },
+  { caseId: "I102", firstName: "Sarah", lastName: "Jones", nino: "QQ654321A", frfId: "FR-1000000000000002", postcode: "BB1 3DD", role: "Partner", function: "Review", owner: "Tom White", status: "Closed" },
+  { caseId: "I103", firstName: "Mike", lastName: "Taylor", nino: "QQ112233B", frfId: "FR-1000000000000003", postcode: "CC4 5EE", role: "Claimant", function: "Investigation", owner: "Jane Green", status: "Pending" },
+  { caseId: "I104", firstName: "Emma", lastName: "Brown", nino: "QQ445566D", frfId: "FR-1000000000000004", postcode: "DD6 7FF", role: "Claimant", function: "Fraud check", owner: "Chris Black", status: "Open" },
+  { caseId: "I105", firstName: "David", lastName: "Wilson", nino: "QQ778899E", frfId: "FR-1000000000000005", postcode: "EE8 9GG", role: "Partner", function: "Review", owner: "Lucy Gray", status: "Closed" },
+  { caseId: "I106", firstName: "Olivia", lastName: "Johnson", nino: "QQ223344F", frfId: "FR-1000000000000006", postcode: "FF1 1HH", role: "Claimant", function: "Investigation", owner: "Mark Blue", status: "Pending" },
+  { caseId: "I107", firstName: "Liam", lastName: "Lee", nino: "QQ556677G", frfId: "FR-1000000000000007", postcode: "GG2 2JJ", role: "Claimant", function: "Fraud check", owner: "Nina Gold", status: "Open" },
+  { caseId: "I108", firstName: "Sophia", lastName: "Walker", nino: "QQ889900H", frfId: "FR-1000000000000008", postcode: "HH3 3KK", role: "Partner", function: "Review", owner: "Harry Silver", status: "Closed" },
+  { caseId: "I109", firstName: "Noah", lastName: "Hall", nino: "QQ667788J", frfId: "FR-1000000000000009", postcode: "JJ4 4LL", role: "Claimant", function: "Investigation", owner: "Ella White", status: "Pending" },
+  { caseId: "I110", firstName: "Ava", lastName: "Young", nino: "QQ990011K", frfId: "FR-1000000000000010", postcode: "KK5 5MM", role: "Claimant", function: "Fraud check", owner: "Oscar Green", status: "Open" }
+];
+
+
+  const tableBody = document.getElementById("table-body");
+  const caption = document.querySelector(".govuk-table__caption");
+
+  document.getElementById("search-search-btn").addEventListener("click", function () {
+
+    const caseId = document.getElementById("caseid").value.toLowerCase();
+    const firstName = document.getElementById("first-name").value.toLowerCase();
+    const lastName = document.getElementById("last-name").value.toLowerCase();
+    const nino = document.getElementById("nino").value.toLowerCase();
+    const frfId = document.getElementById("frfid").value.toLowerCase();
+    const postcode = document.getElementById("postcode-input").value.toLowerCase();
+
+    // Filter dataset
+    const results = dataset.filter(item => {
+      return (
+        (!caseId || item.caseId.toLowerCase().includes(caseId)) &&
+        (!firstName || item.firstName.toLowerCase().includes(firstName)) &&
+        (!lastName || item.lastName.toLowerCase().includes(lastName)) &&
+        (!nino || item.nino.toLowerCase().includes(nino)) &&
+        (!frfId || item.frfId.toLowerCase().includes(frfId)) &&
+        (!postcode || item.postcode.toLowerCase().includes(postcode))
+      );
+    });
+
+    // Clear table
+    tableBody.innerHTML = "";
+
+    // Remove any previous "no results" message
+    const existingMsg = document.getElementById("no-results-msg");
+    if (existingMsg) existingMsg.remove();
+
+    if (results.length === 0) {
+      const msg = document.createElement("div");
+      msg.id = "no-results-msg";
+      msg.className = "govuk-body govuk-!-font-weight-bold";
+      msg.textContent = "No results found";
+      caption.appendChild(msg);
+      return;
+    }
+
+    // Populate table
+    results.forEach(item => {
+      const row = `
+      <tr class="govuk-table__row">
+        
+        
+<td class="govuk-table__cell">
+  <a class="govuk-link" href="case.html#build-case">
+    ${item.caseId}
+  </a>
+</td>
+
+        <td class="govuk-table__cell">${item.nino}</td>
+        <td class="govuk-table__cell">${item.role}</td>
+        <td class="govuk-table__cell">${item.function}</td>
+        <td class="govuk-table__cell">${item.owner}</td>
+        <td class="govuk-table__cell">${item.status}</td>
+      </tr>
+    `;
+      tableBody.insertAdjacentHTML("beforeend", row);
+    });
+
+  });
+</script>
 
 {% endblock %}

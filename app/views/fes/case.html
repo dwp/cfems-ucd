@@ -1,0 +1,257 @@
+{% extends "layouts/fes-case-nav.html" %}
+
+{% set pageName="Search" %}
+
+{% block content %}
+
+<a href="javascript:history.back()" class="govuk-back-link">Back</a>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full ">
+
+        <span class="govuk-caption-xl">Fraud & Error System - Case ID I123 - John Smith<strong class="govuk-tag"
+                id="case-tag">UC Joint claim</strong></span>
+
+        <h1 class="govuk-heading-l">NI number - AB 12 34 56 C</h1>
+    </div>
+</div>
+
+
+<div class="govuk-grid-row">
+
+    <div class="govuk-tabs" data-module="govuk-tabs">
+        <h2 class="govuk-tabs__title">
+            Contents
+        </h2>
+        <ul class="govuk-tabs__list">
+            <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+                <a class="govuk-tabs__tab" href="#initial-review">
+                    Initial review </a>
+            </li>
+            <li class="govuk-tabs__list-item">
+                <a class="govuk-tabs__tab" href="#build-case">
+                    Build case
+                </a>
+            </li>
+            <li class="govuk-tabs__list-item">
+                <a class="govuk-tabs__tab" href="#decision">
+                    Decision
+                </a>
+            </li>
+            <li class="govuk-tabs__list-item">
+                <a class="govuk-tabs__tab" href="#close-case">
+                    Close case
+                </a>
+            </li>
+            <li class="govuk-link table-right">
+                <a class="govuk-link" href="#">
+                    Give us feedback
+                </a>
+            </li>
+        </ul>
+        <div class="govuk-tabs__panel" id="initial-review">
+            <h2 class="govuk-heading-m">Initial review</h2>
+            <table class="govuk-table">
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header">Case manager</th>
+                        <th scope="col" class="govuk-table__header">Cases opened</th>
+                        <th scope="col" class="govuk-table__header">Cases closed</th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">David Francis</td>
+                        <td class="govuk-table__cell">3</td>
+                        <td class="govuk-table__cell">0</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">Paul Farmer</td>
+                        <td class="govuk-table__cell">1</td>
+                        <td class="govuk-table__cell">0</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">Rita Patel</td>
+                        <td class="govuk-table__cell">2</td>
+                        <td class="govuk-table__cell">0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="build-case">
+            <h2 class="govuk-heading-m">Activities in progress</h2>
+            <div class="govuk-checkboxes table-right" data-module="govuk-checkboxes">
+                <div class="govuk-checkboxes__item">
+                    <input class="govuk-checkboxes__input" id="waste" name="view-all" type="checkbox" value="view all">
+                    <label class="govuk-label govuk-checkboxes__label" for="view-all" id="view-all">
+                        View all
+                    </label>
+                </div>
+            </div>
+            <table class="govuk-table">
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header">Activity</th>
+                        <th scope="col" class="govuk-table__header">Assigned to</th>
+                        <th scope="col" class="govuk-table__header">Due</th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell"><a href="#" class="govuk-link">Team leader action
+                                requested</a></td>
+                        <td class="govuk-table__cell"><strong class="round-tag-n2">N2</strong>NITL2</td>
+                        <td class="govuk-table__cell">23 May 2026, 2:04PM</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell"><a href="#" class="govuk-link">Team leader action
+                                requested</a></td>
+                        <td class="govuk-table__cell"><strong class="round-tag-n2">N2</strong>NITL2</td>
+                        <td class="govuk-table__cell">23 May 2026, 2:04PM</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell"><a href="#" class="govuk-link">Submission to prosecuting
+                                authority</a></td>
+                        <td class="govuk-table__cell"><strong class="round-tag-n1">N1</strong>NIPT1</td>
+                        <td class="govuk-table__cell">29 May 2026, 2:04PM</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="decision">
+            <h2 class="govuk-heading-m">Decision</h2>
+            <table class="govuk-table">
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header">Case manager</th>
+                        <th scope="col" class="govuk-table__header">Cases opened</th>
+                        <th scope="col" class="govuk-table__header">Cases closed</th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">David Francis</td>
+                        <td class="govuk-table__cell">98</td>
+                        <td class="govuk-table__cell">95</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">Paul Farmer</td>
+                        <td class="govuk-table__cell">122</td>
+                        <td class="govuk-table__cell">131</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">Rita Patel</td>
+                        <td class="govuk-table__cell">126</td>
+                        <td class="govuk-table__cell">142</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="close-case">
+            <h2 class="govuk-heading-m">Close case</h2>
+            <table class="govuk-table">
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header">Case manager</th>
+                        <th scope="col" class="govuk-table__header">Cases opened</th>
+                        <th scope="col" class="govuk-table__header">Cases closed</th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">David Francis</td>
+                        <td class="govuk-table__cell">1380</td>
+                        <td class="govuk-table__cell">1472</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">Paul Farmer</td>
+                        <td class="govuk-table__cell">1129</td>
+                        <td class="govuk-table__cell">1083</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">Rita Patel</td>
+                        <td class="govuk-table__cell">1539</td>
+                        <td class="govuk-table__cell">1265</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="govuk-grid-row grey">
+
+    <div class="govuk-grid-column-one-third">
+        <h2 class="govuk-heading-m">What would you like to do?</h2>
+
+        <ul class="govuk-list">
+            <li>
+                <a class="govuk-link" href="#">Add or remove vulnerability flag</a>
+            </li>
+            <li>
+                <a class="govuk-link" href="#">Record a request for evidence</a>
+            </li>
+            <li>
+                <a class="govuk-link" href="#">Add a case note</a>
+            </li>
+            <li>
+                <a class="govuk-link" href="#">Add or remove a flag</a>
+            </li>
+            <li>
+                <a class="govuk-link" href="#">Record contact</a>
+            </li>
+            <li>
+                <a class="govuk-link" href="#">Manage people</a>
+            </li>
+            <li>
+                <a class="govuk-link" href="#">Set an activity</a>
+            </li>
+            <li>
+                <a class="govuk-link" href="#">add staff sensitive flag</a>
+            </li>
+        </ul>
+    </div>
+    <div class="govuk-grid-column-one-third">
+        <h2 class="govuk-heading-m" style="visibility: hidden;">placeholder</h2>
+
+        <ul class="govuk-list">
+            <li>
+                <a class="govuk-link" href="#">Ask for some advice</a>
+            </li>
+            <li>
+                <a class="govuk-link" href="#">Request for Information (RFI)</a>
+            </li>
+            <li>
+                <a class="govuk-link" href="#">Ask a team leader to do something</a>
+            </li>
+            <li>
+                <a class="govuk-link" href="#">Ask for the benefit to be suspended</a>
+            </li>
+            <li>
+                <a class="govuk-link" href="#">Refer for financial investigation</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+        <h2 class="govuk-heading-m" style="visibility: hidden;">placeholder</h2>
+
+        <ul class="govuk-list">
+            <li>
+                <a class="govuk-link" href="#">Plan an interview</a>
+            </li>
+            <li>
+                <a class="govuk-link" href="#">Request or record a decision</a>
+            </li>
+            <li>
+                <a class="govuk-link" href="#">Record outcome</a>
+            </li>
+            <li>
+                <a class="govuk-link" href="#">Update primary risk ID</a>
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+{% endblock %}

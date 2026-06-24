@@ -46,3 +46,37 @@
     font-weight: normal;
     display: block;
   }
+
+  #view-all
+  {
+    font-weight: normal;
+  }
+
+  #case-tag
+  {
+    margin-left: 1rem;
+    background-color: #482d8d;
+    color: #ffffff;
+    font-weight: bold;
+  }
+
+  .round-tag-n2,
+  .round-tag-n1
+  {
+    border-radius: 50%;
+    background-color: #8d38a4;
+    color: #ffffff;
+    padding: 5px 4px;
+    margin-right: 1rem;
+  }
+
+  .round-tag-n1
+  {
+    padding: 5px 6px;
+  }
+
+  .grey
+  {
+    background-color: #f8f8f8;
+    padding: 1rem;
+  }
