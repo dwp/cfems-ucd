@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev": "govuk-prototype-kit dev",
+    "dev": "chokidar \"app/views/**/*.{html,njk}\" -c \"node track-changes.js {path}\" & govuk-prototype-kit dev",
     "serve": "govuk-prototype-kit serve",
     "start": "govuk-prototype-kit start",
     "heroku prebuild": "rm -rf package-lock.json"
@@ -13,4 +13,5 @@
     "govuk-frontend": "5.13.0",
     "govuk-prototype-kit": "13.18.1"
   }
+
 }

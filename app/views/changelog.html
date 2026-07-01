@@ -1,0 +1,52 @@
+{% extends "layouts/main.html" %}
+
+<!-- Add this check line directly underneath the extends tag -->
+{% set logData = data['automated-changelog'] or pluginContext('automated-changelog') %}
+
+{% block pageTitle %}
+  Live Activity Log - {{ serviceName }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    
+    <div class="govuk-grid-column-one-third">
+      <nav class="moj-side-navigation" aria-label="Changelog navigation">
+        <h2 class="govuk-heading-s govuk-!-margin-bottom-2">Navigation</h2>
+        <ul class="govuk-list">
+          <li>
+            <a class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold" href="#">Live Activity Log</a>
+          </li>
+          <li>
+            <a class="govuk-link" href="/index">Prototype Home</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l">Prototype administration</span>
+      <h1 class="govuk-heading-xl">Live Activity Log</h1>
+      
+      <p class="govuk-body">
+        This log is automatically generated. Any time you modify or create an HTML/Nunjucks template screen within this prototype, the interface will list it right here in real-time.
+      </p>
+
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+      <!-- Change this condition block -->
+{% if logData and logData.length > 0 %}
+  <ol class="govuk-list govuk-list--number">
+    {% for change in logData %}
+       ...
+    {% endfor %}
+  </ol>
+{% else %}
+        <div class="govuk-inset-text">
+          No edits captured yet. Save any file in your <code>app/views/</code> folder to start capturing live edits.
+        </div>
+      {% endif %}
+
+    </div>
+  </div>
+{% endblock %}

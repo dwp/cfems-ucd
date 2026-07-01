@@ -1,5 +1,5 @@
 {
-  "serviceName": "Respond to a request for information",
+  "serviceName": "CFEMS",
   "plugins": {
     "govuk-frontend": {
       "rebrand": true
