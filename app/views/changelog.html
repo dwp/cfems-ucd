@@ -1,10 +1,7 @@
 {% extends "layouts/main.html" %}
 
-<!-- Add this check line directly underneath the extends tag -->
-{% set logData = data['automated-changelog'] or pluginContext('automated-changelog') %}
-
 {% block pageTitle %}
-  Live Activity Log - {{ serviceName }}
+  Changelog - {{ serviceName }}
 {% endblock %}
 
 {% block content %}
@@ -26,7 +23,7 @@
 
     <div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-l">Prototype administration</span>
-      <h1 class="govuk-heading-xl">Live Activity Log</h1>
+      <h1 class="govuk-heading-xl">Changelog</h1>
       
       <p class="govuk-body">
         This log is automatically generated. Any time you modify or create an HTML/Nunjucks template screen within this prototype, the interface will list it right here in real-time.

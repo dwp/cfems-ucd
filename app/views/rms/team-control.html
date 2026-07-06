@@ -1,95 +1,442 @@
 {% extends "layouts/rms-nav.html" %}
 
-{% set pageName="Home" %}
+{% set pageName="RMS - Team control" %}
 
 {% block content %}
 
+<div
+  id="error-summary"
+  class="govuk-error-summary"
+  aria-labelledby="error-summary-title"
+  role="alert"
+  tabindex="-1"
+  data-module="govuk-error-summary"
+  style="display:none;">
+  <div class="govuk-error-summary__title-wrapper">
+    <h2
+      class="govuk-error-summary__title"
+      id="error-summary-title">
+      There is a problem
+    </h2>
+  </div>
+
+  <div class="govuk-error-summary__body">
+    <ul
+      class="govuk-list govuk-error-summary__list"
+      id="error-list">
+    </ul>
+  </div>
+</div>
+
+<div
+  id="success-banner"
+  class="govuk-notification-banner govuk-notification-banner--success"
+  role="alert"
+  aria-labelledby="govuk-notification-banner-title"
+  data-module="govuk-notification-banner"
+  style="display:none;">
+  <div class="govuk-notification-banner__header">
+    <h2
+      class="govuk-notification-banner__title"
+      id="govuk-notification-banner-title">
+      Success
+    </h2>
+  </div>
+
+  <div class="govuk-notification-banner__content">
+    <h3 class="govuk-notification-banner__heading">
+      Team control settings have been updated.
+    </h3>
+    <p class="govuk-body">
+      Changes have been applied and will take effect immediately.
+    </p>
+  </div>
+</div>
+
 <a href="javascript:history.back()" class="govuk-back-link">Back</a>
 
+
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-full ">
+  <div class="govuk-grid-column-full">
 
     <span class="govuk-caption-xl">Referral Management System</span>
+
     <h1 class="govuk-heading-l">Team control</h1>
-    <p class="govuk-body">Assign a prioritised source to a specific team so they can work on those cases first. </p>
+
+    <p class="govuk-body-l">
+      Assign a prioritised source to a specific team so they can work on those cases first.
+    </p>
 
     <div class="govuk-warning-text">
-  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-  <strong class="govuk-warning-text__text">
-    <span class="govuk-visually-hidden">Warning</span>
-    Changes you make here will override any source prioritisation previously set
-  </strong>
-</div>
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-visually-hidden">Warning</span>
+        Changes you make here will override any source prioritisation previously set
+      </strong>
+    </div>
 
     <div class="govuk-form-group">
-      <label class="govuk-label" for="sort">
-        Select source you wnat to priotitise
+
+      <p id="source-error" class="govuk-error-message" style="display:none;">
+        <span class="govuk-visually-hidden">Error:</span>
+        Select a source
+      </p>
+
+      <label class="govuk-label" for="source">
+        Select the source you want to prioritise
       </label>
-      <div id="location-hint" class="govuk-hint">
-    For example, if you want a particular team to work on Local Authority referrals, select that as the source.
-  </div>
-      <select class="govuk-select" id="sort" name="sort">
-        <option value="published" selected>Select</option>
-        <option value="published">LA</option>
-        <option value="updated">HMRC</option>
-        <option value="views">UCCR</option>
-        <option value="comments">Performance measurement</option>
+
+      <div class="govuk-hint">
+        For example, if you want a particular team to work on Local Authority referrals, select that as the source.
+      </div>
+
+      <select class="govuk-select" id="source" name="source">
+        <option value="" selected>Select</option>
+        <option value="LA">LA</option>
+        <option value="HMRC">HMRC</option>
+        <option value="UCCR">UCCR</option>
+        <option value="Performance measurement">Performance measurement</option>
       </select>
+
     </div>
-<div class="govuk-form-group">
-  <label class="govuk-label" for="location">
-    Select a team to assign the prioritised source to  
-  </label>
-  <div id="location-hint" class="govuk-hint">
-    The team selected will first work on referrals from the source you've prioritised. Once there are no longer any referrals from that prioritised source, the team will get referrals as normal from the workbasket. 
+
+    <div class="govuk-form-group">
+
+      <p id="team-error" class="govuk-error-message" style="display:none;">
+        <span class="govuk-visually-hidden">Error:</span>
+        Select a team
+      </p>
+
+      <label class="govuk-label" for="team">
+        Select a team to assign the prioritised source to
+      </label>
+
+      <div class="govuk-hint">
+        The team selected will first work on referrals from the source you've prioritised.
+        Once there are no longer any referrals from that source, the team will receive referrals normally from the workbasket.
+      </div>
+
+      <select
+        class="govuk-select"
+        id="team"
+        name="team">
+        <option value="" selected>Select</option>
+        <option value="RMS Team 1">RMS Team 1</option>
+        <option value="RMS Team 2">RMS Team 2</option>
+        <option value="RMS Team 3">RMS Team 3</option>
+        <option value="RMS Team 4">RMS Team 4</option>
+      </select>
+
+    </div>
+
+    <button
+      type="button"
+      id="add-selection"
+      class="govuk-button govuk-button--secondary"
+      data-module="govuk-button">
+      Add selection to the table
+    </button>
+
+    <table class="govuk-table">
+
+      <caption class="govuk-table__caption govuk-table__caption--m">
+        Prioritised sources
+      </caption>
+
+      <div class="govuk-hint">
+        Once submitted, the changes you've made to any teams' workbasket will take place immediately.
+        To change the priority of a source, remove it from the table and start again.
+      </div>
+
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Source</th>
+          <th scope="col" class="govuk-table__header">Team</th>
+          <th scope="col" class="govuk-table__header">Remove</th>
+        </tr>
+      </thead>
+
+      <tbody
+  class="govuk-table__body"
+  id="prioritisation-table-body">
+
+  <tr
+    class="govuk-table__row"
+    id="empty-row">
+
+    <td class="govuk-table__cell"></td>
+    <td class="govuk-table__cell">
+      No sources have been prioritised yet.
+    </td>
+    <td class="govuk-table__cell"></td>
+
+  </tr>
+
+</tbody>
+
+    </table>
+
+    <button
+      type="button"
+      id="apply-button"
+      class="govuk-button"
+      data-module="govuk-button">
+      Apply
+    </button>
+
   </div>
-  <select class="govuk-select" id="location" name="location" aria-describedby="location-hint">
-    <option value="choose" selected>Select</option>
-    <option value="london">RMS Team 1</option>
-    <option value="northeast">RMS Team 2</option>
-    <option value="northwest">RMS Team 3</option>
-    <option value="southeast">RMS Team 4</option>
-  </select>
 </div>
 
-<button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button">
-  Add selection to the table
-</button>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
 
-<table class="govuk-table">
-  <label class="govuk-label" for="location">
-    Prioritised sources
-  </label>
-  <div id="location-hint" class="govuk-hint">
-    Once submitted, the changes you've made to any teams' workbasket will take place immediately. To change the priority of a source, remove it from the table and start again.
-  </div>
-  <thead class="govuk-table__head">
-    <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header">Source</th>
-      <th scope="col" class="govuk-table__header">Ranking</th>
-      <th scope="col" class="govuk-table__header">Remove</th>
-    </tr>
-  </thead>
-  <tbody class="govuk-table__body">
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell"></td>
-      <td class="govuk-table__cell"></td>
-      <td class="govuk-table__cell"></td>
-    </tr>
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell"></td>
-      <td class="govuk-table__cell"></td>
-      <td class="govuk-table__cell"></td>
-    </tr>
-  </tbody>
-</table>
+  const sourceSelect = document.getElementById('source');
+  const teamSelect = document.getElementById('team');
 
-<button type="submit" class="govuk-button" data-module="govuk-button">
-  Apply
-</button>
-<!-- conditional table? {% include '/includes/case-table.html' %}-->
-    
-  </div>
-</div>
+  const addButton = document.getElementById('add-selection');
+  const applyButton = document.getElementById('apply-button');
+
+  const tableBody = document.getElementById('prioritisation-table-body');
+
+  const successBanner = document.getElementById('success-banner');
+
+  const errorSummary = document.getElementById('error-summary');
+  const errorList = document.getElementById('error-list');
+
+  const sourceError = document.getElementById('source-error');
+  const teamError = document.getElementById('team-error');
+
+  const sourceGroup = sourceSelect.closest('.govuk-form-group');
+  const teamGroup = teamSelect.closest('.govuk-form-group');
+
+  function hideSuccessBanner() {
+    successBanner.style.display = 'none';
+  }
+
+  function clearErrors() {
+
+    errorSummary.style.display = 'none';
+    errorList.innerHTML = '';
+
+    sourceError.style.display = 'none';
+    teamError.style.display = 'none';
+
+    sourceGroup.classList.remove('govuk-form-group--error');
+    teamGroup.classList.remove('govuk-form-group--error');
+
+    sourceSelect.classList.remove('govuk-select--error');
+    teamSelect.classList.remove('govuk-select--error');
+  }
+
+  function showErrors(errors) {
+
+    errorSummary.style.display = 'block';
+    errorList.innerHTML = '';
+
+    errors.forEach(function (error) {
+
+      const li = document.createElement('li');
+
+      const link = document.createElement('a');
+
+      link.href = error.href;
+      link.className = 'govuk-link';
+      link.textContent = error.text;
+
+      li.appendChild(link);
+      errorList.appendChild(li);
+    });
+
+    errorSummary.focus();
+  }
+
+  errorList.addEventListener('click', function (e) {
+
+    const link = e.target.closest('a');
+
+    if (!link) {
+      return;
+    }
+
+    e.preventDefault();
+
+    const target = document.querySelector(
+      link.getAttribute('href')
+    );
+
+    if (target) {
+
+      target.focus();
+
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    }
+  });
+
+  sourceSelect.addEventListener('change', function () {
+    clearErrors();
+    hideSuccessBanner();
+  });
+
+  teamSelect.addEventListener('change', function () {
+    clearErrors();
+    hideSuccessBanner();
+  });
+
+  addButton.addEventListener('click', function () {
+
+    clearErrors();
+    hideSuccessBanner();
+
+    const errors = [];
+
+    if (!sourceSelect.value) {
+
+      sourceError.style.display = 'block';
+
+      sourceGroup.classList.add('govuk-form-group--error');
+      sourceSelect.classList.add('govuk-select--error');
+
+      errors.push({
+        href: '#source',
+        text: 'Select a source'
+      });
+    }
+
+    if (!teamSelect.value) {
+
+      teamError.style.display = 'block';
+
+      teamGroup.classList.add('govuk-form-group--error');
+      teamSelect.classList.add('govuk-select--error');
+
+      errors.push({
+        href: '#team',
+        text: 'Select a team'
+      });
+    }
+
+    if (errors.length > 0) {
+      showErrors(errors);
+      return;
+    }
+
+    const sourceText =
+      sourceSelect.options[sourceSelect.selectedIndex].text;
+
+    const teamText =
+      teamSelect.options[teamSelect.selectedIndex].text;
+
+    const existingRows = tableBody.querySelectorAll('tr');
+
+    for (const existingRow of existingRows) {
+
+      const cells = existingRow.querySelectorAll('td');
+
+      if (
+        cells.length > 0 &&
+        cells[0].textContent.trim() === sourceText
+      ) {
+        alert('This source has already been assigned.');
+        return;
+      }
+    }
+
+    const emptyRow = document.getElementById('empty-row');
+
+    if (emptyRow) {
+      emptyRow.remove();
+    }
+
+    const row = document.createElement('tr');
+
+row.className = 'govuk-table__row';
+
+
+
+row.innerHTML = `
+  <td class="govuk-table__cell">${sourceText}</td>
+  <td class="govuk-table__cell">${teamText}</td>
+  <td class="govuk-table__cell">
+    <a class="govuk-link remove-row" href="#">Remove</a>
+  </td>
+`;
+
+
+
+tableBody.appendChild(row);
+
+sourceSelect.selectedIndex = 0;
+teamSelect.selectedIndex = 0;
+  });
+
+  // Remove row
+
+tableBody.addEventListener('click', function (e) {
+
+  const removeLink = e.target.closest('.remove-row');
+
+  if (!removeLink) {
+    return;
+  }
+
+  e.preventDefault();
+
+  const row = removeLink.closest('tr');
+
+  if (row) {
+    row.remove();
+  }
+
+  const remainingRows =
+    tableBody.querySelectorAll('tr:not(#empty-row)');
+
+  if (remainingRows.length === 0) {
+
+    tableBody.innerHTML = `
+      <tr class="govuk-table__row" id="empty-row">
+        <td class="govuk-table__cell"></td>
+        <td class="govuk-table__cell">
+          No sources have been prioritised yet.
+        </td>
+        <td class="govuk-table__cell"></td>
+      </tr>
+    `;
+  }
+
+  hideSuccessBanner();
+});
+
+  applyButton.addEventListener('click', function () {
+
+    clearErrors();
+
+    const hasRows =
+      tableBody.querySelectorAll('tr:not(#empty-row)').length > 0;
+
+    if (!hasRows) {
+
+      showErrors([
+        {
+          href: '#source',
+          text: 'Add at least one source and team assignment before applying'
+        }
+      ]);
+
+      return;
+    }
+
+    successBanner.style.display = 'block';
+
+    successBanner.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  });
+
+});
+</script>
 
 {% endblock %}

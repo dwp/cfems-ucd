@@ -90,3 +90,43 @@ hr
     background-color: #f8f8f8;
     padding: 1rem;
   }
+
+  .govuk-notification-banner__content > * {
+    max-width: none;
+}
+
+  .remove-link:link {
+    color: #1d70b8;
+  }
+
+  .remove-link:visited {
+    color: #4c2c92;
+  }
+
+  a:hover {
+    color: #003078;
+    text-decoration-thickness: 3px;
+    cursor: pointer;
+  }
+
+  .remove-link:active {
+    color: #0b0c0c;
+  }
+
+  .remove-link:focus {
+    color: #0b0c0c;
+    background: #ffdd00;
+    outline: 3px solid #ffdd00;
+    box-shadow: 0 -2px #ffdd00, 0 4px #0b0c0c;
+    text-decoration: none;
+  }
+
+.autocomplete-option {
+  padding: 8px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #b1b4b6;
+}
+
+.autocomplete-option:hover {
+  background: #f3f2f1;
+}

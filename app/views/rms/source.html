@@ -1,81 +1,439 @@
 {% extends "layouts/rms-nav.html" %}
 
-{% set pageName="RMS Source prioritisation" %}
+{% set pageName = "RMS Source prioritisation" %}
 
 {% block content %}
+<div
+  id="error-summary"
+  class="govuk-error-summary"
+  aria-labelledby="error-summary-title"
+  role="alert"
+  tabindex="-1"
+  data-module="govuk-error-summary"
+  style="display:none;">
+
+  <div class="govuk-error-summary__title-wrapper">
+    <h2
+      class="govuk-error-summary__title"
+      id="error-summary-title">
+      There is a problem
+    </h2>
+  </div>
+
+  <div class="govuk-error-summary__body">
+    <ul
+      class="govuk-list govuk-error-summary__list"
+      id="error-list">
+    </ul>
+  </div>
+
+</div>
+<div
+  id="success-banner"
+  class="govuk-notification-banner govuk-notification-banner--success"
+  role="alert"
+  aria-labelledby="govuk-notification-banner-title"
+  data-module="govuk-notification-banner"
+  style="display:none;">
+  <div class="govuk-notification-banner__header">
+    <h2
+      class="govuk-notification-banner__title"
+      id="govuk-notification-banner-title">
+      Success
+    </h2>
+  </div>
+  <div class="govuk-notification-banner__content">
+    <h3 class="govuk-notification-banner__heading">
+      Source prioritisation has been updated.
+    </h3>
+    <p class="govuk-body">
+      The new prioritisation will take effect immediately for new cases and overnight for existing cases.
+    </p>
+  </div>
+</div>
 
 <a href="javascript:history.back()" class="govuk-back-link">Back</a>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-full ">
+  <div class="govuk-grid-column-full">
 
     <span class="govuk-caption-xl">Referral Management System</span>
     <h1 class="govuk-heading-l">Source prioritisation</h1>
-    <p class="govuk-body-l">Choose the sources you want to prioritise from the workbasket.</p>
+
+    <p class="govuk-body-l">
+      Choose the sources you want to prioritise from the workbasket.
+    </p>
+
+    
 
     <div class="govuk-form-group">
-  <label class="govuk-label" for="sort">
-    Select source to prioritise backlog
-  </label>
-  <select class="govuk-select" id="sort" name="sort">
-    <option value="published" selected>Select</option>
-    <option value="published">LA</option>
-    <option value="updated">HMRC</option>
-    <option value="views">UCCR</option>
-    <option value="comments">Performance measurement</option>
-  </select>
-</div>
-<div class="govuk-form-group">
-  <label class="govuk-label" for="location">
-    Select a priority ranking for the source (1 to 5) 
-  </label>
-  <div id="location-hint" class="govuk-hint">
-    You can prioritise up to 5 sources from 1 to 5, with 1 being the highest priority. Any sources given the same priority will be equally weighted.
-  </div>
-  <select class="govuk-select" id="location" name="location" aria-describedby="location-hint">
-    <option value="choose" selected>Select</option>
-    <option value="london">1</option>
-    <option value="northeast">2</option>
-    <option value="northwest">3</option>
-    <option value="southeast">4</option>
-    <option value="southwest">5</option>
-  </select>
-</div>
+      <p id="source-error" class="govuk-error-message" style="display:none;">
+  <span class="govuk-visually-hidden">Error:</span>
+  Select a source
+</p>
+      <label class="govuk-label" for="source">
+        Select a source you want to prioritise
+      </label>
 
-<button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button">
-  Add selection to the table
-</button>
-
-<table class="govuk-table">
-  <label class="govuk-label" for="location">
-    Prioritised sources
-  </label>
-  <div id="location-hint" class="govuk-hint">
-    Once you apply the changes you've made, they will take place immediately for new cases and overnight for existing ones. To change the priority of a source, remove it from the table and start again.
-  </div>
-  <thead class="govuk-table__head">
-    <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header">Source</th>
-      <th scope="col" class="govuk-table__header">Ranking</th>
-      <th scope="col" class="govuk-table__header">Remove</th>
-    </tr>
-  </thead>
-  <tbody class="govuk-table__body">
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell"></td>
-      <td class="govuk-table__cell">Nothing has been selected yet</td>
-      <td class="govuk-table__cell"></td>
-    </tr>
+      <select class="govuk-select" id="source" name="source">
+        <option value="" selected>Select</option>
+        <option value="LA">LA</option>
+        <option value="HMRC">HMRC</option>
+        <option value="UCCR">UCCR</option>
+        <option value="Performance measurement">Performance measurement</option>
+      </select>
+    </div>
     
-  </tbody>
-</table>
 
-<button type="submit" class="govuk-button" data-module="govuk-button">
+    <div class="govuk-form-group">
+      <p id="ranking-error" class="govuk-error-message" style="display:none;">
+  <span class="govuk-visually-hidden">Error:</span>
+  Select a priority ranking
+</p>
+      <label class="govuk-label" for="ranking">
+        Select a priority ranking for the source (1 to 5) 
+      </label>
+
+      <div id="ranking-hint" class="govuk-hint">
+        You can prioritise up to 5 sources from 1 to 5, with 1 being the highest priority.
+        Any sources given the same priority will be equally weighted.
+      </div>
+
+      <select
+        class="govuk-select"
+        id="ranking"
+        name="ranking"
+        aria-describedby="ranking-hint">
+        <option value="" selected>Select a source before choosing a ranking</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </div>
+
+    
+
+    <button
+      type="button"
+      id="add-selection"
+      class="govuk-button govuk-button--secondary"
+      data-module="govuk-button">
+      Add selection to the table
+    </button>
+
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--m">
+        Prioritised sources
+      </caption>
+
+      <div id="table-hint" class="govuk-hint">
+        Once you apply the changes you've made, they will take place immediately
+        for new cases and overnight for existing ones. To change the priority of
+        a source, remove it from the table and start again.
+      </div>
+
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Source</th>
+          <th scope="col" class="govuk-table__header">Ranking</th>
+          <th scope="col" class="govuk-table__header">Remove</th>
+        </tr>
+      </thead>
+
+      <tbody class="govuk-table__body" id="prioritisation-table-body">
+        <tr class="govuk-table__row" id="empty-row">
+          <td class="govuk-table__cell"></td>
+          <td class="govuk-table__cell">Nothing has been selected yet</td>
+          <td class="govuk-table__cell"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button
+  type="button"
+  id="apply-button"
+  class="govuk-button"
+  data-module="govuk-button">
   Apply
 </button>
-<!-- conditional table? {% include '/includes/case-table.html' %}-->
-    
+
   </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  // Elements
+
+  const sourceSelect = document.getElementById('source');
+  const rankingSelect = document.getElementById('ranking');
+
+  const addButton = document.getElementById('add-selection');
+  const applyButton = document.getElementById('apply-button');
+
+  const tableBody = document.getElementById('prioritisation-table-body');
+
+  const successBanner = document.getElementById('success-banner');
+
+  const errorSummary = document.getElementById('error-summary');
+  const errorList = document.getElementById('error-list');
+
+  const sourceError = document.getElementById('source-error');
+  const rankingError = document.getElementById('ranking-error');
+
+  const sourceGroup = sourceSelect.closest('.govuk-form-group');
+  const rankingGroup = rankingSelect.closest('.govuk-form-group');
+
+  // Helpers
+
+  function hideSuccessBanner() {
+    successBanner.style.display = 'none';
+  }
+
+  function clearErrors() {
+
+    errorSummary.style.display = 'none';
+    errorList.innerHTML = '';
+
+    sourceError.style.display = 'none';
+    rankingError.style.display = 'none';
+
+    sourceGroup.classList.remove('govuk-form-group--error');
+    rankingGroup.classList.remove('govuk-form-group--error');
+
+    sourceSelect.classList.remove('govuk-select--error');
+    rankingSelect.classList.remove('govuk-select--error');
+  }
+
+  function showErrors(errors) {
+
+    errorSummary.style.display = 'block';
+    errorList.innerHTML = '';
+
+    errors.forEach(function (error) {
+
+      const li = document.createElement('li');
+
+      const link = document.createElement('a');
+
+      link.href = error.href;
+      link.className = 'govuk-link';
+      link.textContent = error.text;
+
+      li.appendChild(link);
+      errorList.appendChild(li);
+    });
+
+    errorSummary.focus();
+  }
+
+  // Error summary links
+
+  errorList.addEventListener('click', function (e) {
+
+    const link = e.target.closest('a');
+
+    if (!link) {
+      return;
+    }
+
+    e.preventDefault();
+
+    const target = document.querySelector(
+      link.getAttribute('href')
+    );
+
+    if (target) {
+
+      target.focus();
+
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    }
+  });
+
+  // Clear messaging when user changes values
+
+  sourceSelect.addEventListener('change', function () {
+    hideSuccessBanner();
+    clearErrors();
+  });
+
+  rankingSelect.addEventListener('change', function () {
+    hideSuccessBanner();
+    clearErrors();
+  });
+
+  // Add Selection
+
+  addButton.addEventListener('click', function () {
+
+    hideSuccessBanner();
+    clearErrors();
+
+    const sourceValue = sourceSelect.value;
+    const rankingValue = rankingSelect.value;
+
+    const errors = [];
+
+    if (!sourceValue) {
+
+      sourceError.style.display = 'block';
+      sourceGroup.classList.add('govuk-form-group--error');
+      sourceSelect.classList.add('govuk-select--error');
+
+      errors.push({
+        href: '#source',
+        text: 'Select a source'
+      });
+    }
+
+    if (!rankingValue) {
+
+      rankingError.style.display = 'block';
+      rankingGroup.classList.add('govuk-form-group--error');
+      rankingSelect.classList.add('govuk-select--error');
+
+      errors.push({
+        href: '#ranking',
+        text: 'Select a priority ranking'
+      });
+    }
+
+    if (errors.length > 0) {
+      showErrors(errors);
+      return;
+    }
+
+    const sourceText =
+      sourceSelect.options[sourceSelect.selectedIndex].text;
+
+    const rankingText =
+      rankingSelect.options[rankingSelect.selectedIndex].text;
+
+    // Prevent duplicates
+
+    const existingRows = tableBody.querySelectorAll('tr');
+
+    for (const existingRow of existingRows) {
+
+      const cells = existingRow.querySelectorAll('td');
+
+      if (
+        cells.length > 0 &&
+        cells[0].textContent.trim() === sourceText
+      ) {
+        alert('This source has already been added.');
+        return;
+      }
+    }
+
+    const emptyRow = document.getElementById('empty-row');
+
+    if (emptyRow) {
+      emptyRow.remove();
+    }
+
+    const row = document.createElement('tr');
+
+    row.className = 'govuk-table__row';
+
+    row.innerHTML = `
+      <td class="govuk-table__cell">${sourceText}</td>
+      <td class="govuk-table__cell">${rankingText}</td>
+      <td class="govuk-table__cell">
+        #
+          Remove
+        </a>
+      </td>
+    `;
+
+    tableBody.appendChild(row);
+
+    sourceSelect.selectedIndex = 0;
+    rankingSelect.selectedIndex = 0;
+  });
+
+  // Remove row
+
+  tableBody.addEventListener('click', function (e) {
+
+    if (!e.target.classList.contains('remove-row')) {
+      return;
+    }
+
+    e.preventDefault();
+
+    const row = e.target.closest('tr');
+
+    if (row) {
+      row.remove();
+    }
+
+    const rows =
+      tableBody.querySelectorAll('tr:not(#empty-row)');
+
+    if (rows.length === 0) {
+
+      tableBody.innerHTML = `
+        <tr class="govuk-table__row" id="empty-row">
+          <td class="govuk-table__cell"></td>
+          <td class="govuk-table__cell">Nothing has been selected yet</td>
+          <td class="govuk-table__cell"></td>
+        </tr>
+      `;
+    }
+
+    hideSuccessBanner();
+  });
+
+  // Apply
+
+  applyButton.addEventListener('click', function () {
+
+    clearErrors();
+
+    const hasRows =
+      tableBody.querySelectorAll('tr:not(#empty-row)').length > 0;
+
+    if (!hasRows) {
+
+      sourceError.style.display = 'block';
+      rankingError.style.display = 'block';
+
+      sourceGroup.classList.add('govuk-form-group--error');
+      rankingGroup.classList.add('govuk-form-group--error');
+
+      sourceSelect.classList.add('govuk-select--error');
+      rankingSelect.classList.add('govuk-select--error');
+
+      showErrors([
+        {
+          href: '#source',
+          text: 'Select a source to prioritise'
+        },
+        {
+          href: '#ranking',
+          text: 'Select a priority ranking'
+        }
+      ]);
+
+      return;
+    }
+
+    successBanner.style.display = 'block';
+
+    successBanner.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  });
+
+});
+</script>
 
 {% endblock %}

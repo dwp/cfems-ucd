@@ -1,6 +1,6 @@
 {% extends "layouts/rms-nav.html" %}
 
-{% set pageName="Home" %}
+{% set pageName="RMS Workbasket control" %}
 
 {% block content %}
 
@@ -11,93 +11,539 @@
 
     <span class="govuk-caption-xl">Referral Management System</span>
     <h1 class="govuk-heading-l">Workbasket control</h1>
-    <p class="govuk-body">Filter workbasket by source or search using Case ID, Fraud Referral Form ID or National Insurance number to find cases you want to view, assign or close.</p>
+    <p class="govuk-body-l">Filter workbasket by source or search using Case ID or Fraud Referral Form ID to find cases
+      you want to view, assign or reject.</p>
 
+  </div>
+</div>
+
+<h2 class="govuk-heading-m">Filter your workbasket</h2>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
     <div class="govuk-form-group">
-  <label class="govuk-label" for="sort">
-    Select source to prioritise backlog
-  </label>
-  <select class="govuk-select" id="sort" name="sort">
-    <option value="published" selected>Select</option>
-    <option value="published">LA</option>
-    <option value="updated">HMRC</option>
-    <option value="views">UCCR</option>
-    <option value="comments">Performance measurement</option>
-  </select>
+      <label class="govuk-label" for="sort">
+        Filter by source
+      </label>
+      <div id="location-hint" class="govuk-hint">
+        Select from the list below.
+      </div>
+
+      <select class="govuk-select" id="sort" name="sort">
+        <option value="" selected>Select</option>
+        <option value="LA">LA</option>
+        <option value="HMRC">HMRC</option>
+        <option value="UCCR">UCCR</option>
+        <option value="PM">Performance measurement</option>
+      </select>
+
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-half">
+
+    <!-- Postcode -->
+    <div class="govuk-form-group" style="position:relative;">
+      <label class="govuk-label" for="postcode-input">Filter by postcode</label>
+      <div id="postcode-hint" class="govuk-hint">
+        For example, AA1 2BC.
+      </div>
+
+      <input id="postcode-input" class="govuk-input" autocomplete="off" style="width:220px;" placeholder="Start typing">
+
+      <div id="postcode-results" class="autocomplete-results"
+        style="display:none; position:absolute; background:white; border:2px solid #0b0c0c; width:220px; z-index:100;">
+      </div>
+    </div>
+
+  </div>
 </div>
 
-<div class="govuk-form-group">
-  <label class="govuk-label" for="one-quarter">
-    Search by Case ID
-  </label>
-  <div id="location-hint" class="govuk-hint">
-  For example, PR-123.
-</div>
-  <input class="govuk-input govuk-!-width-one-quarter" id="one-quarter" name="oneQuarter" type="text">
-</div>
+<h2 class="govuk-heading-m">Search for individual cases</h2>
 
-<div class="govuk-form-group">
-  <label class="govuk-label" for="one-quarter">
-    Search by Fraud Referral Form ID
-  </label>
-  <div id="location-hint" class="govuk-hint">
-  For example, FR-76929D8300004786.
-</div>
-  <input class="govuk-input govuk-!-width-one-quarter" id="one-quarter" name="oneQuarter" type="text">
-</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+    <!-- Case ID -->
+    <div class="govuk-form-group" style="position:relative;">
+      <label class="govuk-label" for="caseid-input">Search by case ID</label>
+      <div class="govuk-hint">
+        For example, I-123.
+      </div>
 
-<div class="govuk-form-group">
-  <label class="govuk-label" for="one-quarter">
-    Search by National Insurance number
-  </label>
-  <div id="location-hint" class="govuk-hint">
-  For example, QQ123456C.
-</div>
-  <input class="govuk-input govuk-!-width-one-quarter" id="one-quarter" name="oneQuarter" type="text">
-</div>
+      <input id="caseid-input" class="govuk-input" autocomplete="off" style="width:220px;" placeholder="Start typing">
 
+      <div id="caseid-results" class="autocomplete-results"
+        style="display:none; position:absolute; background:white; border:2px solid #0b0c0c; width:220px; z-index:100;">
+      </div>
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-half">
+    <!-- FRF ID -->
+    <div class="govuk-form-group" style="position:relative;">
+      <label class="govuk-label" for="frf-input">Search by Fraud Referral Form ID</label>
+      <div class="govuk-hint">
+        For example, FR-76929D8300004786.
+      </div>
 
-<button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+      <input id="frf-input" class="govuk-input" autocomplete="off" style="width:220px;" placeholder="Start typing">
+
+      <div id="frf-results" class="autocomplete-results"
+        style="display:none; position:absolute; background:white; border:2px solid #0b0c0c; width:220px; z-index:100;">
+      </div>
+    </div>
+  </div>
+</div>
+<button type="submit" class="govuk-button govuk-button" data-module="govuk-button">
   Search
 </button>
+<hr>
 
-<table class="govuk-table">
-  <label class="govuk-label" for="location">
-    Prioritised sources
-  </label>
-  <div id="location-hint" class="govuk-hint">
-    Once submitted, the changes you've made to any teams' workbasket will take place immediately. To change the priority of a source, remove it from the table and start again.
+<h2 class="govuk-heading-m">Workbasket results</h2>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+    <p class="govuk-body">
+      <a href="#" id="load-cases" class="govuk-link">
+        Show oldest 1,000 cases
+      </a>
+    </p>
+
+    <h3 class="govuk-heading-s" id="results-caption">
+      Total 15,525 cases
+    </h3>
   </div>
-  <thead class="govuk-table__head">
-    <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header">Source</th>
-      <th scope="col" class="govuk-table__header">Case ID</th>
-      <th scope="col" class="govuk-table__header">FRF ID</th>
-      <th scope="col" class="govuk-table__header">NI number</th>
-      <th scope="col" class="govuk-table__header">Date created</th>
-    </tr>
-  </thead>
-  <tbody class="govuk-table__body">
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell"></td>
-      <td class="govuk-table__cell"></td>
-      <td class="govuk-table__cell"></td>
-      <td class="govuk-table__cell"></td>
-      <td class="govuk-table__cell"></td>
-    </tr>
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell"></td>
-      <td class="govuk-table__cell"></td>
-      <td class="govuk-table__cell"></td>
-      <td class="govuk-table__cell"></td>
-      <td class="govuk-table__cell"></td>
-    </tr>
-  </tbody>
-</table>
 
-<!-- conditional table? {% include '/includes/case-table.html' %}-->
-    
+  <div id="results-actions" class="govuk-grid-column-one-half table-right" style="display:none;">
+
+    <p>
+      <a href="#" id="export-excel">
+        Export to Excel
+      </a>
+    </p>
+
+    <p>
+      <a href="#" id="refresh-list">
+        Refresh list
+      </a>
+    </p>
+
   </div>
 </div>
+<div id="search-results"></div>
+
+
+<nav class="govuk-pagination" aria-label="Results pages">
+
+  <div id="prev-container" class="govuk-pagination__prev"></div>
+
+  <ul id="pagination-list" class="govuk-pagination__list"></ul>
+
+  <div id="next-container" class="govuk-pagination__next"></div>
+
+</nav>
+
+<!--search  and 1000 cases script-->
+<script>
+
+
+  const sourceSelect = document.getElementById("sort");
+
+  const dependentFields = [
+    document.getElementById("postcode-input"),
+    document.getElementById("caseid-input"),
+    document.getElementById("frf-input")
+  ];
+
+  function updateFilters() {
+
+    const sourceSelected = sourceSelect.value !== "";
+
+    dependentFields.forEach(field => {
+
+      field.disabled = !sourceSelected;
+
+      if (sourceSelected) {
+        field.placeholder = "Start typing";
+      } else {
+        field.placeholder = "Select a source first";
+        field.value = "";
+      }
+
+    });
+
+    [
+      "postcode-results",
+      "caseid-results",
+      "frf-results"
+    ].forEach(id => {
+
+      const el = document.getElementById(id);
+
+      if (el) {
+        el.style.display = "none";
+      }
+
+    });
+
+  }
+
+  sourceSelect.addEventListener("change", updateFilters);
+  updateFilters();
+
+  /* ===========================
+     AUTOCOMPLETE DATA
+  =========================== */
+
+  const postcodes = [
+    "SW1A 1AA",
+    "E14 5AB",
+    "M1 1AE",
+    "B1 1BB",
+    "LS1 4AP",
+    "L1 8JQ",
+    "CF10 1EP"
+  ];
+
+  const caseIds = [
+    "I-123",
+    "I-124",
+    "I-125",
+    "I-126",
+    "I-127",
+    "I-128"
+  ];
+
+  const frfIds = [
+    "FR-76929D8300004786",
+    "FR-76929D8300004787",
+    "FR-76929D8300004788",
+    "FR-76929D8300004789",
+    "FR-76929D8300004790"
+  ];
+
+  function setupAutocomplete(inputId, resultsId, data) {
+
+    const input = document.getElementById(inputId);
+    const results = document.getElementById(resultsId);
+
+    input.addEventListener("input", function () {
+
+      const value = this.value.trim().toLowerCase();
+
+      results.innerHTML = "";
+
+      if (!value) {
+        results.style.display = "none";
+        return;
+      }
+
+      const matches = data.filter(item =>
+        item.toLowerCase().includes(value)
+      );
+
+      if (!matches.length) {
+        results.style.display = "none";
+        return;
+      }
+
+      matches.slice(0, 10).forEach(match => {
+
+        const option = document.createElement("div");
+
+        option.className = "autocomplete-option";
+        option.textContent = match;
+
+        option.addEventListener("click", () => {
+
+          input.value = match;
+          results.style.display = "none";
+
+        });
+
+        results.appendChild(option);
+
+      });
+
+      results.style.display = "block";
+
+    });
+
+    document.addEventListener("click", function (e) {
+
+      if (
+        !input.contains(e.target) &&
+        !results.contains(e.target)
+      ) {
+        results.style.display = "none";
+      }
+
+    });
+
+  }
+
+  setupAutocomplete(
+    "postcode-input",
+    "postcode-results",
+    postcodes
+  );
+
+  setupAutocomplete(
+    "caseid-input",
+    "caseid-results",
+    caseIds
+  );
+
+  setupAutocomplete(
+    "frf-input",
+    "frf-results",
+    frfIds
+  );
+
+  /* ===========================
+     CASE DATA
+  =========================== */
+
+  const cases = [];
+
+  const sources = [
+    "LA",
+    "HMRC",
+    "UCCR",
+    "PM"
+  ];
+
+  for (let i = 1; i <= 15525; i++) {
+
+    cases.push({
+      caseId: `I-${1000 + i}`,
+      frfId: `FR-76929D83${String(i).padStart(8, "0")}`,
+      postcode: postcodes[i % postcodes.length],
+      source: sources[i % sources.length],
+      claimant: `Claimant ${i}`,
+      received: `2025-${String((i % 12) + 1).padStart(2, "0")}-${String((i % 28) + 1).padStart(2, "0")}`
+    });
+
+  }
+
+  let filteredCases = [];
+  let currentPage = 1;
+
+  const rowsPerPage = 20;
+
+  /* ===========================
+     SHOW OLDEST 1000 CASES
+  =========================== */
+
+  document
+    .getElementById("load-cases")
+    .addEventListener("click", function (e) {
+
+      e.preventDefault();
+
+      filteredCases = cases.slice(0, 1000);
+
+      currentPage = 1;
+
+      document.getElementById("results-caption").innerText =
+        "1,000 matches (out of 15,525 cases)";
+
+      renderTable();
+
+    });
+
+  /* ===========================
+     SEARCH
+  =========================== */
+
+  document
+    .querySelector(".govuk-button")
+    .addEventListener("click", function (e) {
+
+      e.preventDefault();
+
+      const source =
+        document.getElementById("sort").value;
+
+      // Source must be selected
+      if (!source) {
+
+        document.getElementById("results-caption").innerText =
+          "Select a source before searching";
+
+        document.getElementById("search-results").innerHTML =
+          "";
+
+        filteredCases = [];
+
+document.getElementById("search-results").innerHTML = "";
+
+updateResultsActions();
+
+return;
+      }
+
+      const postcode =
+        document.getElementById("postcode-input")
+          .value
+          .trim()
+          .toLowerCase();
+
+      const caseId =
+        document.getElementById("caseid-input")
+          .value
+          .trim()
+          .toLowerCase();
+
+      const frfId =
+        document.getElementById("frf-input")
+          .value
+          .trim()
+          .toLowerCase();
+
+      filteredCases = cases.filter(row => {
+
+        if (source && row.source !== source) {
+          return false;
+        }
+
+        if (
+          postcode &&
+          !row.postcode.toLowerCase().includes(postcode)
+        ) {
+          return false;
+        }
+
+        if (
+          caseId &&
+          !row.caseId.toLowerCase().includes(caseId)
+        ) {
+          return false;
+        }
+
+        if (
+          frfId &&
+          !row.frfId.toLowerCase().includes(frfId)
+        ) {
+          return false;
+        }
+
+        return true;
+
+      });
+
+      currentPage = 1;
+
+      renderTable();
+
+    });
+
+  /* ===========================
+     TABLE
+  =========================== */
+
+  
+  function renderTable() {
+
+    if (filteredCases.length === 0) {
+
+  document.getElementById("search-results").innerHTML = "";
+
+  updateResultsActions();
+
+  return;
+
+}
+
+    const start =
+      (currentPage - 1) * rowsPerPage;
+
+    const pageData =
+      filteredCases.slice(
+        start,
+        start + rowsPerPage
+      );
+
+    document.getElementById("results-caption").innerText =
+      `${filteredCases.length.toLocaleString()} matches (out of 15,525 cases)`;
+
+    let html = `
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header">Source</th>
+          <th class="govuk-table__header">Postcode</th>
+          <th class="govuk-table__header">Case ID</th>
+          <th class="govuk-table__header">FRF</th>
+          <th class="govuk-table__header">Date created</th>
+        </tr>
+      </thead>
+
+      <tbody class="govuk-table__body">
+  `;
+
+    pageData.forEach(item => {
+
+      const dateCreated =
+        new Date(item.received)
+          .toLocaleDateString("en-GB");
+
+      html += `
+      <tr class="govuk-table__row">
+
+        <td class="govuk-table__cell">
+          ${item.source}
+        </td>
+
+        <td class="govuk-table__cell">
+          ${item.postcode}
+        </td>
+
+        
+
+<td class="govuk-table__cell">
+      <a
+        href="${item.caseId}">${item.caseId}
+      </a>
+    </td>
+
+
+
+        <td class="govuk-table__cell">
+          ${item.frfId}
+        </td>
+
+        <td class="govuk-table__cell">
+          ${dateCreated}
+        </td>
+
+      </tr>
+    `;
+
+    });
+
+    html += `
+      </tbody>
+    </table>
+  `;
+
+    document.getElementById("search-results").innerHTML = html;
+
+updateResultsActions();
+
+  }
+function updateResultsActions() {
+
+  const actions =
+    document.getElementById("results-actions");
+
+  if (!actions) {
+    return;
+  }
+
+  actions.style.display =
+    filteredCases.length > 0
+      ? "block"
+      : "none";
+
+}
+updateResultsActions();
+</script>
 
 {% endblock %}
