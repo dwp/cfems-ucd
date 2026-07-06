@@ -544,6 +544,115 @@ function updateResultsActions() {
 
 }
 updateResultsActions();
+
+</script>
+
+<!--Export to Excel-->
+<script>
+document
+  .getElementById("export-excel")
+  .addEventListener("click", function (e) {
+
+    e.preventDefault();
+
+    if (!filteredCases.length) {
+      return;
+    }
+
+    const rows = [
+      [
+        "Source",
+        "Postcode",
+        "Case ID",
+        "FRF",
+        "Date created"
+      ]
+    ];
+
+    filteredCases.forEach(item => {
+
+      rows.push([
+        item.source,
+        item.postcode,
+        item.caseId,
+        item.frfId,
+        new Date(item.received).toLocaleDateString("en-GB")
+      ]);
+
+    });
+
+    const csvContent = rows
+      .map(row =>
+        row.map(value =>
+          `"${String(value).replace(/"/g, '""')}"`
+        ).join(",")
+      )
+      .join("\n");
+
+    const blob = new Blob(
+      [csvContent],
+      { type: "text/csv;charset=utf-8;" }
+    );
+
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = `workbasket-export-${new Date()
+      .toISOString()
+      .slice(0, 10)}.csv`;
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    document.body.removeChild(link);
+
+    URL.revokeObjectURL(url);
+
+  });
+</script>
+
+<!--Refresh list-->
+<script>
+document
+  .getElementById("refresh-list")
+  .addEventListener("click", function (e) {
+
+    e.preventDefault();
+
+    const refreshedCases = [];
+
+    for (let i = 1; i <= 1000; i++) {
+
+      refreshedCases.push({
+        caseId: `I-${20000 + i}`,
+        frfId: `FR-REFRESH${String(i).padStart(8, "0")}`,
+        postcode:
+          postcodes[Math.floor(Math.random() * postcodes.length)],
+        source:
+          sources[Math.floor(Math.random() * sources.length)],
+        claimant: `Refreshed Claimant ${i}`,
+        received: `2026-${String(
+          Math.floor(Math.random() * 12) + 1
+        ).padStart(2, "0")}-${String(
+          Math.floor(Math.random() * 28) + 1
+        ).padStart(2, "0")}`
+      });
+
+    }
+
+    filteredCases = refreshedCases;
+
+    currentPage = 1;
+
+    document.getElementById("results-caption").innerText =
+      "1,000 refreshed matches";
+
+    renderTable();
+
+  });
 </script>
 
 {% endblock %}
