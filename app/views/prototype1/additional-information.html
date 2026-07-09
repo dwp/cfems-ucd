@@ -1,0 +1,120 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Additional information – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {% include "includes/back-link.html" %}
+  {% include "includes/language-toggle.html" %}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <form class="form" action="review" method="post">
+
+        <!-- HTML lifted directly from current FRC form -->
+
+            <fieldset class="govuk-fieldset">
+  
+  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+  
+    <h1 class="govuk-fieldset__heading">
+      Additional information
+    </h1>
+  
+  </legend>
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="govuk-form-group govuk-character-count"
+    
+        
+      
+    
+        
+      
+    
+    
+    
+   data-module="govuk-character-count" data-maxlength="1500" data-i18n.characters-under-limit.other="You have %{count} characters remaining" data-i18n.characters-under-limit.one="You have %{count} character remaining"
+   data-i18n.characters-at-limit="You have 0 characters remaining" data-i18n.characters-over-limit.other="You have %{count} characters too many" data-i18n.characters-over-limit.one="You have %{count} character too many"
+  >
+  <label class="govuk-label govuk-label--s" for="f-additionalDetails">
+    Give any other information about what you think the person is doing? (optional)
+  </label>
+
+  
+  
+  <div id="f-additionalDetails-hint" class="govuk-hint">
+    Don&#39;t include any of your own personal details
+  </div>
+
+
+
+  <textarea class="govuk-textarea govuk-js-character-count govuk-input--width-30" id="f-additionalDetails" name="additionalDetails" rows="5" aria-describedby="f-additionalDetails-info f-additionalDetails-hint"
+    
+  ></textarea>
+
+  <div id="f-additionalDetails-info" class="govuk-hint govuk-character-count__message">
+    You can enter up to 1500 characters
+  </div>
+
+</div>
+
+
+
+
+   
+
+</fieldset>
+
+
+
+  
+
+  
+    <div class="govuk-button-group casa-form-control-block">
+      
+  
+    
+  
+
+<button type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button"
+    
+        
+      
+    
+   id="continue-button">
+  Continue
+</button>
+
+
+      
+    </div>
+  
+</form>
+
+        <!-- End of HTML lifted directly from current FRC form -->
+
+    </div>
+  </div>
+
+{% endblock %}

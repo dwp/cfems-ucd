@@ -1,0 +1,42 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Report benefit fraud in Scotland – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {% include "includes/back-link.html" %}
+  {% include "includes/language-toggle.html" %}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-l">
+        Report benefit fraud in Scotland
+      </h1>
+
+      <p>How you report someone in Scotland depends on the type of benefit they're getting.</p>
+
+      <p>We issue the following benefits to people living in Scotland:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Universal Credit</li>
+        <li>Jobseeker's Allowance (JSA)</li>
+        <li>Employment and Support Allowance (ESA)</li>
+        <li>Income Support</li>
+        <li>State Pension</li>
+        <li>Pension Credit</li>
+        <li>Bereavement Support Payment</li>
+      </ul>
+
+      <p>You can continue to <a href="reported-before">report fraud of these benefits on GOV.UK</a>.</p>
+
+      <p>For all other benefits you <a href="https://www.mygov.scot/benefit-fraud">report fraud on myscot.gov</a>.</p>
+
+    </div>
+  </div>
+
+{% endblock %}

@@ -29,7 +29,7 @@
 </div>
 
 <div
-  id="success-banner"
+  id="success-message"
   class="govuk-notification-banner govuk-notification-banner--success"
   role="alert"
   aria-labelledby="govuk-notification-banner-title"
@@ -111,10 +111,10 @@
         Select a team to assign the prioritised source to
       </label>
 
-      <div class="govuk-hint">
+      <!--<div class="govuk-hint">
         The team selected will first work on referrals from the source you've prioritised.
         Once there are no longer any referrals from that source, the team will receive referrals normally from the workbasket.
-      </div>
+      </div>-->
 
       <select
         class="govuk-select"
@@ -141,18 +141,19 @@
 
       <caption class="govuk-table__caption govuk-table__caption--m">
         Prioritised sources
+        <span id="prioritisation-table-hint" class="govuk-body">        Once submitted, the changes you've made to any teams' workbasket will take place immediately.
+        To change the priority of a source, remove it from the table and start again.
+</span>
       </caption>
 
-      <div class="govuk-hint">
-        Once submitted, the changes you've made to any teams' workbasket will take place immediately.
-        To change the priority of a source, remove it from the table and start again.
-      </div>
+      
+
 
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">Source</th>
           <th scope="col" class="govuk-table__header">Team</th>
-          <th scope="col" class="govuk-table__header">Remove</th>
+          <th scope="col" class="govuk-table__header">Action</th>
         </tr>
       </thead>
 
@@ -166,7 +167,7 @@
 
     <td class="govuk-table__cell"></td>
     <td class="govuk-table__cell">
-      No sources have been prioritised yet.
+      Nothing have been prioritised yet.
     </td>
     <td class="govuk-table__cell"></td>
 
@@ -198,7 +199,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   const tableBody = document.getElementById('prioritisation-table-body');
 
-  const successBanner = document.getElementById('success-banner');
+  const successBanner = document.getElementById('success-message');
 
   const errorSummary = document.getElementById('error-summary');
   const errorList = document.getElementById('error-list');
@@ -421,7 +422,7 @@ tableBody.addEventListener('click', function (e) {
       showErrors([
         {
           href: '#source',
-          text: 'Add at least one source and team assignment before applying'
+          text: 'You must select a source and team before applying your changes'
         }
       ]);
 

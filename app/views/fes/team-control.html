@@ -30,15 +30,29 @@
     </div>
 
     <!-- SUCCESS -->
-    <div id="success-message" class="govuk-notification-banner govuk-notification-banner--success" role="alert" style="display:none; margin-bottom:20px;">
+    <div id="success-message" class="govuk-notification-banner govuk-notification-banner--success" role="alert"
+      aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner" style="display:none;">
+      <div class="govuk-notification-banner__header">
+        <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+          Success
+        </h2>
+      </div>
       <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">Your changes have been successfully applied.</p>
+        <h3 class="govuk-notification-banner__heading">
+          Your prioritisation has been applied.
+        </h3>
+        <p class="govuk-body">
+          Your changes have been successfully applied.
+        </p>
       </div>
     </div>
 
     <!-- Function (NOW WITH ERROR SUPPORT) -->
     <div class="govuk-form-group" id="function-group">
       <label class="govuk-label" for="function-select">Select a function</label>
+      <div class="govuk-hint">
+            You must select a function before filtering or searching the workbasket.
+          </div>
       <select class="govuk-select" id="function-select">
         <option value="select">Select</option>
         <option value="campaigns">Campaigns</option>
@@ -50,7 +64,9 @@
     <!-- Criteria -->
     <div class="govuk-form-group" id="criteria-group">
       <label class="govuk-label" for="criteria">Select a category</label>
-      <select id="criteria" class="govuk-select">
+<div class="govuk-hint">
+            Select a function before selecting what you want to prioritise.
+          </div>      <select id="criteria" class="govuk-select">
         <option value="choose">Select</option>
         <option value="Benefit type">Benefit type</option>
         <option value="Risk or allegation ID">Risk or allegation ID</option>

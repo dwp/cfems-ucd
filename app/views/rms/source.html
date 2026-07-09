@@ -3,42 +3,25 @@
 {% set pageName = "RMS Source prioritisation" %}
 
 {% block content %}
-<div
-  id="error-summary"
-  class="govuk-error-summary"
-  aria-labelledby="error-summary-title"
-  role="alert"
-  tabindex="-1"
-  data-module="govuk-error-summary"
-  style="display:none;">
+<div id="error-summary" class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1"
+  data-module="govuk-error-summary" style="display:none;">
 
   <div class="govuk-error-summary__title-wrapper">
-    <h2
-      class="govuk-error-summary__title"
-      id="error-summary-title">
+    <h2 class="govuk-error-summary__title" id="error-summary-title">
       There is a problem
     </h2>
   </div>
 
   <div class="govuk-error-summary__body">
-    <ul
-      class="govuk-list govuk-error-summary__list"
-      id="error-list">
+    <ul class="govuk-list govuk-error-summary__list" id="error-list">
     </ul>
   </div>
 
 </div>
-<div
-  id="success-banner"
-  class="govuk-notification-banner govuk-notification-banner--success"
-  role="alert"
-  aria-labelledby="govuk-notification-banner-title"
-  data-module="govuk-notification-banner"
-  style="display:none;">
+<div id="success-message" class="govuk-notification-banner govuk-notification-banner--success" role="alert"
+  aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner" style="display:none;">
   <div class="govuk-notification-banner__header">
-    <h2
-      class="govuk-notification-banner__title"
-      id="govuk-notification-banner-title">
+    <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
       Success
     </h2>
   </div>
@@ -64,13 +47,13 @@
       Choose the sources you want to prioritise from the workbasket.
     </p>
 
-    
+
 
     <div class="govuk-form-group">
       <p id="source-error" class="govuk-error-message" style="display:none;">
-  <span class="govuk-visually-hidden">Error:</span>
-  Select a source
-</p>
+        <span class="govuk-visually-hidden">Error:</span>
+        Select a source
+      </p>
       <label class="govuk-label" for="source">
         Select a source you want to prioritise
       </label>
@@ -83,15 +66,15 @@
         <option value="Performance measurement">Performance measurement</option>
       </select>
     </div>
-    
+
 
     <div class="govuk-form-group">
       <p id="ranking-error" class="govuk-error-message" style="display:none;">
-  <span class="govuk-visually-hidden">Error:</span>
-  Select a priority ranking
-</p>
+        <span class="govuk-visually-hidden">Error:</span>
+        Select a priority ranking
+      </p>
       <label class="govuk-label" for="ranking">
-        Select a priority ranking for the source (1 to 5) 
+        Select a priority ranking for the source (1 to 5)
       </label>
 
       <div id="ranking-hint" class="govuk-hint">
@@ -99,11 +82,7 @@
         Any sources given the same priority will be equally weighted.
       </div>
 
-      <select
-        class="govuk-select"
-        id="ranking"
-        name="ranking"
-        aria-describedby="ranking-hint">
+      <select class="govuk-select" id="ranking" name="ranking" aria-describedby="ranking-hint">
         <option value="" selected>Select a source before choosing a ranking</option>
         <option value="1">1</option>
         <option value="2">2</option>
@@ -113,26 +92,21 @@
       </select>
     </div>
 
-    
 
-    <button
-      type="button"
-      id="add-selection"
-      class="govuk-button govuk-button--secondary"
-      data-module="govuk-button">
+
+    <button type="button" id="add-selection" class="govuk-button govuk-button--secondary" data-module="govuk-button">
       Add selection to the table
     </button>
 
     <table class="govuk-table">
       <caption class="govuk-table__caption govuk-table__caption--m">
         Prioritised sources
+        <span id="prioritisation-table-hint" class="govuk-body">        Once submitted, the changes you've made to any teams' workbasket will take place immediately.
+        Once you apply the changes you've made, they will take place immediately for new cases and overnight for existing ones. To change the priority of a source, remove it from the table and start again.
+</span>
       </caption>
 
-      <div id="table-hint" class="govuk-hint">
-        Once you apply the changes you've made, they will take place immediately
-        for new cases and overnight for existing ones. To change the priority of
-        a source, remove it from the table and start again.
-      </div>
+      
 
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
@@ -145,204 +119,200 @@
       <tbody class="govuk-table__body" id="prioritisation-table-body">
         <tr class="govuk-table__row" id="empty-row">
           <td class="govuk-table__cell"></td>
-          <td class="govuk-table__cell">Nothing has been selected yet</td>
+          <td class="govuk-table__cell">Nothing has been prioritised yet</td>
           <td class="govuk-table__cell"></td>
         </tr>
       </tbody>
     </table>
 
-    <button
-  type="button"
-  id="apply-button"
-  class="govuk-button"
-  data-module="govuk-button">
-  Apply
-</button>
+    <button type="button" id="apply-button" class="govuk-button" data-module="govuk-button">
+      Apply
+    </button>
 
   </div>
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', function () {
 
-  // Elements
+    // Elements
 
-  const sourceSelect = document.getElementById('source');
-  const rankingSelect = document.getElementById('ranking');
+    const sourceSelect = document.getElementById('source');
+    const rankingSelect = document.getElementById('ranking');
 
-  const addButton = document.getElementById('add-selection');
-  const applyButton = document.getElementById('apply-button');
+    const addButton = document.getElementById('add-selection');
+    const applyButton = document.getElementById('apply-button');
 
-  const tableBody = document.getElementById('prioritisation-table-body');
+    const tableBody = document.getElementById('prioritisation-table-body');
 
-  const successBanner = document.getElementById('success-banner');
+    const successBanner = document.getElementById('success-message');
 
-  const errorSummary = document.getElementById('error-summary');
-  const errorList = document.getElementById('error-list');
+    const errorSummary = document.getElementById('error-summary');
+    const errorList = document.getElementById('error-list');
 
-  const sourceError = document.getElementById('source-error');
-  const rankingError = document.getElementById('ranking-error');
+    const sourceError = document.getElementById('source-error');
+    const rankingError = document.getElementById('ranking-error');
 
-  const sourceGroup = sourceSelect.closest('.govuk-form-group');
-  const rankingGroup = rankingSelect.closest('.govuk-form-group');
+    const sourceGroup = sourceSelect.closest('.govuk-form-group');
+    const rankingGroup = rankingSelect.closest('.govuk-form-group');
 
-  // Helpers
+    // Helpers
 
-  function hideSuccessBanner() {
-    successBanner.style.display = 'none';
-  }
-
-  function clearErrors() {
-
-    errorSummary.style.display = 'none';
-    errorList.innerHTML = '';
-
-    sourceError.style.display = 'none';
-    rankingError.style.display = 'none';
-
-    sourceGroup.classList.remove('govuk-form-group--error');
-    rankingGroup.classList.remove('govuk-form-group--error');
-
-    sourceSelect.classList.remove('govuk-select--error');
-    rankingSelect.classList.remove('govuk-select--error');
-  }
-
-  function showErrors(errors) {
-
-    errorSummary.style.display = 'block';
-    errorList.innerHTML = '';
-
-    errors.forEach(function (error) {
-
-      const li = document.createElement('li');
-
-      const link = document.createElement('a');
-
-      link.href = error.href;
-      link.className = 'govuk-link';
-      link.textContent = error.text;
-
-      li.appendChild(link);
-      errorList.appendChild(li);
-    });
-
-    errorSummary.focus();
-  }
-
-  // Error summary links
-
-  errorList.addEventListener('click', function (e) {
-
-    const link = e.target.closest('a');
-
-    if (!link) {
-      return;
+    function hideSuccessBanner() {
+      successBanner.style.display = 'none';
     }
 
-    e.preventDefault();
+    function clearErrors() {
 
-    const target = document.querySelector(
-      link.getAttribute('href')
-    );
+      errorSummary.style.display = 'none';
+      errorList.innerHTML = '';
 
-    if (target) {
+      sourceError.style.display = 'none';
+      rankingError.style.display = 'none';
 
-      target.focus();
+      sourceGroup.classList.remove('govuk-form-group--error');
+      rankingGroup.classList.remove('govuk-form-group--error');
 
-      target.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center'
+      sourceSelect.classList.remove('govuk-select--error');
+      rankingSelect.classList.remove('govuk-select--error');
+    }
+
+    function showErrors(errors) {
+
+      errorSummary.style.display = 'block';
+      errorList.innerHTML = '';
+
+      errors.forEach(function (error) {
+
+        const li = document.createElement('li');
+
+        const link = document.createElement('a');
+
+        link.href = error.href;
+        link.className = 'govuk-link';
+        link.textContent = error.text;
+
+        li.appendChild(link);
+        errorList.appendChild(li);
       });
-    }
-  });
 
-  // Clear messaging when user changes values
-
-  sourceSelect.addEventListener('change', function () {
-    hideSuccessBanner();
-    clearErrors();
-  });
-
-  rankingSelect.addEventListener('change', function () {
-    hideSuccessBanner();
-    clearErrors();
-  });
-
-  // Add Selection
-
-  addButton.addEventListener('click', function () {
-
-    hideSuccessBanner();
-    clearErrors();
-
-    const sourceValue = sourceSelect.value;
-    const rankingValue = rankingSelect.value;
-
-    const errors = [];
-
-    if (!sourceValue) {
-
-      sourceError.style.display = 'block';
-      sourceGroup.classList.add('govuk-form-group--error');
-      sourceSelect.classList.add('govuk-select--error');
-
-      errors.push({
-        href: '#source',
-        text: 'Select a source'
-      });
+      errorSummary.focus();
     }
 
-    if (!rankingValue) {
+    // Error summary links
 
-      rankingError.style.display = 'block';
-      rankingGroup.classList.add('govuk-form-group--error');
-      rankingSelect.classList.add('govuk-select--error');
+    errorList.addEventListener('click', function (e) {
 
-      errors.push({
-        href: '#ranking',
-        text: 'Select a priority ranking'
-      });
-    }
+      const link = e.target.closest('a');
 
-    if (errors.length > 0) {
-      showErrors(errors);
-      return;
-    }
-
-    const sourceText =
-      sourceSelect.options[sourceSelect.selectedIndex].text;
-
-    const rankingText =
-      rankingSelect.options[rankingSelect.selectedIndex].text;
-
-    // Prevent duplicates
-
-    const existingRows = tableBody.querySelectorAll('tr');
-
-    for (const existingRow of existingRows) {
-
-      const cells = existingRow.querySelectorAll('td');
-
-      if (
-        cells.length > 0 &&
-        cells[0].textContent.trim() === sourceText
-      ) {
-        alert('This source has already been added.');
+      if (!link) {
         return;
       }
-    }
 
-    const emptyRow = document.getElementById('empty-row');
+      e.preventDefault();
 
-    if (emptyRow) {
-      emptyRow.remove();
-    }
+      const target = document.querySelector(
+        link.getAttribute('href')
+      );
 
-    const row = document.createElement('tr');
+      if (target) {
 
-    row.className = 'govuk-table__row';
+        target.focus();
 
-    row.innerHTML = `
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center'
+        });
+      }
+    });
+
+    // Clear messaging when user changes values
+
+    sourceSelect.addEventListener('change', function () {
+      hideSuccessBanner();
+      clearErrors();
+    });
+
+    rankingSelect.addEventListener('change', function () {
+      hideSuccessBanner();
+      clearErrors();
+    });
+
+    // Add Selection
+
+    addButton.addEventListener('click', function () {
+
+      hideSuccessBanner();
+      clearErrors();
+
+      const sourceValue = sourceSelect.value;
+      const rankingValue = rankingSelect.value;
+
+      const errors = [];
+
+      if (!sourceValue) {
+
+        sourceError.style.display = 'block';
+        sourceGroup.classList.add('govuk-form-group--error');
+        sourceSelect.classList.add('govuk-select--error');
+
+        errors.push({
+          href: '#source',
+          text: 'Select a source'
+        });
+      }
+
+      if (!rankingValue) {
+
+        rankingError.style.display = 'block';
+        rankingGroup.classList.add('govuk-form-group--error');
+        rankingSelect.classList.add('govuk-select--error');
+
+        errors.push({
+          href: '#ranking',
+          text: 'Select a priority ranking'
+        });
+      }
+
+      if (errors.length > 0) {
+        showErrors(errors);
+        return;
+      }
+
+      const sourceText =
+        sourceSelect.options[sourceSelect.selectedIndex].text;
+
+      const rankingText =
+        rankingSelect.options[rankingSelect.selectedIndex].text;
+
+      // Prevent duplicates
+
+      const existingRows = tableBody.querySelectorAll('tr');
+
+      for (const existingRow of existingRows) {
+
+        const cells = existingRow.querySelectorAll('td');
+
+        if (
+          cells.length > 0 &&
+          cells[0].textContent.trim() === sourceText
+        ) {
+          alert('This source has already been added.');
+          return;
+        }
+      }
+
+      const emptyRow = document.getElementById('empty-row');
+
+      if (emptyRow) {
+        emptyRow.remove();
+      }
+
+      const row = document.createElement('tr');
+
+      row.className = 'govuk-table__row';
+
+      row.innerHTML = `
       <td class="govuk-table__cell">${sourceText}</td>
       <td class="govuk-table__cell">${rankingText}</td>
       <td class="govuk-table__cell">
@@ -352,88 +322,88 @@ document.addEventListener('DOMContentLoaded', function () {
       </td>
     `;
 
-    tableBody.appendChild(row);
+      tableBody.appendChild(row);
 
-    sourceSelect.selectedIndex = 0;
-    rankingSelect.selectedIndex = 0;
-  });
+      sourceSelect.selectedIndex = 0;
+      rankingSelect.selectedIndex = 0;
+    });
 
-  // Remove row
+    // Remove row
 
-  tableBody.addEventListener('click', function (e) {
+    tableBody.addEventListener('click', function (e) {
 
-    if (!e.target.classList.contains('remove-row')) {
-      return;
-    }
+      if (!e.target.classList.contains('remove-row')) {
+        return;
+      }
 
-    e.preventDefault();
+      e.preventDefault();
 
-    const row = e.target.closest('tr');
+      const row = e.target.closest('tr');
 
-    if (row) {
-      row.remove();
-    }
+      if (row) {
+        row.remove();
+      }
 
-    const rows =
-      tableBody.querySelectorAll('tr:not(#empty-row)');
+      const rows =
+        tableBody.querySelectorAll('tr:not(#empty-row)');
 
-    if (rows.length === 0) {
+      if (rows.length === 0) {
 
-      tableBody.innerHTML = `
+        tableBody.innerHTML = `
         <tr class="govuk-table__row" id="empty-row">
           <td class="govuk-table__cell"></td>
-          <td class="govuk-table__cell">Nothing has been selected yet</td>
+          <td class="govuk-table__cell">Nothing has been prioritised yet</td>
           <td class="govuk-table__cell"></td>
         </tr>
       `;
-    }
+      }
 
-    hideSuccessBanner();
-  });
-
-  // Apply
-
-  applyButton.addEventListener('click', function () {
-
-    clearErrors();
-
-    const hasRows =
-      tableBody.querySelectorAll('tr:not(#empty-row)').length > 0;
-
-    if (!hasRows) {
-
-      sourceError.style.display = 'block';
-      rankingError.style.display = 'block';
-
-      sourceGroup.classList.add('govuk-form-group--error');
-      rankingGroup.classList.add('govuk-form-group--error');
-
-      sourceSelect.classList.add('govuk-select--error');
-      rankingSelect.classList.add('govuk-select--error');
-
-      showErrors([
-        {
-          href: '#source',
-          text: 'Select a source to prioritise'
-        },
-        {
-          href: '#ranking',
-          text: 'Select a priority ranking'
-        }
-      ]);
-
-      return;
-    }
-
-    successBanner.style.display = 'block';
-
-    successBanner.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
+      hideSuccessBanner();
     });
-  });
 
-});
+    // Apply
+
+    applyButton.addEventListener('click', function () {
+
+      clearErrors();
+
+      const hasRows =
+        tableBody.querySelectorAll('tr:not(#empty-row)').length > 0;
+
+      if (!hasRows) {
+
+        sourceError.style.display = 'block';
+        rankingError.style.display = 'block';
+
+        sourceGroup.classList.add('govuk-form-group--error');
+        rankingGroup.classList.add('govuk-form-group--error');
+
+        sourceSelect.classList.add('govuk-select--error');
+        rankingSelect.classList.add('govuk-select--error');
+
+        showErrors([
+          {
+            href: '#source',
+            text: 'Select a source to prioritise'
+          },
+          {
+            href: '#ranking',
+            text: 'Select a priority ranking'
+          }
+        ]);
+
+        return;
+      }
+
+      successBanner.style.display = 'block';
+
+      successBanner.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    });
+
+  });
 </script>
 
 {% endblock %}

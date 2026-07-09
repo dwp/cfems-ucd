@@ -1,0 +1,54 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Report submitted – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {{ govukPanel({
+        titleText: "Report submitted"
+      }) }}
+
+
+      <h2 class="govuk-heading-m">
+        What happens next
+      </h2>
+
+      <p>We'll look into your report.</p>
+ 
+      <p>You only need to report them once unless you have new information.</p>
+
+      <p>Investigations can take a long time and are confidential.</p>
+
+      <div class="govuk-inset-text">
+        We cannot update you or tell you outcomes.
+      </div>
+
+      <p>We take all reports of benefit fraud seriously.</p>
+
+      <p>Sometimes we do not take any action because: </p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>they may have declared a change in their circumstances </li>
+        <li>their benefit may not be affected by what you’re reporting </li>
+      </ul>
+
+      
+
+
+
+
+
+
+ 
+
+
+
+    </div>
+  </div>
+
+{% endblock %}

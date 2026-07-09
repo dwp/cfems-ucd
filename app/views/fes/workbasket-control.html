@@ -31,7 +31,7 @@
 
         <!-- Criteria -->
         <div class="govuk-form-group">
-          <label class="govuk-label" for="criteria">Select the criteria</label>
+          <label class="govuk-label" for="criteria">Filter by category</label>
           <div id="priority-hint" class="govuk-hint">
             Placeholder hint text (for horizontal alignment).
           </div>
@@ -49,10 +49,9 @@
       <div class="govuk-grid-column-one-third">
 
         <div class="govuk-form-group" style="position:relative;">
-          <label class="govuk-label" for="priority-search">Filter by benefit type, risk or allegation ID or
-            source</label>
+          <label class="govuk-label" for="priority-search">Filter by sub-category</label>
           <div id="priority-hint" class="govuk-hint">
-            Placeholder hint text (for horizontal alignment).
+            [Dynamic text, based on category selection].
           </div>
 
           <input id="priority-search" class="govuk-input" autocomplete="off" style="width: 220px;"
@@ -493,7 +492,7 @@
     <table class="govuk-table">
       <thead class="govuk-table__head">
         <tr>
-          <th class="govuk-table__header">Item</th>
+          <th class="govuk-table__header">Sub-category</th>
           <th class="govuk-table__header">Case ID</th>
           <th class="govuk-table__header">FRF ID</th>
           <th class="govuk-table__header">NI number</th>

@@ -1,0 +1,723 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  The person you want to report – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {% include "includes/back-link.html" %}
+  {% include "includes/language-toggle.html" %}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <form class="form" action="fraud-type" method="post">
+
+        <!-- HTML lifted directly from current FRC form -->
+
+        <fieldset class="govuk-fieldset">
+  
+  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+  
+    <h1 class="govuk-fieldset__heading">
+      The person you want to report
+    </h1>
+  
+  </legend>
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<div class="govuk-form-group">
+  <label class="govuk-label govuk-label--m" for="f-firstName">
+    First name (optional)
+  </label>
+
+
+  <input
+    
+        
+      
+    
+        
+      
+    
+        
+      
+    
+        
+      
+    
+    
+    
+    
+    
+    
+    
+    
+    
+   class="govuk-input govuk-input--width-20" id="f-firstName" name="firstName" type="text"
+    
+  >
+
+</div>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<div class="govuk-form-group">
+  <label class="govuk-label govuk-label--m" for="f-lastName">
+    Last name
+  </label>
+
+
+  <input
+    
+        
+      
+    
+        
+      
+    
+        
+      
+    
+        
+      
+    
+    
+    
+    
+    
+    
+    
+    
+    
+   class="govuk-input govuk-input--width-20" id="f-lastName" name="lastName" type="text"
+    
+  >
+
+</div>
+
+
+
+
+  
+
+
+
+
+
+<!-- GDS components for other names -->
+
+{% set nicknameHtml %}
+  {{ govukCharacterCount({
+    name: "withHint",
+    id: "with-hint",
+    maxlength: 250,
+    label: {
+      text: "Other names",
+      classes: "govuk-label--s",
+      isPageHeading: true
+    }
+  }) }}
+{% endset -%}
+
+
+{{ govukRadios({
+  classes: "govuk-radios",
+  name: "nickname",
+  fieldset: {
+    legend: {
+      text: "Do you know them by another name? (optional)"    }
+  },
+  hint: {
+    text: "For example nickname, professional name or maiden name"
+  },
+  items: [
+    {
+      value: "Yes",
+      text: "Yes",
+      conditional: {
+        html: nicknameHtml
+      }
+    },
+    {
+      value: "No",
+      text: "No"
+    }
+  ]
+}) }}
+
+<!-- End of GDS components for other names -->
+
+
+<!-- GDS components for Age -->
+{% set dobHtml %}
+  {{ govukDateInput({
+    id: "passport-issued",
+    namePrefix: "passport-issued",
+    fieldset: {
+      legend: {
+        text: "Date of Birth"
+      }
+    },
+    hint: {
+      text: "For example, 27 3 2024"
+    }
+  }) }}
+{% endset -%}
+
+{% set approxHtml %}
+  {{ govukInput({
+    label: {
+      text: "Approximate age in years"
+    },
+    id: "event-name",
+    classes: "govuk-input--width-4",
+    name: "eventName"
+  }) }}
+{% endset -%}
+
+
+
+
+
+{{ govukRadios({
+  classes: "govuk-radios",
+  name: "dob",
+  fieldset: {
+    legend: {
+      text: "Do you know their date of birth? (optional)"    }
+  },
+  items: [
+    {
+      value: "Yes",
+      text: "Yes",
+      conditional: {
+        html: dobHtml
+      }
+    },
+    {
+      value: "No",
+      text: "No",
+      conditional: {
+        html: approxHtml
+      }
+    }
+  ]
+}) }}
+
+<!-- End of GDS components for Age -->
+
+
+
+
+ <fieldset class="govuk-fieldset">
+  
+  <legend class="govuk-fieldset__legend govuk-label--m">
+  
+    Address
+  
+  </legend>
+  
+
+  <p class="govuk-hint"> Include at least street and town </p>
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<div class="govuk-form-group">
+  <label class="govuk-label" for="f-addressLine1">
+    Building name or number (optional)
+  </label>
+
+
+  <input
+    
+        
+      
+    
+        
+      
+    
+        
+      
+    
+        
+      
+    
+    
+    
+    
+    
+    
+    
+    
+    
+   class="govuk-input govuk-input--width-20" id="f-addressLine1" name="addressLine1" type="text"
+    
+  >
+
+</div>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<div class="govuk-form-group">
+  <label class="govuk-label" for="f-addressLine2">
+    Street (optional)
+  </label>
+
+
+  <input
+    
+        
+      
+    
+        
+      
+    
+        
+      
+    
+        
+      
+    
+    
+    
+    
+    
+    
+    
+    
+    
+   class="govuk-input govuk-input--width-20" id="f-addressLine2" name="addressLine2" type="text"
+    
+  >
+
+</div>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<div class="govuk-form-group">
+  <label class="govuk-label" for="f-addressTown">
+    Town or city (optional)
+  </label>
+
+
+  <input
+    
+        
+      
+    
+        
+      
+    
+        
+      
+    
+        
+      
+    
+    
+    
+    
+    
+    
+    
+    
+    
+   class="govuk-input govuk-input--width-20" id="f-addressTown" name="addressTown" type="text"
+    
+  >
+
+</div>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<div class="govuk-form-group">
+  <label class="govuk-label" for="f-addressCounty">
+    County (optional)
+  </label>
+
+
+  <input
+    
+        
+      
+    
+        
+      
+    
+        
+      
+    
+        
+      
+    
+    
+    
+    
+    
+    
+    
+    
+    
+   class="govuk-input govuk-input--width-20" id="f-addressCounty" name="addressCounty" type="text"
+    
+  >
+
+</div>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<div class="govuk-form-group">
+  <label class="govuk-label" for="f-addressPostcode">
+    Postcode (optional)
+  </label>
+
+
+  <input
+    
+        
+      
+    
+        
+      
+    
+        
+      
+    
+        
+      
+    
+    
+    
+    
+    
+    
+    
+    
+    
+   class="govuk-input govuk-input--width-10" id="f-addressPostcode" name="addressPostcode" type="text"
+    
+  >
+
+</div>
+
+
+  
+
+</fieldset>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<div class="govuk-form-group">
+  <label class="govuk-label govuk-label--m" for="f-nino">
+    What is their National Insurance Number? (optional)
+  </label>
+
+  
+  
+  <div id="f-nino-hint" class="govuk-hint">
+    For example, &#39;QQ123456C&#39;
+  </div>
+
+
+  <input
+    
+        
+      
+    
+        
+      
+    
+        
+      
+    
+        
+      
+    
+    
+    
+    
+        
+      
+    
+    
+    
+    
+    
+   class="govuk-input govuk-input--width-20" id="f-nino" name="nino" type="text" aria-describedby="f-nino-hint"
+    
+  >
+
+</div>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<div class="govuk-form-group">
+  <label class="govuk-label govuk-label--m" for="f-telephone">
+    What is their telephone number? (optional)
+  </label>
+
+
+  <input
+    
+        
+      
+    
+        
+      
+    
+        
+      
+    
+        
+      
+    
+    
+    
+    
+    
+    
+    
+    
+    
+   class="govuk-input govuk-input--width-20" id="f-telephone" name="telephone" type="text"
+    
+  >
+
+</div>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<div class="govuk-form-group">
+  <label class="govuk-label govuk-label--m" for="f-email">
+    What is their email address? (optional)
+  </label>
+
+
+  <input
+    
+        
+      
+    
+        
+      
+    
+        
+      
+    
+        
+      
+    
+        
+      
+    
+    
+    
+    
+        
+      
+    
+    
+    
+    
+   class="govuk-input govuk-input--width-20" id="f-email" name="email" type="email" spellcheck="false" autocomplete="email"
+    
+  >
+
+</div>
+
+
+
+   
+
+</fieldset>
+
+
+
+  
+
+  
+    <div class="govuk-button-group casa-form-control-block">
+      
+  
+    
+  
+
+<button type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button"
+    id="continue-button">
+  Continue
+</button>
+
+
+      
+    </div>
+  
+</form>
+
+    <!-- End of HTML lifted directly from current FRC form -->
+
+    </div>
+  </div>
+
+{% endblock %}

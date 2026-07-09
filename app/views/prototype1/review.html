@@ -1,0 +1,76 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Review and send your report – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {% include "includes/back-link.html" %}
+  {% include "includes/language-toggle.html" %}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <form class="form" action="confirmation" method="post">
+
+        <!-- HTML lifted directly from current FRC form -->
+
+           <h1 class="govuk-heading-xl">Review and send your report</h1>
+
+<p class="govuk-body">
+    Before you send your report, review what you have entered:
+</p>
+<p class="govuk-body">
+    You&#39;re saying that <font class="govuk-body govuk-!-font-weight-bold">John Smith</font>
+</p>
+
+<div class="govuk-inset-text">
+  <ul class='govuk-list govuk-list--bullet govuk-list--spaced'><li>is working and claiming benefit</li>
+</div>
+
+
+<p class="govuk-body"  >
+    Additional information:
+</p>
+<p class="govuk-body"  >
+    
+
+</p>
+
+
+
+
+
+
+  
+    <div class="govuk-button-group casa-form-control-block">
+      
+  
+    
+  
+
+<button type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button"
+    
+        
+      
+    
+   id="continue-button">
+  Send report
+</button>
+
+
+      
+    </div>
+  
+</form>
+
+
+        <!-- End of HTML lifted directly from current FRC form -->
+
+    </div>
+  </div>
+
+{% endblock %}

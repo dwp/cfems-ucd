@@ -1,0 +1,48 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Staying safe – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {% include "includes/language-toggle.html" %}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-l">
+        Staying safe
+      </h1>
+
+      <p>You do not have to give your name or contact details.</p>
+
+      <p>We will need the full name of the person you’re reporting. </p> 
+
+      <p>The more information you can tell us the better.</p> 
+
+      <p>For your safety you should not:</p>
+  
+      <ul class="govuk-list govuk-list--bullet">
+        <li>try to find out more than you already know</li> 
+        <li>tell anyone you’re making a report</li>
+        <li>report something that would identify you to the person you're reporting</li>
+      </ul>
+
+      <p>Investigations are confidential including the information you give us.</p>
+
+      <div class="govuk-inset-text">      
+        <p>We cannot update you or tell you outcomes.</p>
+      </div>
+
+      {{ govukButton({
+        text: "Continue",
+        href: "country"
+      }) }}
+
+    </div>
+  </div>
+
+{% endblock %}

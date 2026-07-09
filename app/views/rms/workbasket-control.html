@@ -25,7 +25,7 @@
         Filter by source
       </label>
       <div id="location-hint" class="govuk-hint">
-        Select from the list below.
+        Select the source you are looking for.
       </div>
 
       <select class="govuk-select" id="sort" name="sort">
@@ -332,22 +332,34 @@
   =========================== */
 
   document
-    .getElementById("load-cases")
-    .addEventListener("click", function (e) {
+    document
+  .getElementById("load-cases")
+  .addEventListener("click", function (e) {
 
-      e.preventDefault();
+    e.preventDefault();
 
-      filteredCases = cases.slice(0, 1000);
+    filteredCases = [];
 
-      currentPage = 1;
+    for (let i = 1; i <= 1000; i++) {
 
-      document.getElementById("results-caption").innerText =
-        "1,000 matches (out of 15,525 cases)";
+      filteredCases.push({
+        source: sources[i % sources.length],
+        postcode: postcodes[i % postcodes.length],
+        caseId: `I-${50000 + i}`,
+        frfId: `FR-TEST${String(i).padStart(8, "0")}`,
+        received: `2025-${String((i % 12) + 1).padStart(2, "0")}-${String((i % 28) + 1).padStart(2, "0")}`
+      });
 
-      renderTable();
+    }
 
-    });
+    currentPage = 1;
 
+    document.getElementById("results-caption").innerText =
+      "1,000 matches (out of 15,525 cases)";
+
+    renderTable();
+
+  });
   /* ===========================
      SEARCH
   =========================== */
@@ -470,7 +482,7 @@ return;
           <th class="govuk-table__header">Source</th>
           <th class="govuk-table__header">Postcode</th>
           <th class="govuk-table__header">Case ID</th>
-          <th class="govuk-table__header">FRF</th>
+          <th class="govuk-table__header">FRF ID</th>
           <th class="govuk-table__header">Date created</th>
         </tr>
       </thead>
@@ -545,6 +557,120 @@ function updateResultsActions() {
 }
 updateResultsActions();
 
+//pagination
+
+function renderPagination() {
+
+  const totalPages =
+    Math.ceil(filteredCases.length / rowsPerPage);
+
+  const paginationList =
+    document.getElementById("pagination-list");
+
+  const prevContainer =
+    document.getElementById("prev-container");
+
+  const nextContainer =
+    document.getElementById("next-container");
+
+  paginationList.innerHTML = "";
+  prevContainer.innerHTML = "";
+  nextContainer.innerHTML = "";
+
+  if (totalPages <= 1) {
+    return;
+  }
+
+  if (currentPage > 1) {
+
+    const prevLink = document.createElement("a");
+
+    prevLink.href = "#";
+    prevLink.className =
+      "govuk-link govuk-pagination__link";
+
+    prevLink.dataset.page = currentPage - 1;
+    prevLink.textContent = "Previous";
+
+    prevContainer.appendChild(prevLink);
+
+  }
+
+  const startPage =
+    Math.max(1, currentPage - 2);
+
+  const endPage =
+    Math.min(totalPages, currentPage + 2);
+
+  for (let page = startPage; page <= endPage; page++) {
+
+    const li = document.createElement("li");
+
+    li.className =
+      page === currentPage
+        ? "govuk-pagination__item govuk-pagination__item--current"
+        : "govuk-pagination__item";
+
+    const link = document.createElement("a");
+
+    link.href = "#";
+    link.className =
+      "govuk-link govuk-pagination__link";
+
+    link.dataset.page = page;
+    link.textContent = page;
+
+    li.appendChild(link);
+
+    paginationList.appendChild(li);
+
+  }
+
+  if (currentPage < totalPages) {
+
+    const nextLink = document.createElement("a");
+
+    nextLink.href = "#";
+    nextLink.className =
+      "govuk-link govuk-pagination__link";
+
+    nextLink.dataset.page = currentPage + 1;
+    nextLink.textContent = "Next";
+
+    nextContainer.appendChild(nextLink);
+
+  }
+
+}
+
+document
+  .querySelector(".govuk-pagination")
+  .addEventListener("click", function (e) {
+
+    const link =
+      e.target.closest("[data-page]");
+
+    if (!link) {
+      return;
+    }
+
+    e.preventDefault();
+
+    currentPage =
+      Number(link.dataset.page);
+
+    renderTable();
+
+    document
+      .getElementById("search-results")
+      .scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+
+  });
+
+
 </script>
 
 <!--Export to Excel-->
@@ -564,7 +690,7 @@ document
         "Source",
         "Postcode",
         "Case ID",
-        "FRF",
+        "FRF ID",
         "Date created"
       ]
     ];

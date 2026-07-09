@@ -1,0 +1,118 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Report benefit fraud – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block header %}
+  <!-- Blank header with no service name for the start page -->
+  {{ govukHeader() }}
+{% endblock %}
+
+{% block beforeContent %}
+
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "#"
+      },
+      {
+        text: "Crime, justice and the law",
+        href: "#"
+      },
+      {
+        text: "Reporting crimes"
+      }
+    ]
+  }) }}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">
+        {{ serviceName }}
+      </h1>
+
+      <p>Benefit fraud is deliberately claiming benefits you are not entitled, for example by: </p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>giving false information</li> 
+        <li>not reporting a change of circumstances </li>
+      </ul>
+
+      <p>You can report someone to us if you think they’re committing benefit fraud. </p>
+
+      <p>You only need to report them once unless you have new information. </p>
+
+      <div class="govuk-inset-text">      
+        <p>This page is also available <a href="/hysbysu-twyll-budd-daliadau">in Welsh (Cymraeg)</a>.</p>
+      </div>
+
+      <h2 class="govuk-heading-m">Reporting other types of fraud or crime </h2>
+
+      <p>There’s a different way to report: </p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li><a href="https://www.gov.uk/report-tax-fraud">Child Benefit fraud</a></li>
+        <li><a href="https://www.gov.uk/report-tax-fraud">Tax fraud or tax avoidance</a>, including tax credit fraud</li>
+        <li>social housing fraud (to the relevant council)</li>
+        <li><a href="https://www.gov.uk/report-crime">a crime</a></li>
+        <li><a href="https://www.gov.uk/report-immigration-crime">immigration or border crime</a></li> 
+        <li><a href="https://www.gov.uk/guidance/veterans-uk-contact-us">War pension Scheme or Armed Forces Compensation Scheme fraud</a> (Veterans UK helpline)</li>
+      </ul>
+
+      <h2 class="govuk-heading-m">Report benefit fraud online</h2>
+
+      {{ govukButton({
+        text: "Start now",
+        href: "staying-safe",
+        isStartButton: true
+      }) }}
+
+      <h2 class="govuk-heading-m">Other ways to report</h2>
+
+      <p>Contact our helpline if you cannot use the online service. Monday to Friday except <a href="https://www.gov.uk/bank-holidays">bank holidays</a>.</p>
+
+      <p>Do not send reports any other way, for example by post or webchat.</p>
+
+
+      <h3 class="govuk-heading-s">Helpline numbers</h3>
+      <p>England and Wales: 0800 854 440, 8am to 6pm<br>
+Northern Ireland: 0800 975 6050, 8am to 4pm<br>
+Scotland: 0800 158 2071, 8am to 5pm<br>
+Welsh language: 0800 678 3722, 8am to 6pm<br>
+<a href="https://www.relayuk.bt.com">Relay UK</a> (if you cannot hear or speak on the phone): 18001 then 0800 328 5644<br>
+British Sign Language (BSL): <a href="https://connect.interpreterslive.co.uk/vrs?ilc=DWP">use the video relay service on a computer</a> or download the InterpretersLive! app to your device. <br>
+Textphone: 0800 328 0512 </p>
+
+<p><a href="https://www.gov.uk/call-charges">Find out about call charges</a></p>
+
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+
+      <aside class="govuk-prototype-kit-common-templates-related-items" role="complementary">
+        <h2 class="govuk-heading-m" id="subsection-title">
+          Related content
+        </h2>
+        <nav role="navigation" aria-labelledby="subsection-title">
+          <ul class="govuk-list govuk-!-font-size-16">
+            <li>
+              <a href="#">
+                Benefit fraud
+              </a>
+            </li>
+            
+          </ul>
+        </nav>
+      </aside>
+
+    </div>
+  </div>
+
+{% endblock %}

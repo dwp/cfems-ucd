@@ -1,0 +1,270 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  What type of fraud do you want to report? – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {% include "includes/back-link.html" %}
+  {% include "includes/language-toggle.html" %}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <form class="form" action="working-and-claiming-benefits" method="post">
+
+        <!-- HTML lifted directly from current FRC form -->
+
+        <div class="govuk-form-group">
+
+  <fieldset class="govuk-fieldset" aria-describedby="f-fraudType-hint">
+    
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+    
+      <h1 class="govuk-fieldset__heading">
+        What type of fraud do you want to report?
+      </h1>
+    
+    </legend>
+    
+  
+    <div id="f-fraudType-hint" class="govuk-hint">
+      Select one or more
+    </div>
+  
+  
+    <div class="govuk-checkboxes"
+      
+          
+        
+      
+     id="f-fraudType-wrapper" data-module="govuk-checkboxes">
+      
+      
+        
+    
+    
+      
+      
+      
+      
+      
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="f-fraudType" name="fraudType[]" type="checkbox" value="employment" aria-describedby="f-fraudType-item-hint">
+        <label class="govuk-label govuk-checkboxes__label" for="f-fraudType">
+          Working and claiming benefit
+        </label>
+        
+        <div id="f-fraudType-item-hint" class="govuk-hint govuk-checkboxes__hint">
+          Not declaring they are working, or under reporting hours worked or earnings, including cash in hand.
+        </div>
+        
+      </div>
+      
+    
+  
+      
+        
+    
+    
+      
+      
+      
+      
+      
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="f-fraudType-2" name="fraudType[]" type="checkbox" value="partner" aria-describedby="f-fraudType-2-item-hint">
+        <label class="govuk-label govuk-checkboxes__label" for="f-fraudType-2">
+          Living with a partner while claiming to be living alone
+        </label>
+        
+        <div id="f-fraudType-2-item-hint" class="govuk-hint govuk-checkboxes__hint">
+          A partner could be a husband, wife, civil partner or someone they live with as if they were married or in a civil partnership.
+        </div>
+        
+      </div>
+      
+    
+  
+      
+        
+    
+    
+      
+      
+      
+      
+      
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="f-fraudType-3" name="fraudType[]" type="checkbox" value="disability" aria-describedby="f-fraudType-3-item-hint">
+        <label class="govuk-label govuk-checkboxes__label" for="f-fraudType-3">
+          Dishonestly claiming a disability benefit
+        </label>
+        
+        <div id="f-fraudType-3-item-hint" class="govuk-hint govuk-checkboxes__hint">
+          They do not have the disability they are claiming for.
+        </div>
+        
+      </div>
+      
+    
+  
+      
+        
+    
+    
+      
+      
+      
+      
+      
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="f-fraudType-4" name="fraudType[]" type="checkbox" value="carers" aria-describedby="f-fraudType-4-item-hint">
+        <label class="govuk-label govuk-checkboxes__label" for="f-fraudType-4">
+          Dishonestly claiming a carer&#39;s benefit
+        </label>
+        
+        <div id="f-fraudType-4-item-hint" class="govuk-hint govuk-checkboxes__hint">
+          They do not provide care but claim to do so, or the person they&#39;ve said they care for doesn&#39;t need it.
+        </div>
+        
+      </div>
+      
+    
+  
+      
+        
+    
+    
+      
+      
+      
+      
+      
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="f-fraudType-5" name="fraudType[]" type="checkbox" value="abroad" aria-describedby="f-fraudType-5-item-hint">
+        <label class="govuk-label govuk-checkboxes__label" for="f-fraudType-5">
+          Claiming benefits but not living in the UK
+        </label>
+        
+        <div id="f-fraudType-5-item-hint" class="govuk-hint govuk-checkboxes__hint">
+          Their benefit claim is based on a UK address and they have not told the relevant government department they now live abroad.
+        </div>
+        
+      </div>
+      
+    
+  
+      
+        
+    
+    
+      
+      
+      
+      
+      
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="f-fraudType-6" name="fraudType[]" type="checkbox" value="identity" aria-describedby="f-fraudType-6-item-hint">
+        <label class="govuk-label govuk-checkboxes__label" for="f-fraudType-6">
+          Using a fraudulent identity
+        </label>
+        
+        <div id="f-fraudType-6-item-hint" class="govuk-hint govuk-checkboxes__hint">
+          They have claimed a benefit using a false identity or someone else&#39;s name, National Insurance number or other personal details.
+        </div>
+        
+      </div>
+      
+    
+  
+      
+        
+    
+    
+      
+      
+      
+      
+      
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="f-fraudType-7" name="fraudType[]" type="checkbox" value="income" aria-describedby="f-fraudType-7-item-hint">
+        <label class="govuk-label govuk-checkboxes__label" for="f-fraudType-7">
+          Not declaring savings or other non-work related income
+        </label>
+        
+        <div id="f-fraudType-7-item-hint" class="govuk-hint govuk-checkboxes__hint">
+          Non-work related income includes savings, inheritance, winnings, property, pensions or compensation.
+        </div>
+        
+      </div>
+      
+    
+  
+      
+        
+    
+    
+      
+      
+      
+      
+      
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="f-fraudType-8" name="fraudType[]" type="checkbox" value="others" data-behaviour="exclusive">
+        <label class="govuk-label govuk-checkboxes__label" for="f-fraudType-8">
+          None of the above
+        </label>
+        
+      </div>
+      
+    
+  
+      
+      
+    </div>
+  
+  </fieldset>
+
+</div>
+
+
+
+</div>
+</div>
+
+
+  
+
+  
+    <div class="govuk-button-group casa-form-control-block">
+      
+  
+    
+  
+
+<button type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button"
+    
+        
+      
+    
+   id="continue-button">
+  Continue
+</button>
+
+
+      
+    </div>
+  
+</form>
+
+
+        <!-- End of HTML lifted directly from current FRC form -->
+
+    </div>
+  </div>
+
+{% endblock %}
