@@ -26,11 +26,6 @@
       </div>
 
       <input class="govuk-input govuk-input--width-10" id="caseid" name="caseId" type="text" autocomplete="off">
-      
-<div id="caseid-results"
-     style="display:none; position:absolute; background:white; border:2px solid #0b0c0c; max-width:220px; z-index:100;">
-</div>
-
 
 
     </div>
@@ -58,12 +53,6 @@
       <input class="govuk-input govuk-input--width-10" id="nino" name="nino" type="text" autocomplete="off">
 
 
-<div id="nino-results"
-     style="display:none; position:absolute; background:white; border:2px solid #0b0c0c; max-width:260px; z-index:100;">
-</div>
-
-
-
     </div>
 
     <div class="govuk-form-group" style="position:relative;">
@@ -88,10 +77,6 @@
       </div>
 
       <input class="govuk-input govuk-input--width-10" id="frfid" name="frfId" type="text" autocomplete="off">
-
-<div id="frfid-results"
-     style="display:none; position:absolute; background:white; border:2px solid #0b0c0c; max-width:300px; z-index:100;">
-</div>
 
 
     </div>
@@ -124,7 +109,10 @@
 <!-- FIXED GDS TABLE -->
 <table class="govuk-table">
   <caption class="govuk-table__caption govuk-table__caption--m">
-Search results
+    Prioritisation choice
+    <span id="prioritisation-table-hint" class="govuk-body">Once you apply the changes you've made, they will take place
+      immediately for new cases and overnight for existing ones. To change the priority of a choice, remove it from the
+      table and start again.</span>
   </caption>
 
   <thead class="govuk-table__head">
@@ -159,113 +147,6 @@ const dataset = [
   const tableBody = document.getElementById("table-body");
   const caption = document.querySelector(".govuk-table__caption");
 
-
-  /* ================= AUTOCOMPLETE ================= */
-
-const caseIdList = [...new Set(dataset.map(item => item.caseId))];
-const ninoList = [...new Set(dataset.map(item => item.nino))];
-const frfIdList = [...new Set(dataset.map(item => item.frfId))];
-
-function setupAutocomplete(inputId, resultsId, values, forceUppercase = false) {
-
-  const input = document.getElementById(inputId);
-  const results = document.getElementById(resultsId);
-
-  function renderSuggestions(query) {
-
-    results.innerHTML = "";
-
-    const q = query.trim();
-
-    const matches = values
-      .filter(value => value.toLowerCase().includes(q.toLowerCase()))
-      .slice(0, 10);
-
-    if (!matches.length) {
-      results.style.display = "none";
-      return;
-    }
-
-    matches.forEach(value => {
-
-      const item = document.createElement("div");
-
-      item.className = "govuk-autocomplete__item";
-      item.style.padding = "8px";
-      item.style.cursor = "pointer";
-
-      item.innerHTML = q
-        ? value.replace(
-            new RegExp(`(${q})`, "gi"),
-            "<strong>$1</strong>"
-          )
-        : value;
-
-      item.addEventListener("click", () => {
-        input.value = value;
-        results.style.display = "none";
-      });
-
-      item.addEventListener("mouseover", () => {
-        item.style.background = "#f3f2f1";
-      });
-
-      item.addEventListener("mouseout", () => {
-        item.style.background = "white";
-      });
-
-      results.appendChild(item);
-    });
-
-    results.style.display = "block";
-  }
-
-  input.addEventListener("input", e => {
-
-    if (forceUppercase) {
-      e.target.value = e.target.value.toUpperCase();
-    }
-
-    renderSuggestions(e.target.value);
-  });
-
-  input.addEventListener("focus", () => {
-    renderSuggestions(input.value);
-  });
-
-  document.addEventListener("click", e => {
-
-    if (
-      !input.contains(e.target) &&
-      !results.contains(e.target)
-    ) {
-      results.style.display = "none";
-    }
-  });
-}
-
-/* Initialise */
-
-setupAutocomplete(
-  "caseid",
-  "caseid-results",
-  caseIdList,
-  true
-);
-
-setupAutocomplete(
-  "nino",
-  "nino-results",
-  ninoList,
-  true
-);
-
-setupAutocomplete(
-  "frfid",
-  "frfid-results",
-  frfIdList,
-  true
-);
   document.getElementById("search-search-btn").addEventListener("click", function () {
 
     const caseId = document.getElementById("caseid").value.toLowerCase();
