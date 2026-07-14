@@ -98,8 +98,12 @@
 
     <!-- FIXED GDS TABLE -->
     <table class="govuk-table">
-      <caption class="govuk-table__caption govuk-table__caption--m">
-        Prioritisation choice
+      
+<caption
+  id="table-caption"
+  class="govuk-table__caption govuk-table__caption--m">
+  Prioritised choices
+
         <span id="prioritisation-table-hint" class="govuk-body">Once you apply the changes you've made, they will take
           place immediately for new cases and overnight for existing ones. To change the priority of a choice, remove it
           from the table and start again.</span>
@@ -139,6 +143,7 @@
   const addBtn = document.getElementById('add-btn');
   const applyBtn = document.getElementById('apply-btn');
   const successMessage = document.getElementById('success-message');
+  const tableCaption = document.getElementById('table-caption');
 
   const errorSummary = document.getElementById('error-summary');
   const errorList = document.getElementById('error-list');
@@ -176,14 +181,32 @@
 
 
   criteriaSelect.addEventListener('change', () => {
-    inputEl.value = '';
+  inputEl.value = '';
 
+  if (criteriaSelect.value === "Benefit type") priorities = benefitTypes;
+  else if (criteriaSelect.value === "Risk or allegation ID") priorities = riskIds;
+  else if (criteriaSelect.value === "Source") priorities = sourceList;
+  else priorities = [];
 
-    if (criteriaSelect.value === "Benefit type") priorities = benefitTypes;
-    else if (criteriaSelect.value === "Risk or allegation ID") priorities = riskIds;
-    else if (criteriaSelect.value === "Source") priorities = sourceList;
-    else priorities = [];
-  });
+  const selectedCategory =
+    criteriaSelect.options[criteriaSelect.selectedIndex].text;
+
+  if (criteriaSelect.value !== 'choose') {
+    tableCaption.innerHTML = `
+      Prioritised choices for ${selectedCategory}
+      <span id="prioritisation-table-hint" class="govuk-body">
+        Once you apply the changes you've made, they will take place immediately for new cases and overnight for existing ones. To change the priority of a choice, remove it from the table and start again.
+      </span>
+    `;
+  } else {
+    tableCaption.innerHTML = `
+      Prioritised choices
+      <span id="prioritisation-table-hint" class="govuk-body">
+        Once you apply the changes you've made, they will take place immediately for new cases and overnight for existing ones. To change the priority of a choice, remove it from the table and start again.
+      </span>
+    `;
+  }
+});
 
 
   inputEl.addEventListener('input', e => {
@@ -284,6 +307,8 @@
     successMessage.style.display = 'block';
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
+
+  
 
 </script>
 

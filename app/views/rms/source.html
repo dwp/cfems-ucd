@@ -99,8 +99,12 @@
     </button>
 
     <table class="govuk-table">
-      <caption class="govuk-table__caption govuk-table__caption--m">
-        Prioritised sources
+      
+<caption
+  id="table-caption"
+  class="govuk-table__caption govuk-table__caption--m">
+  Prioritised sources
+
         <span id="prioritisation-table-hint" class="govuk-body">        Once submitted, the changes you've made to any teams' workbasket will take place immediately.
         Once you apply the changes you've made, they will take place immediately for new cases and overnight for existing ones. To change the priority of a source, remove it from the table and start again.
 </span>
@@ -139,6 +143,7 @@
 
     const sourceSelect = document.getElementById('source');
     const rankingSelect = document.getElementById('ranking');
+    const tableCaption = document.getElementById('table-caption');
 
     const addButton = document.getElementById('add-selection');
     const applyButton = document.getElementById('apply-button');
@@ -229,9 +234,30 @@
     // Clear messaging when user changes values
 
     sourceSelect.addEventListener('change', function () {
-      hideSuccessBanner();
-      clearErrors();
-    });
+  hideSuccessBanner();
+  clearErrors();
+
+  const selectedSource =
+    sourceSelect.options[sourceSelect.selectedIndex].text;
+
+  if (sourceSelect.value) {
+    tableCaption.innerHTML = `
+      Prioritised sources for ${selectedSource}
+      <span id="prioritisation-table-hint" class="govuk-body">
+        Once submitted, the changes you've made to any teams' workbasket will take place immediately.
+        Once you apply the changes you've made, they will take place immediately for new cases and overnight for existing ones. To change the priority of a source, remove it from the table and start again.
+      </span>
+    `;
+  } else {
+    tableCaption.innerHTML = `
+      Prioritised sources
+      <span id="prioritisation-table-hint" class="govuk-body">
+        Once submitted, the changes you've made to any teams' workbasket will take place immediately.
+        Once you apply the changes you've made, they will take place immediately for new cases and overnight for existing ones. To change the priority of a source, remove it from the table and start again.
+      </span>
+    `;
+  }
+});
 
     rankingSelect.addEventListener('change', function () {
       hideSuccessBanner();
