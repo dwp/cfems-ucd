@@ -50,16 +50,16 @@
       </select>
     </div>
 
-    <!-- Criteria -->
+    <!-- Category -->
     <div class="govuk-form-group" id="criteria-group">
       <label class="govuk-label" for="criteria">Select a category</label>
-      <!--<div id="event-name-hint" class="govuk-hint">
-        Select a function before selecting what you want to prioritise.
-      </div>-->
+      <div id="event-name-hint" class="govuk-hint">
+        For example, benefit type, risk ID or source.
+      </div>
       <select id="criteria" class="govuk-select">
-        <option value="choose">Select</option>
+        <option value="choose">Select a category</option>
         <option value="Benefit type">Benefit type</option>
-        <option value="Risk or allegation ID">Risk or allegation ID</option>
+        <option value="Risk ID">Risk ID</option>
         <option value="Source">Source</option>
       </select>
     </div>
@@ -67,9 +67,7 @@
     <!-- Autocomplete -->
     <div class="govuk-form-group" id="value-group" style="position:relative;">
       <label class="govuk-label" for="priority-search">Select sub-category</label>
-      <div id="event-name-hint" class="govuk-hint">
-        For example, benefit type, risk ID or source.
-      </div>
+      
       <input id="priority-search" class="govuk-input" autocomplete="off" style="width:220px;"
         placeholder="Start typing">
       <div id="autocomplete-results"
@@ -111,8 +109,8 @@
 
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-          <th scope="col" class="govuk-table__header">Criteria</th>
-          <th scope="col" class="govuk-table__header">Value</th>
+          <th scope="col" class="govuk-table__header">Category</th>
+          <th scope="col" class="govuk-table__header">Sub-category</th>
           <th scope="col" class="govuk-table__header">Ranking</th>
           <th scope="col" class="govuk-table__header">Action</th>
         </tr>
@@ -180,17 +178,17 @@
   }
 
 
-  criteriaSelect.addEventListener('change', () => {
+ criteriaSelect.addEventListener('change', () => {
   inputEl.value = '';
 
   if (criteriaSelect.value === "Benefit type") priorities = benefitTypes;
-  else if (criteriaSelect.value === "Risk or allegation ID") priorities = riskIds;
+  else if (criteriaSelect.value === "Risk ID") priorities = riskIds;
   else if (criteriaSelect.value === "Source") priorities = sourceList;
   else priorities = [];
 
   const selectedCategory =
     criteriaSelect.options[criteriaSelect.selectedIndex].text;
-
+/*
   if (criteriaSelect.value !== 'choose') {
     tableCaption.innerHTML = `
       Prioritised choices for ${selectedCategory}
@@ -205,7 +203,7 @@
         Once you apply the changes you've made, they will take place immediately for new cases and overnight for existing ones. To change the priority of a choice, remove it from the table and start again.
       </span>
     `;
-  }
+  }*/
 });
 
 
