@@ -1,0 +1,322 @@
+{% extends "layouts/fiu-nav.html" %}
+
+{% set pageName="Workbasket control" %}
+
+{% block content %}
+<a href="javascript:history.back()" class="govuk-back-link">Back</a>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full ">
+
+    <span class="govuk-caption-xl">FIU Case Management</span>
+    <h1 class="govuk-heading-l">Case details</h1>
+    <p class="govuk-body-l">XXXXXXXX</p>
+
+    <div class="govuk-form-group">
+      <label class="govuk-label" for="account-number">
+        Client details
+      </label>
+      <div id="account-number-hint" class="govuk-hint">
+        Search by FIU reference, NI number, case number, SR (active cases only), client or third party name. Search
+        requires an exact match.
+      </div>
+      <input class="govuk-input govuk-input--width-10" id="account-number" name="accountNumber" type="text"
+        spellcheck="false" aria-describedby="account-number-hint" inputmode="numeric">
+    </div>
+
+
+    <h2 class="govuk-heading-m">Case assignement</h2>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="sort">
+            Type of referral
+          </label>
+          <div id="account-number-hint" class="govuk-hint">
+            Hint text
+          </div>
+          <select class="govuk-select" id="sort" name="sort">
+            <option value="select" selected>Select</option>
+            <option value="published">Recently published</option>
+            <option value="updated">Recently updated</option>
+            <option value="views">Most views</option>
+            <option value="comments">Most comments</option>
+          </select>
+        </div>
+
+      </div>
+      <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="sort">
+            Reason for referral
+          </label>
+          <div id="account-number-hint" class="govuk-hint">
+            Hint text
+          </div>
+          <select class="govuk-select" id="sort" name="sort">
+            <option value="select" selected>Select</option>
+            <option value="published">Recently published</option>
+            <option value="updated">Recently updated</option>
+            <option value="views">Most views</option>
+            <option value="comments">Most comments</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="sort">
+            Team
+          </label>
+          <div id="account-number-hint" class="govuk-hint">
+            Hint text
+          </div>
+          <select class="govuk-select" id="sort" name="sort">
+            <option value="select" selected>Select</option>
+            <option value="published">Recently published</option>
+            <option value="updated">Recently updated</option>
+            <option value="views">Most views</option>
+            <option value="comments">Most comments</option>
+          </select>
+        </div>
+      </div>
+      <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="sort">
+            Allocated investigator
+          </label>
+          <div id="account-number-hint" class="govuk-hint">
+            Hint text
+          </div>
+          <select class="govuk-select" id="sort" name="sort">
+            <option value="select" selected>Select</option>
+            <option value="published">Recently published</option>
+            <option value="updated">Recently updated</option>
+            <option value="views">Most views</option>
+            <option value="comments">Most comments</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full ">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+              <h2 class="govuk-heading-m">Case conference</h2>
+            </legend>
+            <div id="waste-hint" class="govuk-hint">
+              Select if required
+            </div>
+            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses">
+                <label class="govuk-label govuk-checkboxes__label" for="waste">
+                  8 week case conference
+                </label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full ">
+        <h2 class="govuk-heading-m">Case information</h2>
+      </div>
+      <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+
+            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses">
+                <label class="govuk-label govuk-checkboxes__label" for="waste">
+                  One of the parties in this case has made a threat of self-harm or suicide
+                </label>
+              </div>
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses">
+                <label class="govuk-label govuk-checkboxes__label" for="waste">
+                  Sesitive case
+                </label>
+              </div>
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses">
+                <label class="govuk-label govuk-checkboxes__label" for="waste">
+                  Nationally high profile/complaint
+                </label>
+              </div>
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses">
+                <label class="govuk-label govuk-checkboxes__label" for="waste">
+                  Special application
+                </label>
+              </div>
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses">
+                <label class="govuk-label govuk-checkboxes__label" for="waste">
+                  CHIS descussion required
+                </label>
+              </div>
+
+
+            </div>
+          </fieldset>
+        </div>
+
+      </div>
+
+      <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+
+            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses">
+                <label class="govuk-label govuk-checkboxes__label" for="waste">
+                  One of the parties in this case is a victim or survivor of domestic abuse
+                </label>
+              </div>
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses">
+                <label class="govuk-label govuk-checkboxes__label" for="waste">
+                  DEO: Emp contact
+                </label>
+              </div>
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses">
+                <label class="govuk-label govuk-checkboxes__label" for="waste">
+                  DVS obtained
+                </label>
+              </div>
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses">
+                <label class="govuk-label govuk-checkboxes__label" for="waste">
+                  LoCTA accessed
+                </label>
+              </div>
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses">
+                <label class="govuk-label govuk-checkboxes__label" for="waste">
+                  Fraud/error established was the result of a change reported via MCMC
+                </label>
+              </div>
+
+
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half">
+        <h2 class="govuk-heading-m">Active cases</h2>
+
+        <h3 class="govuk-heading-s" id="results-caption">
+          3 matches
+        </h3>
+      </div>
+
+      <div id="results-actions" class="govuk-grid-column-one-half table-right">
+
+        <p>
+          <a href="#" id="export-excel">
+            Export to Excel
+          </a>
+        </p>
+
+        <p>
+          <a href="#" id="refresh-list">
+            Refresh list
+          </a>
+        </p>
+
+      </div>
+      <table class="govuk-table">
+
+
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Client</th>
+            <th scope="col" class="govuk-table__header">Date of receipt</th>
+            <th scope="col" class="govuk-table__header">BF date</th>
+            <th scope="col" class="govuk-table__header">Note</th>
+
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">John Smith</td>
+            <td class="govuk-table__cell">8 May 26</td>
+            <td class="govuk-table__cell">12 August 26</td>
+            <td class="govuk-table__cell">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua.</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">Mary Jones</td>
+            <td class="govuk-table__cell">10 May 26</td>
+            <td class="govuk-table__cell">18 August 26 </td>
+            <td class="govuk-table__cell">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua.</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">Steve Stephens</td>
+            <td class="govuk-table__cell">6 June 26</td>
+            <td class="govuk-table__cell">1 September 26</td>
+            <td class="govuk-table__cell">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua.</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+<button type="submit" class="govuk-button" data-module="govuk-button">
+  Exit
+</button>
+<!--
+<div class="govuk-grid-row grey">
+
+  <div class="govuk-grid-column-one-half">
+
+    <ul class="govuk-list">
+      <li>
+        <a class="govuk-link" href="#">Add new case</a>
+      </li>
+      <li>
+        <a class="govuk-link" href="#">Update</a>
+      </li>
+      <li>
+        <a class="govuk-link" href="#">Open SIP</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="govuk-grid-column-one-half">
+
+    <ul class="govuk-list">
+      <li>
+        <a class="govuk-link" href="#">Clear</a>
+      </li>
+      <li>
+        <a class="govuk-link" href="#">Work list</a>
+      </li>
+      <li>
+        <a class="govuk-link" href="#">Email FIU Support</a>
+      </li>
+    </ul>
+  </div>
+
+</div>-->
+
+</div>
+
+{% endblock %}
